@@ -1,73 +1,167 @@
-# React + TypeScript + Vite
+⚡ RechargeX – Data, Airtime & Utility Payment Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack web application that enables users to recharge airtime, buy data plans, and pay for utility bills seamlessly.
+Built with React + TypeScript on the frontend and Node.js + Express + PostgreSQL on the backend.
 
-Currently, two official plugins are available:
+🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+💳 Airtime & Data Recharge – Buy airtime or mobile data for all major networks.
 
-## React Compiler
+🧾 Utility Bill Payments – Pay for electricity, cable TV, and other services.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+👤 User Authentication – Secure signup/login using JWT.
 
-## Expanding the ESLint configuration
+💼 Transaction History – Track past purchases and payments.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+📊 Wallet System – Add funds and make payments directly from your wallet.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+🔐 Role-Based Access Control – Admins can manage users and monitor transactions.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+⚡ Real-Time Updates – Instant transaction feedback via toast notifications.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+📱 Responsive Design – Works perfectly on mobile and desktop devices.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+🧩 Tech Stack
+Frontend
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+⚛️ React
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+💙 TypeScript
+
+🎨 Tailwind CSS
+
+⚡ Vite
+
+🔔 Sonner (notifications)
+
+🧭 React Router DOM
+
+📦 Axios
+
+Backend
+
+🟢 Node.js
+
+🚀 Express.js
+
+🗃️ PostgreSQL (with Prisma or Sequelize ORM)
+
+🔐 JSON Web Token (JWT) for authentication
+
+🧰 Bcrypt for password hashing
+
+🧾 Nodemailer (optional for email notifications)
+
+🏗️ Architecture Overview
+Frontend (React + TypeScript)
+       ↓ Axios API Calls
+Backend (Node + Express)
+       ↓ ORM (Prisma/Sequelize)
+Database (PostgreSQL)
+
+
+The frontend consumes REST APIs provided by the backend. The backend manages authentication, transactions, and integration with external APIs for telecom and utility services.
+
+⚙️ Installation & Setup
+1. Clone the repository
+git clone https://github.com/<your-username>/<your-repo-name>.git
+cd <your-repo-name>
+
+2. Setup Backend
+cd backend
+npm install
+
+Create a .env file
+PORT=5000
+DATABASE_URL=postgresql://user:password@localhost:5432/rechargex
+JWT_SECRET=your_jwt_secret
+NODE_ENV=development
+
+Run database migrations (if using Prisma)
+npx prisma migrate dev
+
+Start backend
+npm run dev
+
+
+Backend should now run on:
+📍 http://localhost:5000
+
+3. Setup Frontend
+cd frontend
+npm install
+
+Create a .env file
+VITE_API_URL=http://localhost:5000
+
+Start frontend
+npm run dev
+
+
+Frontend should now run on:
+📍 http://localhost:5173
+
+🧪 API Endpoints (Examples)
+Method	Endpoint	Description
+POST	/api/auth/register	Register new user
+POST	/api/auth/login	Login user
+GET	/api/user/profile	Get logged-in user details
+POST	/api/transactions/airtime	Recharge airtime
+POST	/api/transactions/data	Purchase data plan
+POST	/api/transactions/utilities	Pay utility bills
+GET	/api/transactions	Get user’s transaction history
+🛡️ Authentication
+
+JWT-based authentication is used for all protected routes.
+The frontend stores tokens securely (e.g., in httpOnly cookies or memory) and includes them in API requests.
+
+📦 Folder Structure
+root/
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── hooks/
+│   │   ├── utils/
+│   │   └── App.tsx
+│   └── ...
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── middleware/
+│   │   └── server.ts
+│   └── ...
+└── README.md
+
+🧰 Scripts
+Frontend
+Command	Description
+npm run dev	Start dev server
+npm run build	Build production app
+npm run preview	Preview production build
+Backend
+Command	Description
+npm run dev	Start development server
+npm run start	Run production server
+🧑‍💻 Author
+
+Iheagwam Bright Chinedum
+Frontend Engineer | Full-Stack Developer
+📧 iheagwambc@gmail.com
+
+🌐 GitHub – BICD-dev
+
+🏁 License
+
+This project is licensed under the MIT License.
+Feel free to fork, modify, and use it as needed.
+
+🌟 Acknowledgements
+
+React, Node.js & PostgreSQL Communities
+
+Open-source API providers for telecom and utility integration
+
+Vercel & Render for deployment
