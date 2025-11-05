@@ -1,10 +1,50 @@
+import { useState } from "react";
+import {Link, NavLink} from 'react-router-dom'
 const Navbar = () => {
+    const [isopen, setIsOpen] = useState(false)
+
+    const toggleSidebar = ()=> setIsOpen(!isopen)
+
+
     return ( 
-        <>
-            <div>
-                <h1>Navbar</h1>
-            </div>
-        </>
+        <div className="fixed top-0 left-0 z-20 w-full px-6 py-3 flex justify-between items-center bg-white border-b-4 border-gray-600">
+                  {/* <Link to="/"> <img
+                        src={logo}
+                        alt="rechargex Logo"
+                        // className="h-20 md:h-20 lg:h-24  md:max-w-[280px] lg:max-w-[320px] object-contain"
+                        className="w-[15rem] cursor-pointer md:w-[15rem] lg:w-[20rem]"
+                     /></Link> replace with the logo*/} 
+                     <h1 className="font-bold text-2xl cursor-pointer pb-2  ">Recharge<b className="text-[#cc2b03] font-bold text-2xl">X</b></h1>
+
+                     {/* desktop menu */}
+                     <ul className="hidden font-semibold text-black md:flex justify-between  w-1/3">
+                        <NavLink to="/" className={({isActive}) => isActive ? "text-[1.2rem] text-[#cc2b03] pb-2 capitalize font-semibold underline" : "text-gray-700 text-[1.2rem] pb-2 no-underline"} >
+                        <li>Personal</li>
+                        </NavLink>
+                        <NavLink to="/business" className={({isActive}) => isActive ? "text-[1.2rem] text-[#cc2b03] pb-2 capitalize font-semibold underline" : "text-gray-700 text-[1.2rem] pb-2 no-underline"} >
+                        <li>Business</li>
+                        </NavLink>
+                        <NavLink to="/commerce" className={({isActive}) => isActive ? "text-[1.2rem] text-[#cc2b03] pb-2 capitalize font-semibold underline" : "text-gray-700 text-[1.2rem] pb-2 no-underline"} >
+                        <li>Commerce</li>
+                        </NavLink>
+                        <NavLink to="/career" className={({isActive}) => isActive ? "text-[1.2rem] text-[#cc2b03] pb-2 capitalize font-semibold underline" : "text-gray-700 text-[1.2rem] pb-2 no-underline"} >
+                        <li>We're Hiring</li>
+                        </NavLink>
+
+                     </ul>
+                     <div className="hidden md:flex items-center justify-between w-1/4">
+                        <NavLink to="/donate">
+                            <button className="bg-white px-10 py-2 rounded-md cursor-pointer transition text-[#cc2b03] capitalize border">
+                            Login
+                            </button>
+                        </NavLink>
+                        <NavLink to="/donate">
+                            <button className="bg-[#cc2b03] px-10 py-2 rounded-md cursor-pointer hover:bg-[#cc2b03] transition text-white capitalize">
+                            sign up
+                            </button>
+                        </NavLink>
+                    </div>
+        </div>
      );
 }
  
