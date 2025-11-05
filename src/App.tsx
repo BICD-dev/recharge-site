@@ -7,15 +7,15 @@ import Footer from './components/Footer.tsx'
 function App() {
 
   return (
-    <>
-    <Navbar />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/about' element={<About />} />
-        
-      </Routes>
-    <Footer />
-    </>
+    <div className="App">
+      <Navbar />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          
+        </Routes>
+      <Footer />
+    </div>
   )
 }
 
