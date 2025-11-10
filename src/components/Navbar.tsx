@@ -7,7 +7,7 @@ const Navbar = () => {
 
 
     return ( 
-        <div className="fixed top-0 left-0 z-50 w-full px-6 py-3 flex justify-between items-center bg-white border-b-4 border-gray-600">
+        <div className="fixed top-0 left-0 z-50 w-full h-16 px-6 py-3 flex justify-between items-center bg-white border-b-4 border-gray-600 ">
                   {/* <Link to="/"> <img
                         src={logo}
                         alt="rechargex Logo"
@@ -53,7 +53,7 @@ const Navbar = () => {
                         }`}
                         >
                         {/* {isOpen ? <X color="white" size={32} /> : <Menu color="black" size={32} />} */}
-                        {isOpen ? <button className="border-none text-2xl">X</button> : <button className="border-none text-2xl">&equiv;</button>}
+                        {isOpen ? <button className="border-none text-2xl">❌</button> : <button className="border-none text-2xl">&equiv;</button>}
                         </div>
                     </div>
 
