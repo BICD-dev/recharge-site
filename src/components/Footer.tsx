@@ -4,7 +4,7 @@ import facebook from "../assets/icons/facebook.svg";
 import twitter from "../assets/icons/twitter.svg";
 const Footer = () => {  
   return (
-    <footer className="text-[#cc2b03] bg-white px-6 py-12 border-2">
+    <footer className="text-[#cc2b03] bg-white px-6 py-8 border-2">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         
         {/* Logo + Description */}
@@ -64,7 +64,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Note */}
-      <div className="mt-12 border-t border-[#cc2b03] pt-6 text-center text-sm text-black">
+      <div className="mt-12 border-t border-[#cc2b03] pt-3 text-center text-sm text-black">
         &copy; 2025 Recharge X.
       </div>
     </footer>

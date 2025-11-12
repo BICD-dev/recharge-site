@@ -2,7 +2,7 @@ const Home = () => {
     return ( 
         <div>
             {/* section 1 */}
-            <div className="bg-white text-gray-700 text-sm px-6 w-full h-screen grid grid-cols-3 mb-4">
+            <div className="bg-white text-gray-700 text-sm px-6 w-full h-fit grid grid-cols-3  mb-20">
 
                 <div className=" flex flex-col gap-4 pt-26">
                     <h1 className="text-gray-700 text-[1.2rem] font-semibold my-2">

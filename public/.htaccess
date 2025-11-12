@@ -1,0 +1,26 @@
+# Enable rewrite engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS and remove www
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^(.*)$ https://site.com/$1 [L,R=301]
+
+  # Set RewriteBase
+  RewriteBase /
+
+  # If the file or directory exists, serve it
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Otherwise, serve index.html (for React Router)
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Prevent access to sensitive files
+<FilesMatch "\.(env|json|log|ini|bak|config|sql)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>

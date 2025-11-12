@@ -69,13 +69,13 @@ const Navbar = () => {
           
         </ul>
                         <div className="flex flex-col gap-4">
-                            <Link to="/login">
+                            <Link to="/login" onClick={toggleSidebar}>
                                 <button className="bg-white px-10 py-2 rounded-lg cursor-pointer transition text-[#cc2b03] capitalize border">
                             Login
                             </button>
                             </Link>
 
-                            <Link to="/register">
+                            <Link to="/register" onClick={toggleSidebar}>
                                 <button className="bg-[#cc2b03] px-10 py-2 rounded-lg cursor-pointer hover:bg-[#cc2b03] transition text-white capitalize">
                             sign up
                             </button>
