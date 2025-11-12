@@ -43,7 +43,7 @@ const Login = () => {
     <div
       className={` backdrop-blur-lg flex justify-center items-center h-screen text-sm text-gray-700`}
     >
-      <div className="rounded-3xl border py-4 px-6 w-[40%] bg-white">
+      <div className="rounded-3xl border py-4 px-6 w-[90%] md:w-[40%] bg-white">
         <h1 className="text-2xl my-4 text-center font-bold uppercase">Login</h1>
         <h2 className=" text-center my-4 ">Login to your account</h2>
         <form
@@ -63,7 +63,7 @@ const Login = () => {
           <button className="uppercase text-white bg-green-700 py-5 px-10 text-lg rounded-sm ">
             login
           </button>
-          <Link to="" className="text-right text-green-700 font-semibold">
+          <Link to="/forgot" className="text-right text-green-700 font-semibold">
             Forgot your password?
           </Link>
           <p className="text-gray-600 font-semibold">
