@@ -6,13 +6,13 @@ const Home = () => {
 
                 <div className=" flex flex-col gap-4 pt-26">
                     <h1 className="text-gray-700 text-[1.2rem] font-semibold my-2">
-                    Welcome {``}, What are you <b className="text-[#cc2b03] font-semibold ">purchasing today?</b>
+                    Welcome {``}, What are you <b className="primary font-semibold ">purchasing today?</b>
                 </h1>
 
                 <input type="text" className=" py-3 px-7 border border-gray-400 rounded-sm w-full " placeholder="Search for Service" />
 
-                <section className="border border-[#cc2b03] rounded-sm my-4 py-11 px-3 text-[0.8rem]">
-                    <p className="text-gray-700 font-semibold text-[1.2rem]/8 capitalize "><b className="text-[#cc2b03]">Save N100</b> on bill payments when you transfer directly to your meter or Decoder's Bank
+                <section className="border primary rounded-sm my-4 py-11 px-3 text-[0.8rem]">
+                    <p className="text-gray-700 font-semibold text-[1.2rem]/8 capitalize "><b className="primary">Save N100</b> on bill payments when you transfer directly to your meter or Decoder's Bank
                         Account. Get instant value !
                     </p>
                     <p>Make a bank transfer to the account to buy tokens or renew your subscription instantly</p>
@@ -23,7 +23,7 @@ const Home = () => {
                         <span>No App. No website</span>
                     </span>
                     <span className="mt-5 w-full flex items-center justify-center">
-                        <button className="text-sm bg-[#cc2b03] px-10 py-4 rounded-sm cursor-pointer hover:bg-[#cc2b03] transition text-white uppercase font-bold">
+                        <button className="text-sm bg-primary px-10 py-4 rounded-sm cursor-pointer hover:bg-primary transition text-white uppercase font-bold">
                                 Get your account
                                 </button>
                     </span>

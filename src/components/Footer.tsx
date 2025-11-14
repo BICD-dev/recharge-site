@@ -4,14 +4,14 @@ import facebook from "../assets/icons/facebook.svg";
 import twitter from "../assets/icons/twitter.svg";
 const Footer = () => {  
   return (
-    <footer className="text-[#cc2b03] bg-white px-6 py-8 border-2">
+    <footer className="primary bg-white px-6 py-8 border-2">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         
         {/* Logo + Description */}
         <div>
           <h2 className="text-2xl font-bold mb-3">Recharge X</h2>
           <span>
-            <h1 className="text-[#cc2b03] text-sm font-semibold">Buy on Whatsapp</h1>
+            <h1 className="primary text-sm font-semibold">Buy on Whatsapp</h1>
             <p className="text-black text-sm">
 
               09065788599
@@ -24,13 +24,13 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm text-black underline">
-            <li><Link to="#" className="hover:text-[#cc2b03]">Send a gift voucher</Link></li>
-            <li><Link to="#" className="hover:text-[#cc2b03]">Blog</Link></li>
-            <li><Link to="#" className="hover:text-[#cc2b03]">Contact Us</Link></li>
-            <li><Link to="/about" className="hover:text-[#cc2b03]">About us</Link></li>
-            <li><Link to="#" className="hover:text-[#cc2b03]"> Terms and Conditions</Link></li>
-            <li><Link to="#" className="hover:text-[#cc2b03]">FAQs</Link></li>
-            <li><Link to="#" className="hover:text-[#cc2b03]">Links </Link></li>
+            <li><Link to="#" className="hover:primary">Send a gift voucher</Link></li>
+            <li><Link to="#" className="hover:primary">Blog</Link></li>
+            <li><Link to="#" className="hover:primary">Contact Us</Link></li>
+            <li><Link to="/about" className="hover:primary">About us</Link></li>
+            <li><Link to="#" className="hover:primary"> Terms and Conditions</Link></li>
+            <li><Link to="#" className="hover:primary">FAQs</Link></li>
+            <li><Link to="#" className="hover:primary">Links </Link></li>
 
             
             
@@ -56,15 +56,15 @@ const Footer = () => {
             <li></li>
           </ul>
           <div className="flex space-x-4 mt-4">
-            <a href="https://www.facebook.com/share/1C4t6scgmn/?mibextid=wwXIfr" target="blank" className="text-gray-300 hover:text-[#cc2b03]"><img src={facebook} alt="facebook logo" /></a>
-            <a href="https://x.com/pphf2020?s=11&t=QmqCiexD3Ori2IiyQkKLig" target="_blank" className="text-gray-300 hover:text-[#cc2b03]"><img src={twitter} alt="twitter logo" /></a>
-            <a href="https://www.instagram.com/progressivehumanitarian?igsh=aHdvNmcyZzRpdXJz" target="blank" className="text-gray-300 hover:text-[#cc2b03]"><img src={instagram} alt="instagram logo" /></a>
+            <a href="https://www.facebook.com/share/1C4t6scgmn/?mibextid=wwXIfr" target="blank" className="text-gray-300 hover:primary"><img src={facebook} alt="facebook logo" /></a>
+            <a href="https://x.com/pphf2020?s=11&t=QmqCiexD3Ori2IiyQkKLig" target="_blank" className="text-gray-300 hover:primary"><img src={twitter} alt="twitter logo" /></a>
+            <a href="https://www.instagram.com/progressivehumanitarian?igsh=aHdvNmcyZzRpdXJz" target="blank" className="text-gray-300 hover:primary"><img src={instagram} alt="instagram logo" /></a>
           </div>
         </div>
       </div>
 
       {/* Bottom Note */}
-      <div className="mt-12 border-t border-[#cc2b03] pt-3 text-center text-sm text-black">
+      <div className="mt-12 pt-3 text-center text-sm text-black">
         &copy; 2025 Recharge X.
       </div>
     </footer>

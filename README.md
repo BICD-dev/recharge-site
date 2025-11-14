@@ -1,4 +1,4 @@
-⚡ RechargeX – Data, Airtime & Utility Payment Platform
+⚡ Datafy – Data, Airtime & Utility Payment Platform
 
 A full-stack web application that enables users to recharge airtime, buy data plans, and pay for utility bills seamlessly.
 Built with React + TypeScript on the frontend and Node.js + Express + PostgreSQL on the backend.
@@ -73,7 +73,7 @@ npm install
 
 Create a .env file
 PORT=5000
-DATABASE_URL=postgresql://user:password@localhost:5432/rechargex
+DATABASE_URL=postgresql://user:password@localhost:5432/Datafy
 JWT_SECRET=your_jwt_secret
 NODE_ENV=development
 

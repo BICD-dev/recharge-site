@@ -1,8 +1,9 @@
 import { useState } from "react";
 import type { LoginFormTypes } from "../../constants/types/authTypes";
 import { authUrl } from "../../constants/links/links";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<LoginFormTypes>({
     email: "",
     password: "",
@@ -34,6 +35,8 @@ const Login = () => {
         })
         const result = response.json();
         console.log(result)
+        // navigate to the personal page
+        navigate('/personal')
 
     } catch (error) {
         console.error(error)

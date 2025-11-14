@@ -1,8 +1,9 @@
 import { useState } from "react";
 import type { RegisterFormTypes } from "../../constants/types/authTypes";
 import { authUrl } from "../../constants/links/links";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
+  const navigate = useNavigate();
       const [formData, setFormData] = useState<RegisterFormTypes>({
         firstname:"",
         lastname:"",
@@ -38,6 +39,10 @@ const Register = () => {
             })
             const result = response.json();
             console.log(result)
+            // toast the result message
+
+            // navigate to the login page
+            navigate('/login')
     
         } catch (error) {
             console.error(error)
@@ -49,7 +54,7 @@ const Register = () => {
     >
       <div className="rounded-3xl border py-4 px-6 w-[90%] md:w-fit bg-white h-fit ">
         <h1 className="text-2xl my-4 text-center font-bold uppercase">Register</h1>
-        <h2 className=" text-center my-4 ">Join RechargeX Community today!!</h2>
+        <h2 className=" text-center my-4 ">Join Datafy Community today!!</h2>
         <form
           onSubmit={handleSubmit}
           method="post"
