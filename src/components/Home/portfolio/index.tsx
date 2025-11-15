@@ -1,6 +1,5 @@
-'use client'
-import Image from 'next/image'
-import { portfolioData } from '@/app/api/data'
+
+import { portfolioData } from '../../../constants/crypto-price/data'
 import { motion } from 'framer-motion'
 
 const Portfolio = () => {
@@ -13,7 +12,7 @@ const Portfolio = () => {
             initial={{ y: '-100%', opacity: 0 }}
             transition={{ duration: 0.6 }}
             className='lg:-ml-32'>
-            <Image
+            <img
               src='/images/portfolio/img-portfolio.png'
               alt='Crypto Portfolio'
               width={780}
@@ -44,7 +43,7 @@ const Portfolio = () => {
                   <tr key={index} className='border-b border-dark_border/10'>
                     <td className='py-5'>
                       <div className='bg-primary/20 p-3 rounded-full w-fit'>
-                        <Image
+                        <img
                           src={item.image}
                           alt={item.title}
                           width={24}

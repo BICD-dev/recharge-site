@@ -1,20 +1,17 @@
 'use client'
 import {Link} from 'react-router-dom'
-import { usePathname } from 'next/navigation'
+import { useLocation } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { headerData } from '../Header/Navigation/menuData'
 import Logo from './Logo'
-import Image from 'next/image'
 import HeaderLink from '../Header/Navigation/HeaderLink'
 import MobileHeaderLink from '../Header/Navigation/MobileHeaderLink'
-import Signin from '@/components/Auth/SignIn'
-import SignUp from '@/components/Auth/SignUp'
-import { useTheme } from 'next-themes'
-import { Icon } from '@iconify/react/dist/iconify.js'
+// import { useTheme } from '../../../utils/hooks/useTheme'
 
 const Header: React.FC = () => {
-  const pathUrl = usePathname()
-  const { theme, setTheme } = useTheme()
+
+  const pathUrl = useLocation().pathname
+  // const { theme, setTheme } = useTheme()
 
   const [navbarOpen, setNavbarOpen] = useState(false)
   const [sticky, setSticky] = useState(false)
@@ -117,7 +114,7 @@ const Header: React.FC = () => {
             ))}
             <div className='mt-4 flex flex-col gap-4 w-full'>
               <Link
-                to='#'
+                to='/login'
                 className='bg-transparent border border-primary text-primary px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white'
                 onClick={() => {
                   setIsSignInOpen(true)
@@ -126,7 +123,7 @@ const Header: React.FC = () => {
                 Sign In
               </Link>
               <Link
-                to='#'
+                to='/register'
                 className='bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700'
                 onClick={() => {
                   setIsSignUpOpen(true)

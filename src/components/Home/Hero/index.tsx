@@ -1,13 +1,29 @@
 'use client'
 import {Link} from 'react-router-dom'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import BuyCrypto from './buy-form'
 import SellCrypto from './sell-form'
 import CardSlider from './slider'
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { Icon } from '@iconify/react/dist/iconify.js'
 import BrandLogo from '../BrandLogo'
+
+/**
+ * Lightweight local Icon replacement to avoid adding @iconify/react dependency.
+ * Accepts className so it can be styled with the same Tailwind classes used in this file.
+ * Also accepts an optional `icon` prop for compatibility with existing usage (ignored locally).
+ */
+const Icon = ({ className = '', icon }: { className?: string; icon?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    aria-hidden="true"
+  >
+    {/* simple generic icon (info/exclamation style) used as a drop-in */}
+    <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm1 14.5h-2v-2h2v2zm0-4.5h-2V7h2v5z" />
+  </svg>
+)
 
 const Hero = () => {
   const [isBuying, setIsBuyingOpen] = useState(false)
@@ -74,7 +90,7 @@ const Hero = () => {
               <Link to={"/#work"}
                 className='bg-primary hover:bg-primary/80 flex items-center gap-2 border border-primary rounded-lg font-semibold text-darkmode py-3 px-7 cursor-pointer'>
                 Explore More
-                <Image src={"/images/icons/icon-arrow.svg"} alt='arrow-icon' width={20} height={20}/>
+                <img src={"/images/icons/icon-arrow.svg"} alt='arrow-icon' width={20} height={20}/>
               </Link>
             </div>
           </motion.div>
@@ -82,7 +98,7 @@ const Hero = () => {
             {...rightAnimation}
             className=''>
             <div className='w-full h-full'>
-              <Image
+              <img
                 src='/images/hero/hero-banner-img.png'
                 alt='Banner'
                 width={584}

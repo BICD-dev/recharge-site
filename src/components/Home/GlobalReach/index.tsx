@@ -1,4 +1,4 @@
-"use client";
+;
 import { GlobalReachData } from "./data";
 import CountUp from 'react-countup'
 import { useInView } from 'react-intersection-observer';

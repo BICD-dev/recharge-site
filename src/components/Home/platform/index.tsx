@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import {Link} from 'react-router-dom'
 
 const Platform = () => {
@@ -21,7 +20,7 @@ const Platform = () => {
                 to='/signup'
                 className='flex items-center gap-2.5 text-darkmode bg-primary hover:bg-primary/80 border border-primary py-3 px-5 rounded-lg sm:text-21 text-18 font-medium'>
                 Get Started
-                <Image src={"/images/icons/icon-arrow.svg"} alt="icon" width={20} height={20} />
+                <img src={"/images/icons/icon-arrow.svg"} alt="icon" width={20} height={20} />
               </Link>
             </div>
           </div>

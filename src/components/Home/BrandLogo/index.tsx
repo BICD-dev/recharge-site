@@ -1,7 +1,6 @@
-'use client';
+
 import Slider from 'react-infinite-logo-slider';
 import { brandList } from './data';
-import Image from 'next/image';
 
 function BrandLogo() {
     return (
@@ -14,23 +13,6 @@ function BrandLogo() {
                                 Trusted by top <span className='text-primary'>service providers</span>
                             </p>
                         </div>
-
-                        {/* <div className="py-3 Xsm:py-7">
-                            <Slider
-                                width="200px"
-                                duration={20}
-                                pauseOnHover={true}
-                                blurBorders={false}
-                            >
-                                {brandList.map((items, index) => (
-                                    <Slider.Slide>
-                                        <div key={index} className='mr-10 w-full h-full flex items-center'>
-                                            <Image src={items?.image} alt="logo" width={135} height={35} className='w-full h-full ' />
-                                        </div>
-                                    </Slider.Slide>
-                                ))}
-                            </Slider>
-                        </div> */}
                          <div className="py-3 Xsm:py-7">
                             <Slider
                                 width="200px"
@@ -41,15 +23,15 @@ function BrandLogo() {
                                 {brandList.map((items, index) => (
                                     <Slider.Slide key={index}>
                                         <div className="relative mr-10 flex items-center justify-center w-[180px] h-[80px]">
-                                            <Image
+                                        <div className="relative mr-10 flex items-center justify-center w-[180px] h-[80px]">
+                                            <img
                                             src={items?.image}
                                             alt="logo"
-                                            fill
-                                            className="object-contain"
+                                            className="object-contain w-full h-full"
                                             />
                                         </div>
+                                        </div>
                                     </Slider.Slide>
-
                                 ))}
                             </Slider>
                         </div>

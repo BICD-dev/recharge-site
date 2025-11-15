@@ -1,4 +1,8 @@
-import { HeaderItem } from "@/types/menu";
+// Local HeaderItem type to avoid missing '@/types/menu' module
+type HeaderItem = {
+  label: string;
+  to: string;
+};
 
 export const headerData: HeaderItem[] = [
   { label: "Features", to: "/#work" },

@@ -1,5 +1,4 @@
-'use client'
-import Image from 'next/image'
+
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 
@@ -55,7 +54,7 @@ const services = [
               {services.map((service, index) => (
                 <div key={index} className='flex items-center gap-5'>
                   <div className='p-3 bg-light_grey/30 rounded-full'>
-                    <Image
+                    <img
                       src={service.icon}
                       alt={`${service.text} icon`}
                       width={25}
@@ -69,7 +68,7 @@ const services = [
           </motion.div>
           <motion.div {...TopAnimation} className='lg:col-span-5 col-span-12'>
             <div className='2xl:-mr-40 mt-9 flex justify-center'>
-              <Image
+              <img
                 src='/images/work/img-work-with-us.png'
                 alt='image'
                 width={600}

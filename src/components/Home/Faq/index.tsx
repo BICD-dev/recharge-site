@@ -1,6 +1,4 @@
-// components/Faq.js
-'use client';
-import Image from 'next/image';
+
 import React, { useState } from 'react';// Optional: install lucide-react icons
 
 const faqData = [
@@ -32,9 +30,9 @@ const faqData = [
 
 
 const Faq = () => {
-    const [openIndex, setOpenIndex] = useState(null);
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-    const toggleFAQ = (index: any) => {
+    const toggleFAQ = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
     };
 
@@ -56,7 +54,7 @@ const Faq = () => {
                             >
                                 <div className="flex justify-between items-center">
                                     <h3 className="text-lg font-medium">{item.question}</h3>
-                                    <Image
+                                    <img
                                         src={"/images/icons/plus-icon.svg"}
                                         alt='plus-icon'
                                         width={20}

@@ -1,8 +1,18 @@
-import { upgradeData } from '@/app/api/data'
-import Image from 'next/image'
-import { Icon } from '@iconify/react'
+import { upgradeData } from '../../../constants/crypto-price/data'
 
 const Upgrade = () => {
+  const Icon = ({ className = '', icon }: { className?: string; icon?: string, width:string, height:string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    aria-hidden="true"
+  >
+    {/* simple generic icon (info/exclamation style) used as a drop-in */}
+    <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm1 14.5h-2v-2h2v2zm0-4.5h-2V7h2v5z" />
+  </svg>
+)
   return (
     <section className='py-20' id='upgrade'>
       <div className='container px-4'>
@@ -35,7 +45,7 @@ const Upgrade = () => {
           </div>
           <div>
             <div className='ml-0 lg:ml-7'>
-              <Image
+              <img
                 src='/images/upgrade/img-upgrade.png'
                 alt='image'
                 width={625}

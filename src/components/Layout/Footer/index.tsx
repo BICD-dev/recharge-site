@@ -1,12 +1,22 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import {Link} from 'react-router-dom'
 import { headerData } from '../Header/Navigation/menuData'
-import { footerlabels } from '@/app/api/data'
-import Image from 'next/image'
-import { Icon } from '@iconify/react'
+import { footerlabels } from '../../../constants/data/Data'
 import Logo from '../Header/Logo'
 
 const Footer: FC = () => {
+  const Icon = ({ className = '', icon }: { className?: string; icon?: string, width:string, height:string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    aria-hidden="true"
+  >
+    {/* simple generic icon (info/exclamation style) used as a drop-in */}
+    <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm1 14.5h-2v-2h2v2zm0-4.5h-2V7h2v5z" />
+  </svg>
+)
   return (
     <footer className='pt-16 bg-darkmode'>
       <div className='container px-4'>
@@ -72,8 +82,8 @@ const Footer: FC = () => {
           <div className='lg:col-span-3 md:col-span-4 col-span-6'>
             <h3 className='text-white text-24 font-medium mb-4'>Download app</h3>
             <div className='flex flex-col gap-4'>
-              <Link to={"https://www.google.com/"}><Image src={"/images/footer/app-store-bedge.svg"} alt='play-store-bedge' width={126} height={23} /></Link>
-              <Link to={"https://www.apple.com/"}><Image src={"/images/footer/app-store.svg"} alt='play-store-bedge' width={126} height={23} /></Link>
+              <Link to={"https://www.google.com/"}><img src={"/images/footer/app-store-bedge.svg"} alt='play-store-bedge' width={126} height={23} /></Link>
+              <Link to={"https://www.apple.com/"}><img src={"/images/footer/app-store.svg"} alt='play-store-bedge' width={126} height={23} /></Link>
             </div>
           </div>
         </div>

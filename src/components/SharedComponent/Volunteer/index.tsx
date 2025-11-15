@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 const Volunteer = () => {
   return (
     <section className='py-28 bg-volunteer-bg bg-no-repeat bg-cover'>
-      <div className='container px-4 mx-auto lg:max-w-(--breakpoint-xl) px-4'>
+      <div className='container mx-auto lg:max-w-(--breakpoint-xl) px-4'>
         <div className='text-center'>
           <h2 className='text-30 font-medium text-white mb-6'>
             Become a Volunteer

@@ -3,8 +3,7 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { pricedeta } from '@/app/api/data';
-import Image from 'next/image';
+import { pricedeta } from '../../../constants/crypto-price/data';
 import { useEffect, useState } from 'react';
 
 const CardSlider = () => {
@@ -72,7 +71,7 @@ const CardSlider = () => {
             <div className='px-5 py-6 bg-dark_grey/80 rounded-xl'>
               <div className='flex flex-col items-center gap-5'>
                 <div className={`${item.background} ${item.padding} rounded-full`}>
-                  <Image
+                  <img
                     src={item.icon}
                     alt={`${item.title} icon`}
                     width={item.width}

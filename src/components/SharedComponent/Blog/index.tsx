@@ -1,56 +1,68 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import { Icon } from '@iconify/react'
-import BlogCard from './blogCard'
-import { getAllPosts } from '@/utils/markdown'
+// import React from 'react'
+// import {Link} from 'react-router-dom'
+// import { Icon } from '@iconify/react'
+// import BlogCard from './blogCard'
+// // import { getAllPosts } from '@/utils/markdown'
 
-const Blog: React.FC = () => {
-  const posts = getAllPosts([
-    'title',
-    'date',
-    'excerpt',
-    'coverImage',
-    'slug',
-  ]).slice(0, 3)
+// const Blog: React.FC = () => {
+//     const Icon = ({ className = '', icon }: { className?: string; icon?: string, width:string, height:string }) => (
+//   <svg
+//     xmlns="http://www.w3.org/2000/svg"
+//     viewBox="0 0 24 24"
+//     fill="currentColor"
+//     className={className}
+//     aria-hidden="true"
+//   >
+//     {/* simple generic icon (info/exclamation style) used as a drop-in */}
+//     <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm1 14.5h-2v-2h2v2zm0-4.5h-2V7h2v5z" />
+//   </svg>
+// )
+//   const posts = getAllPosts([
+//     'title',
+//     'date',
+//     'excerpt',
+//     'coverImage',
+//     'slug',
+//   ]).slice(0, 3)
 
-  return (
-    <section className='flex flex-wrap justify-center py-24 ' id='blog'>
-      <div className='container px-4'>
-        <div className='flex items-baseline justify-between flex-wrap'>
-          <h2
-            className='sm:mb-11 mb-3 text-36 font-bold text-midnight_text dark:text-white'
-            data-aos='fade-right'
-            data-aos-delay='200'
-            data-aos-duration='1000'>
-            Latest blog & news
-          </h2>
-          <Link
-            to='#'
-            className='flex items-center gap-3 text-17 text-midnight_text dark:text-white dark:hover:text-primary font-medium hover:text-primary sm:pb-0 pb-3'
-            data-aos='fade-left'
-            data-aos-delay='200'
-            data-aos-duration='1000'>
-            View More
-            <span>
-              <Icon icon='solar:arrow-right-outline' width='30' height='30' />
-            </span>
-          </Link>
-        </div>
-        <div className='grid grid-cols-12 gap-7'>
-          {posts.map((blog, i) => (
-            <div
-              key={i}
-              className='w-full md:col-span-4 col-span-6'
-              data-aos='fade-up'
-              data-aos-delay='200'
-              data-aos-duration='1000'>
-              <BlogCard blog={blog} />
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+//   return (
+//     <section className='flex flex-wrap justify-center py-24 ' id='blog'>
+//       <div className='container px-4'>
+//         <div className='flex items-baseline justify-between flex-wrap'>
+//           <h2
+//             className='sm:mb-11 mb-3 text-36 font-bold text-midnight_text dark:text-white'
+//             data-aos='fade-right'
+//             data-aos-delay='200'
+//             data-aos-duration='1000'>
+//             Latest blog & news
+//           </h2>
+//           <Link
+//             to='#'
+//             className='flex items-center gap-3 text-17 text-midnight_text dark:text-white dark:hover:text-primary font-medium hover:text-primary sm:pb-0 pb-3'
+//             data-aos='fade-left'
+//             data-aos-delay='200'
+//             data-aos-duration='1000'>
+//             View More
+//             <span>
+//               <Icon icon='solar:arrow-right-outline' width='30' height='30' />
+//             </span>
+//           </Link>
+//         </div>
+//         <div className='grid grid-cols-12 gap-7'>
+//           {posts.map((blog, i) => (
+//             <div
+//               key={i}
+//               className='w-full md:col-span-4 col-span-6'
+//               data-aos='fade-up'
+//               data-aos-delay='200'
+//               data-aos-duration='1000'>
+//               <BlogCard blog={blog} />
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </section>
+//   )
+// }
 
-export default Blog
+// export default Blog

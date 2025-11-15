@@ -1,6 +1,5 @@
-'use client'
-import Image from 'next/image'
-import { timelineData } from '@/app/api/data'
+
+import { timelineData } from '../../../constants/crypto-price/data'
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 
@@ -36,7 +35,7 @@ const TimeLine = () => {
             transition={{ duration: 0.6 }}>
             <div className='md:block hidden relative'>
               <div>
-                <Image
+                <img
                   src='/images/timeline/img-timeline.png'
                   alt='image'
                   width={1220}
@@ -52,7 +51,7 @@ const TimeLine = () => {
                   </p>
                 </div>
                 <div className='bg-light_grey/45 backdrop-blur-xs px-6 py-2 h-fit rounded-full'>
-                  <Image
+                  <img
                     src='/images/solution/solution-icon-1.svg'
                     alt='Planning'
                     width={44}
@@ -63,7 +62,7 @@ const TimeLine = () => {
               </div>
               <div className='absolute lg:top-40 top-36 lg:right-0 -right-20 w-72 flex items-center gap-6'>
                 <div className='bg-light_grey/45 backdrop-blur-xs p-6 h-fit rounded-full'>
-                  <Image
+                  <img
                     src='/images/solution/solution-icon-2.svg'
                     alt='Refinement'
                     width={44}
@@ -85,7 +84,7 @@ const TimeLine = () => {
                   </p>
                 </div>
                 <div className='bg-light_grey/45 backdrop-blur-xs px-6 py-2 h-fit rounded-full'>
-                  <Image
+                  <img
                     src='/images/solution/solution-icon-3.svg'
                     alt='Prototype'
                     width={44}
@@ -96,7 +95,7 @@ const TimeLine = () => {
               </div>
               <div className='absolute lg:bottom-48 bottom-36 lg:right-0 -right-20 w-72 flex items-center gap-6'>
                 <div className='bg-light_grey/45 backdrop-blur-xs px-6 py-2 h-fit rounded-full'>
-                  <Image
+                  <img
                     src='/images/solution/solution-icon-4.svg'
                     alt='Scale and support'
                     width={44}
@@ -118,7 +117,7 @@ const TimeLine = () => {
               {timelineData.map((item, index) => (
                 <div key={index} className='flex items-center gap-6'>
                   <div className='bg-light_grey/45 p-6 rounded-full'>
-                    <Image
+                    <img
                       src={item.icon}
                       alt={item.title}
                       width={44}

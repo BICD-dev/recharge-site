@@ -1,21 +1,18 @@
-"use client";
+;
 import { useState } from "react";
-import {Link} from "react-router-dom";
-import { HeaderItem } from "../../../../types/menu";
-import { usePathname } from "next/navigation";
-import ThemeToggler from '@/components/Layout/Header/ThemeToggler';
+import { Link, useLocation } from "react-router-dom";
+import type { HeaderItem } from "../../../../constants/types/menu";
+import ThemeToggler from '../ThemeToggler';
 
 const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
   const [submenuOpen, setSubmenuOpen] = useState(false);
-  const path = usePathname();
+  const path = useLocation().pathname;
   const handleMouseEnter = () => {
-    if (item.submenu) {
       setSubmenuOpen(true);
     }
-  };
-  const handleMouseLeave = () => {
+    const handleMouseLeave = () => {
     setSubmenuOpen(false);
-  };
+  };  
 
   return (
     <div
