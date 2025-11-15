@@ -1,45 +1,43 @@
-
-import Slider from 'react-infinite-logo-slider';
-import { brandList } from './data';
+import Marquee from "react-fast-marquee";
+import { brandList } from "./data";
 
 function BrandLogo() {
-    return (
-        <section>
-            <div className="2xl:py-20 py-11">
-                <div className="container">
-                    <div className="gap-4">
-                        <div className="flex justify-center text-center py-4 relative">
-                            <p className="text-white font-medium">
-                                Trusted by top <span className='text-primary'>service providers</span>
-                            </p>
-                        </div>
-                         <div className="py-3 Xsm:py-7">
-                            <Slider
-                                width="200px"
-                                duration={20}
-                                pauseOnHover={true}
-                                blurBorders={false}
-                            >
-                                {brandList.map((items, index) => (
-                                    <Slider.Slide key={index}>
-                                        <div className="relative mr-10 flex items-center justify-center w-[180px] h-[80px]">
-                                        <div className="relative mr-10 flex items-center justify-center w-[180px] h-[80px]">
-                                            <img
-                                            src={items?.image}
-                                            alt="logo"
-                                            className="object-contain w-full h-full"
-                                            />
-                                        </div>
-                                        </div>
-                                    </Slider.Slide>
-                                ))}
-                            </Slider>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <section>
+      <div className="2xl:py-20 py-11">
+        <div className="container">
+          <div className="gap-4">
+            <div className="flex justify-center text-center py-4 relative">
+              <p className="text-white font-medium">
+                Trusted by top <span className="text-primary">service providers</span>
+              </p>
             </div>
-        </section >
-    );
+
+            <div className="py-3 Xsm:py-7">
+              <Marquee
+                speed={40}
+                pauseOnHover={true}
+                gradient={false}
+              >
+                {brandList.map((items, index) => (
+                  <div
+                    key={index}
+                    className="relative mr-10 flex items-center justify-center w-[180px] h-[80px]"
+                  >
+                    <img
+                      src={items?.image}
+                      alt="logo"
+                      className="object-contain w-full h-full"
+                    />
+                  </div>
+                ))}
+              </Marquee>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default BrandLogo;

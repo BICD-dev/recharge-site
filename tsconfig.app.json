@@ -25,5 +25,5 @@
     "noUncheckedSideEffectImports": true
   },
   "include": ["src"],
-  "composite": true
+  "exclude": ["node_modules", "build"]
 }
