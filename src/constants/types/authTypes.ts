@@ -7,7 +7,7 @@ export interface RegisterFormTypes {
     firstname:string,
     lastname:string,
     email:string,
-    phone:number,
+    phone:string,
     password:string,
     conf_password:string
 }
