@@ -7,7 +7,10 @@ import { ThemeProvider } from './utils/providers/ThemeProvider.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Router>
-      <ThemeProvider>
+      <ThemeProvider
+          attribute='class'
+          enableSystem={true}
+          defaultTheme='light'>
         <App /> 
       </ThemeProvider>
     </Router>

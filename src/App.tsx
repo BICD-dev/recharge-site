@@ -1,11 +1,13 @@
 import './App.css'
 import {Toaster} from 'sonner'
 import {Route, Routes} from 'react-router-dom'
-import Navbar from './components/Navbar.tsx'
+// import Navbar from './components/Navbar.tsx'
+import Header from './components/Layout/Header/index.tsx'
 import Home from './pages/Home.tsx'
 import Personal from './pages/Personal.tsx'
 import About from './pages/About.tsx'
-import Footer from './components/Footer.tsx'
+// import Footer from './components/Footer.tsx'
+import Footer from './components/Layout/Footer/index.tsx'
 import Login from './pages/auth/Login.tsx'
 import Register from './pages/auth/Register.tsx'
 import Airtime from './pages/vtu/Airtime.tsx'
@@ -18,7 +20,7 @@ function App() {
   return (
     <div className="App poppins-regular">
        <Toaster position="top-right" />
-      <Navbar />
+      <Header />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/personal' element={<Personal />} />
