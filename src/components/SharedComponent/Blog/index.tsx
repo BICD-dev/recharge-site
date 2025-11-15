@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import {Link} from 'react-router-dom'
 import { Icon } from '@iconify/react'
 import BlogCard from './blogCard'
 import { getAllPosts } from '@/utils/markdown'
@@ -25,7 +25,7 @@ const Blog: React.FC = () => {
             Latest blog & news
           </h2>
           <Link
-            href='#'
+            to='#'
             className='flex items-center gap-3 text-17 text-midnight_text dark:text-white dark:hover:text-primary font-medium hover:text-primary sm:pb-0 pb-3'
             data-aos='fade-left'
             data-aos-delay='200'

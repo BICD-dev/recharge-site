@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import {Link} from "react-router-dom";
 import { HeaderItem } from "../../../../types/menu";
 import { usePathname } from "next/navigation";
 import ThemeToggler from '@/components/Layout/Header/ThemeToggler';
@@ -24,9 +24,9 @@ const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
       onMouseLeave={handleMouseLeave}
     >
       <Link
-        href={item.href}
+        to={item.to}
         className={`text-17 flex font-medium hover:text-primary capitalized  ${
-          path === item.href ? "text-primary " : " text-muted "
+          path === item.to ? "text-primary " : " text-muted "
         }`}
       >
         {item.label}
@@ -57,9 +57,9 @@ const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
           {item.submenu?.map((subItem, index) => (
             <Link
               key={index}
-              href={subItem.href}
+              to={subItem.to}
               className={`block px-4 py-2   ${
-                path === subItem.href
+                path === subItem.to
                   ? "bg-primary text-white"
                   : "text-black dark:text-white hover:bg-primary"
               }`}

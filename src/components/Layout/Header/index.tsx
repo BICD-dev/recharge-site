@@ -1,5 +1,5 @@
 'use client'
-import Link from 'next/link'
+import {Link} from 'react-router-dom'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { headerData } from '../Header/Navigation/menuData'
@@ -81,7 +81,7 @@ const Header: React.FC = () => {
               <HeaderLink key={index} item={item} />
             ))}
           </nav>
-          <Link href={"https://calendly.com/"} className='hidden lg:block text-black bg-primary/100 border border-primary hover:bg-primary/80 rounded-lg font-semibold py-2.5 px-5 z-50'>
+          <Link to={"https://calendly.com/"} className='hidden lg:block text-black bg-primary/100 border border-primary hover:bg-primary/80 rounded-lg font-semibold py-2.5 px-5 z-50'>
             Book a call
           </Link>
           <button
@@ -117,7 +117,7 @@ const Header: React.FC = () => {
             ))}
             <div className='mt-4 flex flex-col gap-4 w-full'>
               <Link
-                href='#'
+                to='#'
                 className='bg-transparent border border-primary text-primary px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white'
                 onClick={() => {
                   setIsSignInOpen(true)
@@ -126,7 +126,7 @@ const Header: React.FC = () => {
                 Sign In
               </Link>
               <Link
-                href='#'
+                to='#'
                 className='bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700'
                 onClick={() => {
                   setIsSignUpOpen(true)

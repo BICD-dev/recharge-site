@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import Loader from '@/components/Common/Loader'
-import Link from 'next/link'
+import {Link} from 'react-router-dom'
 import Image from 'next/image'
 
 const ResetPassword = ({ token }: { token: string }) => {
@@ -86,7 +86,7 @@ const ResetPassword = ({ token }: { token: string }) => {
               className='wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white px-8 py-14 text-center dark:bg-dark-2 sm:px-12 md:px-[60px]'
               data-wow-delay='.15s'>
               <div className='mb-10 text-center'>
-                <Link href='/' className='mx-auto inline-block max-w-[160px]'>
+                <Link to='/' className='mx-auto inline-block max-w-[160px]'>
                   <Image
                     src='/images/logo/logo.svg'
                     alt='logo'

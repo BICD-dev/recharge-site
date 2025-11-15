@@ -1,5 +1,5 @@
 'use client'
-import Link from 'next/link'
+import {Link} from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
 export const DocNavigation = () => {
@@ -42,7 +42,7 @@ export const DocNavigation = () => {
         return (
           <Link
             key={item.id}
-            href={`#${item.hash}`}
+            to={`#${item.hash}`}
             onClick={() => getNavItem(item.hash)}
             className={`py-2.5 hover:bg-primary/20 hover:text-primary dark:hover:text-primary xl:min-w-60 lg:min-w-52 min-w-full px-4 rounded-md text-base font-medium  ${
               item.hash === navItem

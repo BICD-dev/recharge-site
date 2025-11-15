@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import Link from 'next/link'
+import {Link} from 'react-router-dom'
 import { headerData } from '../Header/Navigation/menuData'
 import { footerlabels } from '@/app/api/data'
 import Image from 'next/image'
@@ -15,7 +15,7 @@ const Footer: FC = () => {
             <Logo />
             <p className='text-white/60'>Transform your payment and crypto business with Datafy, a powerful platform for utility payments, airtime, and blockchain services.</p>
             <div className='flex gap-6 items-center relative z-1'>
-              <Link href='https://www.facebook.com/' className='group'>
+              <Link to='https://www.facebook.com/' className='group'>
                 <Icon
                   icon='fa6-brands:facebook-f'
                   width='24'
@@ -23,7 +23,7 @@ const Footer: FC = () => {
                   className='text-white group-hover:text-primary'
                 />
               </Link>
-              <Link href='https://www.instagram.com/' className='group'>
+              <Link to='https://www.instagram.com/' className='group'>
                 <Icon
                   icon='fa6-brands:instagram'
                   width='24'
@@ -31,7 +31,7 @@ const Footer: FC = () => {
                   className='text-white group-hover:text-primary'
                 />
               </Link>
-              <Link href='https://www.twitter.com/' className='group'>
+              <Link to='https://www.twitter.com/' className='group'>
                 <Icon
                   icon='fa6-brands:x-twitter'
                   width='24'
@@ -47,7 +47,7 @@ const Footer: FC = () => {
               {headerData.map((item, index) => (
                 <li key={index} className='pb-4'>
                   <Link
-                    href={item.href}
+                    to={item.to}
                     className='text-white/60 hover:text-primary text-17'>
                     {item.label}
                   </Link>
@@ -61,7 +61,7 @@ const Footer: FC = () => {
               {footerlabels.map((item, index) => (
                 <li key={index} className='pb-4'>
                   <Link
-                    href={item.herf}
+                    to={item.to}
                     className='text-white/60 hover:text-primary text-17'>
                     {item.label}
                   </Link>
@@ -72,12 +72,12 @@ const Footer: FC = () => {
           <div className='lg:col-span-3 md:col-span-4 col-span-6'>
             <h3 className='text-white text-24 font-medium mb-4'>Download app</h3>
             <div className='flex flex-col gap-4'>
-              <Link href={"https://www.google.com/"}><Image src={"/images/footer/app-store-bedge.svg"} alt='play-store-bedge' width={126} height={23} /></Link>
-              <Link href={"https://www.apple.com/"}><Image src={"/images/footer/app-store.svg"} alt='play-store-bedge' width={126} height={23} /></Link>
+              <Link to={"https://www.google.com/"}><Image src={"/images/footer/app-store-bedge.svg"} alt='play-store-bedge' width={126} height={23} /></Link>
+              <Link to={"https://www.apple.com/"}><Image src={"/images/footer/app-store.svg"} alt='play-store-bedge' width={126} height={23} /></Link>
             </div>
           </div>
         </div>
-        {/* <p className='text-white/40 text-center py-8 border-t border-white/20'>Design & Develop by <Link className='hover:text-primary' href={"https://getnextjstemplates.com/"}>GetNextjsTemplates.com</Link></p> */}
+        {/* <p className='text-white/40 text-center py-8 border-t border-white/20'>Design & Develop by <Link className='hover:text-primary' to={"https://getnextjstemplates.com/"}>GetNextjsTemplates.com</Link></p> */}
       </div>
     </footer>
   )

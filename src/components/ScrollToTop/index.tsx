@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import {Link} from "react-router-dom";
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,7 +32,7 @@ export default function ScrollToTop() {
   return (
     <div className="fixed bottom-8 right-8 z-999">
       <div className="flex gap-2.5 items-center">
-        <Link href={"#"} className="hidden lg:block bg-primary hover:bg-primary/80 text-sm text-black font-medium px-4 py-3.5 leading-none rounded-lg text-nowrap">
+        <Link to={"#"} className="hidden lg:block bg-primary hover:bg-primary/80 text-sm text-black font-medium px-4 py-3.5 leading-none rounded-lg text-nowrap">
           Download Now
         </Link>
         {isVisible && (

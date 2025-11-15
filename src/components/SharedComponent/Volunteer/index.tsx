@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import {Link} from 'react-router-dom'
 
 const Volunteer = () => {
   return (
@@ -15,7 +15,7 @@ const Volunteer = () => {
           </p>
           <div className='flex justify-center '>
             <Link
-              href='#'
+              to='#'
               className='text-white bg-linear-to-r from-error to-warning px-7 py-5 hover:from-transparent hover:to-transparent border border-transparent hover:border-error hover:text-error rounded-sm'>
               Donate now
             </Link>

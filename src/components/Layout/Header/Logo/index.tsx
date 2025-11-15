@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
+import {Link} from "react-router-dom";
 
 const Logo: React.FC = () => {
   return (
-    <Link href="/">
+    <Link to="/">
       <Image
         src="/images/logo/logo8.png"
         alt="logo"

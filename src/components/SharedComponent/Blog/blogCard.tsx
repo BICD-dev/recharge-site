@@ -2,13 +2,13 @@ import React, { FC } from "react";
 import Image from "next/image";
 import { Blog } from "@/types/blog";
 import { format } from "date-fns";
-import Link from "next/link";
+import {Link} from "react-router-dom";
 
 const BlogCard = ({ blog }: { blog: Blog }) => {
     const { title, coverImage, excerpt, date, slug } = blog;
     return (
         <>
-            <Link href={`/blog/${slug}`} className="group mb-10 flex items-center gap-9">
+            <Link to={`/blog/${slug}`} className="group mb-10 flex items-center gap-9">
                 <div className="overflow-hidden rounded-lg">
                     <Image 
                         src={coverImage}
