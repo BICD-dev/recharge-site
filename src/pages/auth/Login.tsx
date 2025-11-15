@@ -1,7 +1,10 @@
 import { useState } from "react";
+import axios from "axios";
+import { toast } from "sonner";
 import type { LoginFormTypes } from "../../constants/types/authTypes";
 import { authUrl } from "../../constants/links/links";
 import { Link, useNavigate } from "react-router-dom";
+
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<LoginFormTypes>({
@@ -9,8 +12,7 @@ const Login = () => {
     password: "",
   });
 
-  // yup validation
-  // handle change function
+  // handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -19,27 +21,30 @@ const Login = () => {
     }));
   };
 
-  // handle submit function
+  // handle submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // login function
-    try {
-        const url = `${import.meta.env.VITE_API_URL}/${authUrl.loginUrl}`
-        const data= formData;
-        const response = await fetch(url,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(data)
-        })
-        const result = response.json();
-        console.log(result)
-        // navigate to the personal page
-        navigate('/personal')
 
+    try {
+      const url = `${import.meta.env.VITE_API_URL}/${authUrl.loginUrl}`;
+      
+      const response = await axios.post(url, formData);
+
+      toast.success("Login successful!");
+
+      console.log("Login response:", response.data);
+
+      // Redirect after success
+      navigate("/personal");
     } catch (error) {
-        console.error(error)
+      console.error(error);
+
+      // Display meaningful errors
+      // if (error.response) {
+      //   toast.error(error.response.data.message || "Invalid credentials");
+      // } else {
+      //   toast.error("Network error. Please try again.");
+      // }
     }
   };
   return (

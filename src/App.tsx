@@ -16,7 +16,7 @@ import Utility from './pages/vtu/Utility.tsx'
 function App() {
 
   return (
-    <div className="App">
+    <div className="App poppins-regular">
        <Toaster position="top-right" />
       <Navbar />
         <Routes>

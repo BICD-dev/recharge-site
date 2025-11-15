@@ -1,4 +1,27 @@
-const Home = () => {
+import { useNavigate } from "react-router-dom";
+import electricity from '../assets/feature-img/electricity.png'
+import cable from '../assets/feature-img/cable.png'
+import education from '../assets/feature-img/education.png'
+import internet from '../assets/feature-img/internet.png'
+import airtime from '../assets/feature-img/airtime.png'
+const Personal = () => {
+    const navigate = useNavigate()
+    const featureData = [{
+        imgSrc: airtime,
+        title:"Airtime"
+    },{
+        imgSrc:internet,
+        title:"Data"
+    },{
+        imgSrc:electricity,
+        title:"Electricity"
+    },{
+        imgSrc:education,
+        title:"Education"
+    },{
+        imgSrc:cable,
+        title:"Cable tv"
+    }]
     return ( 
         <div>
             {/* section 1 */}
@@ -8,7 +31,20 @@ const Home = () => {
                     <h1 className="text-gray-700 text-[1.2rem] font-semibold my-2">
                     Welcome {``}, What are you <b className="primary font-semibold ">purchasing today?</b>
                 </h1>
-
+                <div className="flex justify-between" >
+                    {featureData.map((item,index)=>{
+                        return(
+                            <section key={index} className="flex flex-col items-center cursor-pointer hover:scale-110" onClick={()=>navigate("/airtime")}>
+                        {/* <span className="w-5 h-5 border-2 rounded-sm px-4 py-2 m-2" > */}
+                            <img src={item.imgSrc} alt={item.title} className="w-12 h-11" />
+                        {/* </span> */}
+                        <p className="mt-2 poppins-regular">{item.title}</p>
+                    </section>
+                        )
+                    })}
+                    
+                    
+                </div>
                 <input type="text" className=" py-3 px-7 border border-gray-400 rounded-sm w-full " placeholder="Search for Service" />
 
                 <section className="border primary rounded-sm my-4 py-11 px-3 text-[0.8rem]">
@@ -39,4 +75,4 @@ const Home = () => {
      );
 }
  
-export default Home;
+export default Personal;
