@@ -1,7 +1,7 @@
 ;
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import type { HeaderItem } from "../../../../constants/types/menu";
+import type { HeaderItem } from "../../../../../constants/types/menu";
 import ThemeToggler from '../ThemeToggler';
 
 const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {

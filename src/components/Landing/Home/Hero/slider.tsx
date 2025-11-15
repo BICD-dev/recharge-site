@@ -3,7 +3,7 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { pricedeta } from '../../../constants/crypto-price/data';
+import { pricedeta } from '../../../../constants/crypto-price/data';
 import { useEffect, useState } from 'react';
 
 const CardSlider = () => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {Link} from "react-router-dom";
-import type { HeaderItem } from "../../../../constants/types/menu";
+import type { HeaderItem } from "../../../../../constants/types/menu";
 
 const MobileHeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
   const [submenuOpen, setSubmenuOpen] = useState(false);

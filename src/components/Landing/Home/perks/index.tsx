@@ -1,4 +1,4 @@
-import { perksData } from '../../../constants/crypto-price/data'
+import { perksData } from '../../../../constants/crypto-price/data'
 
 const Perks = () => {
   return (

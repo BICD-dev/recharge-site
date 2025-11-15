@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import {Link} from 'react-router-dom'
 import { headerData } from '../Header/Navigation/menuData'
-import { footerlabels } from '../../../constants/data/Data'
+import { footerlabels } from '../../../../constants/data/Data'
 import Logo from '../Header/Logo'
 
 const Footer: FC = () => {

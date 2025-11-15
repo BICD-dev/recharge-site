@@ -1,5 +1,5 @@
 
-import { timelineData } from '../../../constants/crypto-price/data'
+import { timelineData } from '../../../../constants/crypto-price/data'
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 

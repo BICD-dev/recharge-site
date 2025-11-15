@@ -2,10 +2,10 @@
 import {Link} from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
-import { headerData } from '../Header/Navigation/menuData'
+import { headerData } from './Navigation/menuData'
 import Logo from './Logo'
-import HeaderLink from '../Header/Navigation/HeaderLink'
-import MobileHeaderLink from '../Header/Navigation/MobileHeaderLink'
+import HeaderLink from './Navigation/HeaderLink'
+import MobileHeaderLink from './Navigation/MobileHeaderLink'
 // import { useTheme } from '../../../utils/hooks/useTheme'
 
 const Header: React.FC = () => {
@@ -78,9 +78,18 @@ const Header: React.FC = () => {
               <HeaderLink key={index} item={item} />
             ))}
           </nav>
-          <Link to={"https://calendly.com/"} className='hidden lg:block text-black bg-primary/100 border border-primary hover:bg-primary/80 rounded-lg font-semibold py-2.5 px-5 z-50'>
-            Book a call
-          </Link>
+          <div className="hidden lg:flex items-center justify-between w-1/4">
+                        <Link to="/login">
+                            <button className="bg-white px-10 py-2 rounded-lg cursor-pointer transition primary capitalize border">
+                            Login
+                            </button>
+                        </Link>
+                        <Link to="/register">
+                            <button className="text-black bg-primary/100 border border-primary hover:bg-primary/80 px-10 py-2 rounded-lg cursor-pointer  transition  capitalize">
+                            sign up
+                            </button>
+                        </Link>
+                    </div>
           <button
             onClick={() => setNavbarOpen(!navbarOpen)}
             className='block lg:hidden p-2 rounded-lg'

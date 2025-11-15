@@ -1,4 +1,4 @@
-import { upgradeData } from '../../../constants/crypto-price/data'
+import { upgradeData } from '../../../../constants/crypto-price/data'
 
 const Upgrade = () => {
   const Icon = ({ className = '', icon }: { className?: string; icon?: string, width:string, height:string }) => (

@@ -1,5 +1,5 @@
 
-import { portfolioData } from '../../../constants/crypto-price/data'
+import { portfolioData } from '../../../../constants/crypto-price/data'
 import { motion } from 'framer-motion'
 
 const Portfolio = () => {
@@ -46,9 +46,11 @@ const Portfolio = () => {
                         <img
                           src={item.image}
                           alt={item.title}
-                          width={24}
+                          width={50}
                           height={24}
+                          className='fill-black stroke-black'
                         />
+                        
                       </div>
                     </td>
                     <td className='py-5'>

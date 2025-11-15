@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import Logo from '../../Layout/Header/Logo'
-import { CryptoData } from '../../../constants/crypto-price/data' // Adjust import as necessary
+import { CryptoData } from '../../../../constants/crypto-price/data' // Adjust import as necessary
 
 interface Crypto {
   name: string
