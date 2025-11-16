@@ -54,11 +54,12 @@ export interface ElectricityPostpaid {
     phone:number,
 }
 
-export interface Education_Waec_Check {
+export interface Education_Waec_PinCheck {
     request_id:string,
     serviceID:string,
-    variation_code:string,
+    variation_code:string, 
     quantity?:number,
+    amount?:number, //use amount to validate if the user can pay for the service. done in the backend though
     phone:number,
 }
 
