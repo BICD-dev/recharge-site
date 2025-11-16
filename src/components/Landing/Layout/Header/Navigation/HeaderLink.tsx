@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import type { HeaderItem } from "../../../../../constants/types/menu";
+import { HashLink } from "react-router-hash-link";
 import ThemeToggler from '../ThemeToggler';
 
 const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
@@ -52,7 +53,7 @@ const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
           data-aos-duration="500"
         >
           {item.submenu?.map((subItem, index) => (
-            <Link
+            <HashLink
               key={index}
               to={subItem.to}
               className={`block px-4 py-2   ${
@@ -62,7 +63,7 @@ const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
               }`}
             >
               {subItem.label}
-            </Link>
+            </HashLink>
           ))}
         </div>
       )}

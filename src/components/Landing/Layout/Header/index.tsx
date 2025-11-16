@@ -1,148 +1,117 @@
 'use client'
-import {Link} from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
-import { headerData } from './Navigation/menuData'
+import { Link, useLocation } from 'react-router-dom'
+import { useState } from 'react'
 import Logo from './Logo'
 import HeaderLink from './Navigation/HeaderLink'
 import MobileHeaderLink from './Navigation/MobileHeaderLink'
-// import { useTheme } from '../../../utils/hooks/useTheme'
+import { headerData } from './Navigation/menuData'
 
 const Header: React.FC = () => {
-
   const pathUrl = useLocation().pathname
-  // const { theme, setTheme } = useTheme()
+  const isAuthPage = pathUrl === "/login" || pathUrl === "/register"
 
   const [navbarOpen, setNavbarOpen] = useState(false)
-  const [sticky, setSticky] = useState(false)
-  const [isSignInOpen, setIsSignInOpen] = useState(false)
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false)
-
-  const navbarRef = useRef<HTMLDivElement>(null)
-  const signInRef = useRef<HTMLDivElement>(null)
-  const signUpRef = useRef<HTMLDivElement>(null)
-  const mobileMenuRef = useRef<HTMLDivElement>(null)
-
-  const handleScroll = () => {
-    setSticky(window.scrollY >= 80)
-  }
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      signInRef.current &&
-      !signInRef.current.contains(event.target as Node)
-    ) {
-      setIsSignInOpen(false)
-    }
-    if (
-      signUpRef.current &&
-      !signUpRef.current.contains(event.target as Node)
-    ) {
-      setIsSignUpOpen(false)
-    }
-    if (
-      mobileMenuRef.current &&
-      !mobileMenuRef.current.contains(event.target as Node) &&
-      navbarOpen
-    ) {
-      setNavbarOpen(false)
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [navbarOpen, isSignInOpen, isSignUpOpen])
-
-  useEffect(() => {
-    if (isSignInOpen || isSignUpOpen || navbarOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-  }, [isSignInOpen, isSignUpOpen, navbarOpen])
 
   return (
-    <header
-      className={`fixed top-0 z-40 w-full pb-5 transition-all duration-300 ${sticky ? ' shadow-lg bg-darkmode pt-5' : 'shadow-none pt-7'
-        }`}>
-      <div className='lg:py-0 py-2'>
-        <div className='container px-4 flex items-center justify-between'>
-          <Logo />
-          <nav className='hidden lg:flex grow items-center gap-8 justify-center'>
-            {headerData.map((item, index) => (
-              <HeaderLink key={index} item={item} />
-            ))}
-          </nav>
-          <div className="hidden lg:flex items-center justify-between w-1/4">
-                        <Link to="/login">
-                            <button className="bg-white px-10 py-2 rounded-lg cursor-pointer transition primary capitalize border">
-                            Login
-                            </button>
-                        </Link>
-                        <Link to="/register">
-                            <button className="text-black bg-primary/100 border border-primary hover:bg-primary/80 px-10 py-2 rounded-lg cursor-pointer  transition  capitalize">
-                            sign up
-                            </button>
-                        </Link>
-                    </div>
-          <button
-            onClick={() => setNavbarOpen(!navbarOpen)}
-            className='block lg:hidden p-2 rounded-lg'
-            aria-label='Toggle mobile menu'>
-            <span className='block w-6 h-0.5 bg-white'></span>
-            <span className='block w-6 h-0.5 bg-white mt-1.5'></span>
-            <span className='block w-6 h-0.5 bg-white mt-1.5'></span>
-          </button>
-        </div>
-        {navbarOpen && (
-          <div className='fixed top-0 left-0 w-full h-full bg-black/50 z-40' />
-        )}
-        <div
-          ref={mobileMenuRef}
-          className={`lg:hidden fixed top-0 right-0 h-full w-full bg-darkmode shadow-lg transform transition-transform duration-300 max-w-xs ${navbarOpen ? 'translate-x-0' : 'translate-x-full'
-            } z-50`}>
-          <div className='flex items-center justify-between p-4'>
-            <h2 className='text-lg font-bold text-midnight_text dark:text-midnight_text'>
-              <Logo />
-            </h2>
+    <header className={`fixed top-0 z-50 w-full transition-all bg-darkmode pt-3 pb-3`}>
+      <div className="container px-4 flex items-center justify-between">
 
-            {/*  */}
-            <button
-              onClick={() => setNavbarOpen(false)}
-              className="bg-[url('/images/closed.svg')] bg-no-repeat bg-contain w-5 h-5 absolute top-0 right-0 mr-8 mt-8 dark:invert"
-              aria-label='Close menu Modal'></button>
-          </div>
-          <nav className='flex flex-col items-start p-4'>
-            {headerData.map((item, index) => (
-              <MobileHeaderLink key={index} item={item} />
-            ))}
-            <div className='mt-4 flex flex-col gap-4 w-full'>
-              <Link
-                to='/login'
-                className='bg-transparent border border-primary text-primary px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white'
-                onClick={() => {
-                  setIsSignInOpen(true)
-                  setNavbarOpen(false)
-                }}>
-                Sign In
-              </Link>
-              <Link
-                to='/register'
-                className='bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700'
-                onClick={() => {
-                  setIsSignUpOpen(true)
-                  setNavbarOpen(false)
-                }}>
-                Sign Up
-              </Link>
-            </div>
-          </nav>
+        {/* LOGO */}
+        <div className={`${isAuthPage ? "text-gray-700" : "text-white"}`}>
+          <Logo />
         </div>
+
+        {/* DESKTOP NAV */}
+        <nav
+          className={`hidden lg:flex grow items-center gap-8 justify-center 
+          ${isAuthPage ? "text-gray-700" : "text-white"}`}>
+          {headerData.map((item, index) => (
+            <HeaderLink key={index} item={item} />
+          ))}
+        </nav>
+
+        {/* DESKTOP BUTTONS */}
+        <div className="hidden lg:flex items-center justify-between w-1/4">
+          <Link to="/login">
+            <button
+              className={`px-10 py-2 rounded-lg border capitalize transition 
+                ${isAuthPage
+                  ? "text-gray-700 bg-white border-gray-700"
+                  : "bg-white text-primary border"
+                }`}>
+              Login
+            </button>
+          </Link>
+
+          <Link to="/register">
+            <button
+              className={`px-10 py-2 rounded-lg capitalize transition border 
+                ${isAuthPage
+                  ? "text-white bg-primary border-primary"
+                  : "text-black bg-primary"
+                }`}>
+              Sign up
+            </button>
+          </Link>
+        </div>
+
+        {/* MOBILE MENU BUTTON */}
+        <button
+          onClick={() => setNavbarOpen(!navbarOpen)}
+          className="block lg:hidden p-2 rounded-lg"
+        >
+          <span className={`block w-6 h-0.5 ${isAuthPage ? "bg-gray-700" : "bg-white"}`}></span>
+          <span className={`block w-6 h-0.5 mt-1.5 ${isAuthPage ? "bg-gray-700" : "bg-white"}`}></span>
+          <span className={`block w-6 h-0.5 mt-1.5 ${isAuthPage ? "bg-gray-700" : "bg-white"}`}></span>
+        </button>
+      </div>
+
+      {/* OVERLAY */}
+      {navbarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40"
+          onClick={() => setNavbarOpen(false)}
+        />
+      )}
+
+      {/* MOBILE MENU */}
+      <div
+        className={`lg:hidden fixed top-0 right-0 h-full w-full max-w-xs 
+        bg-darkmode shadow-lg z-50 transform transition-transform duration-300 
+        ${navbarOpen ? "translate-x-0" : "translate-x-full"}`}>
+
+        <div className="flex items-center justify-between p-4">
+          <Logo />
+          <button
+            onClick={() => setNavbarOpen(false)}
+            className="w-5 h-5 bg-[url('/images/closed.svg')] bg-no-repeat bg-contain dark:invert"
+          />
+        </div>
+
+        <nav className="flex flex-col items-start p-4">
+          {headerData.map((item, index) => (
+            <MobileHeaderLink key={index} item={item}  />
+          ))}
+
+          {/* MOBILE AUTH BUTTONS */}
+          <div className="mt-4 flex flex-col gap-4 w-full">
+            <Link
+              to="/login"
+              onClick={() => setNavbarOpen(false)}
+              className="bg-transparent border border-primary text-primary px-4 py-2 rounded-lg"
+            >
+              Login
+            </Link>
+
+            <Link
+              to="/register"
+              onClick={() => setNavbarOpen(false)}
+              className="bg-primary text-white px-4 py-2 rounded-lg"
+            >
+              Sign up
+            </Link>
+          </div>
+        </nav>
       </div>
     </header>
   )

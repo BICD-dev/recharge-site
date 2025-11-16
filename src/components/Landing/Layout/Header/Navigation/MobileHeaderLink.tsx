@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Link} from "react-router-dom";
+import {HashLink} from "react-router-hash-link";
 import type { HeaderItem } from "../../../../../constants/types/menu";
 
 const MobileHeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
@@ -11,7 +11,7 @@ const MobileHeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
 
   return (
     <div className="relative w-full">
-      <Link
+      <HashLink
         to={item.to}
         onClick={item.submenu ? handleToggle : undefined}
         className="flex items-center justify-between w-full py-2 text-muted focus:outline-hidden"
@@ -34,17 +34,18 @@ const MobileHeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
             />
           </svg>
         )}
-      </Link>
+      </HashLink>
       {submenuOpen && item.submenu && (
         <div className="bg-white p-2 w-full">
           {item.submenu.map((subItem, index) => (
-            <Link
+            <HashLink
               key={index}
               to={subItem.to}
               className="block py-2 text-gray-500 hover:bg-gray-200"
+              onClick={handleToggle}
             >
               {subItem.label}
-            </Link>
+            </HashLink>
           ))}
         </div>
       )}
