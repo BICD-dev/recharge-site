@@ -14,15 +14,15 @@ import {
 } from "react-icons/md";
 
 const menuItems = [
-  { name: "Dashboard", icon: MdDashboard, path: "/" },
-  { name: "Airtime", icon: MdLocalPhone, path: "/airtime" },
-  { name: "Data", icon: MdDataUsage, path: "/data" },
-  { name: "Electricity", icon: MdDataUsage, path: "/electricity" },
-  { name: "Cable", icon: MdDataUsage, path: "/cable" },
-  { name: "WAEC", icon: MdDataUsage, path: "/waec" },
-  { name: "Wallet", icon: MdAccountBalanceWallet, path: "/wallet" },
-  { name: "Transactions", icon: MdReceipt, path: "/transactions" },
-  { name: "Profile", icon: MdPerson, path: "/profile" },
+  { name: "Dashboard", icon: MdDashboard, path: "/dashboard/personal" },
+  { name: "Airtime", icon: MdLocalPhone, path: "/dashboard/airtime" },
+  { name: "Data", icon: MdDataUsage, path: "/dashboard/data" },
+  { name: "Electricity", icon: MdDataUsage, path: "/dashboard/electricity" },
+  { name: "Cable", icon: MdDataUsage, path: "/dashboard/cable" },
+  { name: "WAEC", icon: MdDataUsage, path: "/dashboard/waec" },
+  { name: "Wallet", icon: MdAccountBalanceWallet, path: "/dashboard/wallet" },
+  { name: "Transactions", icon: MdReceipt, path: "/dashboard/transactions" },
+  { name: "Profile", icon: MdPerson, path: "/dashboard/profile" },
 ];
 
 const Sidebar = () => {
@@ -32,13 +32,22 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Mobile Hamburger */}
-      <div className="md:hidden flex items-center justify-between p-4 bg-white shadow">
-        <h1 className="text-primary font-bold text-lg">Menu</h1>
-        <button onClick={toggleSidebar}>
-          {isOpen ? <MdClose size={28} /> : <MdMenu size={28} />}
-        </button>
-      </div>
+<div className="md:hidden flex flex-col gap-5 bg-white px-4 py-3 shadow-sm border-b border-gray-100">
+  
+  <div className="flex items-center gap-2">
+    <img src="/images/logo/logo8.png" alt="brand_pic" width={40} height={40}/>
+    {/* <h1 className="text-gray-800 font-semibold text-lg">Datafy</h1> */}
+  </div>
+
+  <button
+    onClick={toggleSidebar}
+    className="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 active:scale-95 transition-all flex items-center justify-center"
+  >
+    {isOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
+  </button>
+</div>
+
+
 
       {/* Sidebar */}
       <div
@@ -46,16 +55,16 @@ const Sidebar = () => {
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 md:static transition-transform duration-300`}
       >
-        <div className="flex flex-col h-full justify-between">
+        <div className="flex flex-col h-screen justify-between">
           {/* Menu */}
-          <nav className="mt-8 flex-1">
+          <nav className="mt-8 flex-1 pt-10">
             {menuItems.map((item) => (
               <NavLink
                 key={item.name}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-6 py-3 text-primary hover:bg-primary hover:text-white transition-colors rounded-lg m-2 ${
-                    isActive ? "bg-primary text-white" : ""
+                  `flex items-center gap-3 px-6 py-3 hover:bg-primary hover:text-white transition-colors rounded-lg m-2 ${
+                    isActive ? "bg-primary text-white" : "text-gray-700"
                   }`
                 }
                 onClick={() => setIsOpen(false)} // Close sidebar on mobile
@@ -68,7 +77,7 @@ const Sidebar = () => {
 
           {/* Logout */}
           <button
-            className="flex items-center gap-3 px-6 py-3 text-primary hover:bg-red-500 hover:text-white transition-colors rounded-lg m-2 mb-6"
+            className="flex items-center gap-3 px-6 py-3 text-red-500 border border-red-500 hover:bg-red-500 hover:text-white transition-colors rounded-lg m-2 mb-6 cursor-pointer"
             onClick={() => {
               // TODO: Add logout logic
               console.log("Logout clicked");

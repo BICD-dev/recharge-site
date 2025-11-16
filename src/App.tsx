@@ -1,5 +1,5 @@
 import { Toaster } from "sonner";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 // Landing pages
 import Header from "./components/Landing/Layout/Header";
@@ -15,7 +15,7 @@ import Layout from "./components/Dashboard/Layout/Layout";
 import Airtime from "./pages/vtu/Airtime";
 import Data from "./pages/vtu/Data";
 import Electricity from "./pages/vtu/Electricity";
-import Utility from "./pages/vtu/Cable";
+import Cable from "./pages/vtu/Cable";
 import Waec from "./pages/vtu/Waec";
 
 import NotFound from "./components/NotFound";
@@ -39,13 +39,18 @@ function App() {
             </>
           }
         />
+        {/* automatic redirect to personal dashboard */}
+         <Route
+        path="/dashboard"
+        element={<Navigate to="/dashboard/personal" replace />}
+      />
         <Route
-          path="/personal"
+          path="/dashboard/personal"
           element={
             <>
-              <Header />
+              <Layout title="Dashboard">
               <Personal />
-              <Footer />
+              </Layout>
             </>
           }
         />
@@ -61,12 +66,17 @@ function App() {
         />
 
         {/* Auth pages */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={
+          <>
+          <Header />
+        <Login />
+        <Footer />
+        </> } />
         <Route path="/register" element={<Register />} />
 
         {/* Dashboard / VTU pages */}
         <Route
-          path="/airtime"
+          path="/dashboard/airtime"
           element={
             <Layout title="Airtime">
               <Airtime />
@@ -74,7 +84,7 @@ function App() {
           }
         />
         <Route
-          path="/data"
+          path="/dashboard/data"
           element={
             <Layout title="Data">
               <Data />
@@ -82,7 +92,7 @@ function App() {
           }
         />
         <Route
-          path="/electricity"
+          path="/dashboard/electricity"
           element={
             <Layout title="Electricity">
               <Electricity />
@@ -90,15 +100,15 @@ function App() {
           }
         />
         <Route
-          path="/utility"
+          path="/dashboard/cable"
           element={
-            <Layout title="Utility">
-              <Utility />
+            <Layout title="Cable">
+              <Cable />
             </Layout>
           }
         />
         <Route
-          path="/waec"
+          path="/dashboard/waec"
           element={
             <Layout title="WAEC">
               <Waec />
@@ -107,7 +117,16 @@ function App() {
         />
 
         {/* 404 */}
-        <Route path="*" element={<NotFound />} />
+        <Route
+          path="*"
+          element={
+            <>
+              <Header />
+              <NotFound />
+              <Footer />
+            </>
+          }
+        />
       </Routes>
     </div>
   );

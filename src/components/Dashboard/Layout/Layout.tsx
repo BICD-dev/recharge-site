@@ -9,7 +9,7 @@ export default function Layout({title, children }: { title: string; children: Re
 
       <div className="flex flex-col flex-1 bg-gray-50">
         <Topbar title={title} userName="Bright" />
-        <main className="p-6">{children}</main>
+        <main className="p-1 md:p-6">{children}</main>
       </div>
     </div>
   );
