@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useState } from "react";
-import axios from "axios";
 import { toast } from "sonner";
 import * as Yup from "yup";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import type { LoginFormTypes } from "../../constants/types/authTypes";
-import { authUrl } from "../../constants/links/links";
 import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../api/auth";
 
 // Yup validation schema
 const loginSchema = Yup.object().shape({
@@ -44,21 +45,12 @@ const Login = () => {
 
     try {
       await loginSchema.validate(formData, { abortEarly: false });
+      const response = await login(formData);
 
-      const url = `${import.meta.env.VITE_API_URL}/${authUrl.loginUrl}`;
-      const response = await axios.post(url, formData);
-
-      toast.success("Login successful!");
-
-      navigate("/personal");
-    } catch (error: any) {
-      if (error.name === "ValidationError") {
-        error.inner.forEach((err: any) => toast.error(err.message));
-      } else if (error.response) {
-        toast.error(error.response.data.message || "Invalid credentials");
-      } else {
+      
+      navigate("/dashboard/personal");
+    } catch (error:unknown) {
         toast.error("Network error. Please try again.");
-      }
     } finally {
       setLoading(false);
     }

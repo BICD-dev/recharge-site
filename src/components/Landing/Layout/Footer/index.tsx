@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import type { FC } from 'react'
 import {Link} from 'react-router-dom'
 import { headerData } from '../Header/Navigation/menuData'

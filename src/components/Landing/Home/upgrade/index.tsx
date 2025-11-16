@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { upgradeData } from '../../../../constants/crypto-price/data'
 
 const Upgrade = () => {

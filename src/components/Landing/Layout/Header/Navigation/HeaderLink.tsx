@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import type { HeaderItem } from "../../../../../constants/types/menu";
 import { HashLink } from "react-router-hash-link";
-import ThemeToggler from '../ThemeToggler';
+// import ThemeToggler from '../ThemeToggler';
 
 const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
   const [submenuOpen, setSubmenuOpen] = useState(false);

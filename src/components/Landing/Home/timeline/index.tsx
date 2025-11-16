@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 
 import { timelineData } from '../../../../constants/crypto-price/data'
 import { motion, useInView } from 'framer-motion'

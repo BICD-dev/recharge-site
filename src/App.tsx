@@ -12,14 +12,15 @@ import Register from "./pages/auth/Register";
 
 // Dashboard pages
 import Layout from "./components/Dashboard/Layout/Layout";
-import Airtime from "./pages/vtu/Airtime";
-import Data from "./pages/vtu/Data";
-import Electricity from "./pages/vtu/Electricity";
-import Cable from "./pages/vtu/Cable";
-import Waec from "./pages/vtu/Waec";
+import Airtime from "./pages/features/Airtime";
+import Data from "./pages/features/Data";
+import Electricity from "./pages/features/Electricity";
+import Cable from "./pages/features/Cable";
+import Waec from "./pages/features/Waec";
 
 import NotFound from "./components/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
+import Wallet from "./pages/features/Wallet";
 
 function App() {
   return (
@@ -115,6 +116,11 @@ function App() {
             </Layout>
           }
         />
+        <Route path="/dashboard/wallet" element={
+          <Layout title="Wallet">
+            <Wallet />
+          </Layout>
+        } />
 
         {/* 404 */}
         <Route

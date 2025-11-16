@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import Logo from '../../Layout/Header/Logo'
-// import { CryptoData } from '@/app/api/data' // Adjust import as necessary
+import { CryptoData } from '../../../../constants/crypto-price/data' // Adjust import as necessary
 
 interface Crypto {
   name: string
@@ -126,7 +126,7 @@ const BuyCrypto = () => {
           <p>${totalCost}</p>
         </div>
         <button className='text-darkmode font-medium text-18 bg-primary w-full border border-primary rounded-lg py-3 hover:text-primary hover:bg-transparent'>
-          Buy
+          {loading ? 'Processing...' : 'Buy '}
         </button>
       </form>
     </div>

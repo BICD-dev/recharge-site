@@ -1,4 +1,5 @@
-'use client'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {Link} from 'react-router-dom'
 import { motion } from 'framer-motion'
 import BuyCrypto from './buy-form'

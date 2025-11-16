@@ -1,5 +1,4 @@
 // Topbar.tsx
-import React from "react";
 import { MdNotifications } from "react-icons/md";
 
 interface TopbarProps {

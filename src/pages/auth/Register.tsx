@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useState } from "react";
-import axios from "axios";
 import { toast } from "sonner";
 import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
 import type { RegisterFormTypes } from "../../constants/types/authTypes";
-import { authUrl } from "../../constants/links/links";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { register } from "../../api/auth";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -45,29 +46,23 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    // i hvae to change the logic here... build the backend first
     try {
       await schema.validate(formData, { abortEarly: false });
 
       setLoading(true);
-      const url = `${import.meta.env.VITE_API_URL}/${authUrl.signupUrl}`;
-      const response = await axios.post(url, formData);
+      const response = await register(formData);
 
       toast.success("Registration successful!");
       console.log("Register response:", response.data);
 
       navigate("/login");
-    } catch (err: any) {
-      if (err.name === "ValidationError") {
-        err.inner.forEach((e: any) => toast.error(e.message));
-      } else if (err.response) {
-        toast.error(err.response.data.message || "Registration failed");
-      } else {
-        toast.error("Network error. Please try again.");
+    } catch (err) {
+          toast.error("Network error. Please try again.");
+        
+      } finally {
+        setLoading(false);
       }
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';// Optional: install lucide-react icons
+import { useState } from 'react';// Optional: install lucide-react icons
 
 const faqData = [
   {
