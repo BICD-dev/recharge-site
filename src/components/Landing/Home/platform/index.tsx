@@ -18,7 +18,7 @@ const Platform = () => {
             <div className='flex lg:justify-end lg:mt-0 mt-7 justify-center'>
               <Link
                 to='/signup'
-                className='flex items-center gap-2.5 text-darkmode bg-primary hover:bg-primary/80 border border-primary py-3 px-5 rounded-lg sm:text-21 text-18 font-medium'>
+                className='flex items-center gap-2.5 text-darkmode bg-[#60da68] hover:bg-[#60da68]/80 border border-primary py-3 px-5 rounded-lg sm:text-21 text-18 font-medium'>
                 Get Started
                 <img src={"/images/icons/icon-arrow.svg"} alt="icon" width={20} height={20} />
               </Link>

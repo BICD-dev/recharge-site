@@ -21,10 +21,10 @@
 //                     <span className="text-16 text-dark_grey mb-1">
 //                         {format(new Date(date), "MMM dd yyyy")}
 //                     </span>
-//                     <h5 className="text-22 font-medium mb-9 group-hover:text-primary">
+//                     <h5 className="text-22 font-medium mb-9 group-hover:text-[#60da68]">
 //                         {title}
 //                     </h5>
-//                     <p className="text-primary text-17 font-medium ">
+//                     <p className="text-[#60da68] text-17 font-medium ">
 //                         Read More
 //                     </p>
 //                 </div>

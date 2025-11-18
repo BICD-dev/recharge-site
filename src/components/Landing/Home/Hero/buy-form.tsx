@@ -90,7 +90,7 @@ const BuyCrypto = () => {
                 <div
                   key={crypto.name}
                   onClick={() => handleDropdownSelect(crypto)}
-                  className='px-3 bg-dark_grey text-white hover:text-darkmode py-2 hover:bg-primary cursor-pointer'>
+                  className='px-3 bg-dark_grey text-white hover:text-darkmode py-2 hover:bg-[#60da68] cursor-pointer'>
                   {crypto.name}
                 </div>
               ))}
@@ -125,7 +125,7 @@ const BuyCrypto = () => {
           <p>Total Cost: </p>
           <p>${totalCost}</p>
         </div>
-        <button className='text-darkmode font-medium text-18 bg-primary w-full border border-primary rounded-lg py-3 hover:text-primary hover:bg-transparent'>
+        <button className='text-darkmode font-medium text-18 bg-[#60da68] w-full border border-primary rounded-lg py-3 hover:text-[#60da68] hover:bg-transparent'>
           {loading ? 'Processing...' : 'Buy '}
         </button>
       </form>

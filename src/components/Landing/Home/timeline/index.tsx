@@ -24,7 +24,7 @@ const TimeLine = () => {
             transition={{ duration: 0.6 }}>
             <div className='flex flex-col gap-4'>
               <p className='text-white font-medium'>
-                We deliver <span className='text-primary'>best solution</span>
+                We deliver <span className='text-[#60da68]'>best solution</span>
               </p>
               <h2 className='text-white sm:text-40 text-30 font-medium lg:w-80% mx-auto mb-20'>
                 One application with multiple options to give you freedom of buying & selling

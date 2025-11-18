@@ -58,7 +58,7 @@ const CardSlider = () => {
     <div className='pt-14 flex flex-col gap-10'>
       <div className='flex flex-col gap-3 items-center justify-center text-center'>
         <p className='text-white font-medium'>
-          Featured <span className='text-primary'>crypto coins</span>
+          Featured <span className='text-[#60da68]'>crypto coins</span>
         </p>
         <h2 className='sm:text-40 text-30 text-white font-medium'>
           Top crypto coins updates

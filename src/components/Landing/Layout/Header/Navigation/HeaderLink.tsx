@@ -23,8 +23,8 @@ const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
     >
       <HashLink
         to={item.to}
-        className={`text-17 flex font-medium hover:text-primary capitalized  ${
-          path === item.to ? "text-primary " : " text-muted "
+        className={`text-17 flex font-medium hover:text-[#60da68] capitalized  ${
+          path === item.to ? "text-[#60da68] " : " text-muted "
         }`}
       >
         {item.label}
@@ -58,8 +58,8 @@ const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
               to={subItem.to}
               className={`block px-4 py-2   ${
                 path === subItem.to
-                  ? "bg-primary text-white"
-                  : "text-black dark:text-white hover:bg-primary"
+                  ? "bg-[#60da68] text-white"
+                  : "text-black dark:text-white hover:bg-[#60da68]"
               }`}
             >
               {subItem.label}

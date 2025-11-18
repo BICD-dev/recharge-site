@@ -38,7 +38,7 @@
 //           </h2>
 //           <Link
 //             to='#'
-//             className='flex items-center gap-3 text-17 text-midnight_text dark:text-white dark:hover:text-primary font-medium hover:text-primary sm:pb-0 pb-3'
+//             className='flex items-center gap-3 text-17 text-midnight_text dark:text-white dark:hover:text-[#60da68] font-medium hover:text-[#60da68] sm:pb-0 pb-3'
 //             data-aos='fade-left'
 //             data-aos-delay='200'
 //             data-aos-duration='1000'>

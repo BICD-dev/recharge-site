@@ -78,8 +78,8 @@ const Hero = () => {
           <motion.div {...leftAnimation} className='flex flex-col gap-10'>
             <div className='flex flex-col gap-4 text-center md:text-left'>
               <div className='flex gap-6 items-center lg:justify-start justify-center'>
-                <div className='py-1.5 px-4 bg-primary/10 rounded-full border border-white/10'>
-                  <span className='text-primary font-medium'>Future of crypto trading</span>
+                <div className='py-1.5 px-4 bg-[#60da68]/10 rounded-full border border-white/10'>
+                  <span className='text-[#60da68] font-medium'>Future of crypto trading</span>
                 </div>
               </div>
               <h1 className='font-medium xl:text-[72px] lg:text-6xl md:text-54 sm:text-5xl text-4xl md:text-start text-center text-white'>
@@ -89,7 +89,7 @@ const Hero = () => {
             </div>
             <div className='flex items-center md:justify-start justify-center gap-8'>
               <Link to={"/#work"}
-                className='bg-primary hover:bg-primary/80 flex items-center gap-2 border border-primary rounded-lg font-semibold text-darkmode py-3 px-7 cursor-pointer'>
+                className='bg-[#60da68] hover:bg-[#60da68]/80 flex items-center gap-2 border border-primary rounded-lg font-semibold text-darkmode py-3 px-7 cursor-pointer'>
                 Explore More
                 <img src={"/images/icons/icon-arrow.svg"} alt='arrow-icon' width={20} height={20}/>
               </Link>
@@ -125,7 +125,7 @@ const Hero = () => {
               aria-label='Close Buy Modal'>
               <Icon
                 icon='tabler:currency-xrp'
-                className='text-white hover:text-primary text-24 inline-block me-2'
+                className='text-white hover:text-[#60da68] text-24 inline-block me-2'
               />
             </button>
             <BuyCrypto />
@@ -143,7 +143,7 @@ const Hero = () => {
               aria-label='Close Sell Modal'>
               <Icon
                 icon='tabler:currency-xrp'
-                className='text-white hover:text-primary text-24 inline-block me-2'
+                className='text-white hover:text-[#60da68] text-24 inline-block me-2'
               />
             </button>
             <SellCrypto />

@@ -61,8 +61,8 @@ const Sidebar = () => {
                 key={item.name}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-6 py-3 hover:bg-primary hover:text-white transition-colors rounded-lg m-2 ${
-                    isActive ? "bg-primary text-white" : "text-gray-700"
+                  `flex items-center gap-3 px-6 py-3 hover:bg-[#60da68] hover:text-white transition-colors rounded-lg m-2 ${
+                    isActive ? "bg-[#60da68] text-white" : "text-gray-700"
                   }`
                 }
                 onClick={() => setIsOpen(false)} // Close sidebar on mobile

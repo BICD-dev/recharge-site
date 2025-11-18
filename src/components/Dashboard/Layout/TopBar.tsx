@@ -22,7 +22,7 @@ const Topbar: React.FC<TopbarProps> = ({
       {/* Right side: notifications + avatar */}
       <div className="flex items-center gap-4">
         {/* Notifications */}
-        <button className="relative text-black hover:text-primary-dark transition-colors">
+        <button className="relative text-black hover:text-[#60da68]-dark transition-colors">
           <MdNotifications size={28} />
           {/* Notification badge */}
           <span className="absolute top-0 right-0 inline-block w-2 h-2 bg-red-500 rounded-full"></span>
@@ -37,11 +37,11 @@ const Topbar: React.FC<TopbarProps> = ({
               className="w-10 h-10 rounded-full object-cover border-2 border-primary"
             />
           ) : (
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 rounded-full bg-[#60da68] flex items-center justify-center text-white font-bold">
               {userName.charAt(0)}
             </div>
           )}
-          <span className="text-primary font-medium hidden md:inline">
+          <span className="text-[#60da68] font-medium hidden md:inline">
             {userName}
           </span>
         </div>

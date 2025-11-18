@@ -7,7 +7,7 @@ const Perks = () => {
         <div className='text-center'>
           <div className='flex flex-col gap-4'>
             <p className="text-muted text-base relative">
-              Always By <span className='text-primary'>your side</span>
+              Always By <span className='text-[#60da68]'>your side</span>
             </p>
             <h2 className='text-white sm:text-40 text-30 font-medium'>
               Be the first to use our Datafy!
@@ -18,7 +18,7 @@ const Perks = () => {
               <div
                 key={index}
                 className='text-center flex items-center justify-end flex-col'>
-                <div className='bg-primary/25 backdrop-blur-xs p-4 rounded-full w-fit'>
+                <div className='bg-[#60da68]/25 backdrop-blur-xs p-4 rounded-full w-fit'>
                   <img
                     src={item.icon}
                     alt={item.title}

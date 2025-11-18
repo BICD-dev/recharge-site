@@ -34,7 +34,7 @@ const Header: React.FC = () => {
         <div className="hidden lg:flex items-center justify-between w-1/4">
           <Link to="/login">
             <button
-              className={`px-10 py-2 rounded-lg border capitalize transition cursor-pointer hover:bg-primary
+              className={`px-10 py-2 rounded-lg border capitalize transition cursor-pointer hover:bg-[#60da68]
                 ${isAuthPage
                   ? "text-gray-700 bg-white border-gray-700"
                   : "bg-white "
@@ -47,8 +47,8 @@ const Header: React.FC = () => {
             <button
               className={`px-10 py-2 rounded-lg capitalize transition border cursor-pointer hover:bg-white hover:text-black
                 ${isAuthPage
-                  ? "text-white bg-primary border-primary"
-                  : "text-black bg-primary"
+                  ? "text-white bg-[#60da68] border-primary"
+                  : "text-black bg-[#60da68]"
                 }`}>
               Sign up
             </button>
@@ -98,7 +98,7 @@ const Header: React.FC = () => {
             <Link
               to="/login"
               onClick={() => setNavbarOpen(false)}
-              className="bg-transparent border border-primary text-primary px-4 py-2 rounded-lg"
+              className="bg-transparent border border-primary text-[#60da68] px-4 py-2 rounded-lg"
             >
               Login
             </Link>
@@ -106,7 +106,7 @@ const Header: React.FC = () => {
             <Link
               to="/register"
               onClick={() => setNavbarOpen(false)}
-              className="bg-primary text-white px-4 py-2 rounded-lg"
+              className="bg-[#60da68] text-white px-4 py-2 rounded-lg"
             >
               Sign up
             </Link>

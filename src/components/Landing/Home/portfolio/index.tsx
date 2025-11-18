@@ -26,7 +26,7 @@ const Portfolio = () => {
             transition={{ duration: 0.6 }}>
             <div className='flex flex-col gap-4'>
               {/* <p className='text-white font-medium'>
-                Crypto landing page <span className='text-primary'>template</span>
+                Crypto landing page <span className='text-[#60da68]'>template</span>
               </p> */}
               <h2 className='text-white sm:text-40 text-30 mb-4 font-medium'>
                 Create your cryptocurrency portfolio today
@@ -42,7 +42,7 @@ const Portfolio = () => {
                 {portfolioData.map((item, index) => (
                   <tr key={index} className='border-b border-dark_border/10'>
                     <td className='py-5'>
-                      <div className='bg-primary/20 p-3 rounded-full w-fit'>
+                      <div className='bg-[#60da68]/20 p-3 rounded-full w-fit'>
                         <img
                           src={item.image}
                           alt={item.title}

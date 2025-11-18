@@ -65,7 +65,7 @@ const Personal = () => {
                         <span>No App. No website</span>
                     </span>
                     <span className="mt-5 w-full flex items-center justify-center">
-                        <button className="text-sm bg-primary px-10 py-4 rounded-sm cursor-pointer hover:bg-[#60da68] transition text-black uppercase font-bold">
+                        <button className="text-sm bg-[#60da68] px-10 py-4 rounded-sm cursor-pointer hover:bg-[#60da68] transition text-black uppercase font-bold">
                                 Get your account
                                 </button>
                     </span>

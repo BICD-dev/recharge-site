@@ -20,7 +20,7 @@ const Upgrade = () => {
       <div className='container px-4'>
         <div className='grid lg:grid-cols-2 gap-10 items-center'>
           <div>
-            <p className='text-white font-medium'>Datafy<span className='text-primary'>upgrade</span></p>
+            <p className='text-white font-medium'>Datafy<span className='text-[#60da68]'>upgrade</span></p>
             <h2 className='text-white sm:text-40 text-30  font-medium mb-5'>
               Power your payments and crypto with Datafy
             </h2>
@@ -35,7 +35,7 @@ const Upgrade = () => {
                       icon='la:check-circle-solid'
                       width='24'
                       height='24'
-                      className='text-white group-hover:text-primary'
+                      className='text-white group-hover:text-[#60da68]'
                     />
                   </div>
                   <div>

@@ -44,7 +44,7 @@ const services = [
             className='lg:col-span-7 col-span-12'>
             <div className='flex flex-col gap-3'>
               <p className="text-white font-medium">
-                Why choose <span className='text-primary'>datafy</span>
+                Why choose <span className='text-[#60da68]'>datafy</span>
               </p>
               <h2 className='sm:text-40 text-30 text-white lg:w-full md:w-70% font-medium'>
                 Features of the Datafy mobile application

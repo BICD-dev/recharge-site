@@ -32,7 +32,7 @@ const Footer: FC = () => {
                   icon='fa6-brands:facebook-f'
                   width='24'
                   height='24'
-                  className='text-white group-hover:text-primary'
+                  className='text-white group-hover:text-[#60da68]'
                 />
               </Link>
               <Link to='https://www.instagram.com/' className='group'>
@@ -40,7 +40,7 @@ const Footer: FC = () => {
                   icon='fa6-brands:instagram'
                   width='24'
                   height='24'
-                  className='text-white group-hover:text-primary'
+                  className='text-white group-hover:text-[#60da68]'
                 />
               </Link>
               <Link to='https://www.twitter.com/' className='group'>
@@ -48,7 +48,7 @@ const Footer: FC = () => {
                   icon='fa6-brands:x-twitter'
                   width='24'
                   height='24'
-                  className='text-white group-hover:text-primary'
+                  className='text-white group-hover:text-[#60da68]'
                 />
               </Link>
             </div>
@@ -60,7 +60,7 @@ const Footer: FC = () => {
                 <li key={index} className='pb-4'>
                   <Link
                     to={item.to}
-                    className='text-white/60 hover:text-primary text-17'>
+                    className='text-white/60 hover:text-[#60da68] text-17'>
                     {item.label}
                   </Link>
                 </li>
@@ -74,7 +74,7 @@ const Footer: FC = () => {
                 <li key={index} className='pb-4'>
                   <Link
                     to={item.to}
-                    className='text-white/60 hover:text-primary text-17'>
+                    className='text-white/60 hover:text-[#60da68] text-17'>
                     {item.label}
                   </Link>
                 </li>
@@ -89,7 +89,7 @@ const Footer: FC = () => {
             </div>
           </div>
         </div>
-        {/* <p className='text-white/40 text-center py-8 border-t border-white/20'>Design & Develop by <Link className='hover:text-primary' to={"https://getnextjstemplates.com/"}>GetNextjsTemplates.com</Link></p> */}
+        {/* <p className='text-white/40 text-center py-8 border-t border-white/20'>Design & Develop by <Link className='hover:text-[#60da68]' to={"https://getnextjstemplates.com/"}>GetNextjsTemplates.com</Link></p> */}
       </div>
     </footer>
   )

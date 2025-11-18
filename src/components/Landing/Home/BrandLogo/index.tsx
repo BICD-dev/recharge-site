@@ -9,7 +9,7 @@ function BrandLogo() {
           <div className="gap-4">
             <div className="flex justify-center text-center py-4 relative">
               <p className="text-white font-medium">
-                Trusted by top <span className="text-primary">service providers</span>
+                Trusted by top <span className="text-[#60da68]">service providers</span>
               </p>
             </div>
 

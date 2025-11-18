@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {Link, NavLink} from 'react-router-dom'
+
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
 
@@ -39,7 +40,7 @@ const Navbar = () => {
                             </button>
                         </NavLink>
                         <NavLink to="/register">
-                            <button className="bg-primary px-10 py-2 rounded-lg cursor-pointer hover:bg-primary transition text-white capitalize">
+                            <button className="bg-[#60da68] px-10 py-2 rounded-lg cursor-pointer hover:bg-[#60da68] transition text-white capitalize">
                             sign up
                             </button>
                         </NavLink>
@@ -76,7 +77,7 @@ const Navbar = () => {
                             </Link>
 
                             <Link to="/register" onClick={toggleSidebar}>
-                                <button className="bg-primary px-10 py-2 rounded-lg cursor-pointer hover:bg-primary transition text-white capitalize">
+                                <button className="bg-[#60da68] px-10 py-2 rounded-lg cursor-pointer hover:bg-[#60da68] transition text-white capitalize">
                             sign up
                             </button>
                             </Link>
