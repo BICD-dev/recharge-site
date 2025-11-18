@@ -1,6 +1,6 @@
 ;
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import type { HeaderItem } from "../../../../../constants/types/menu";
 import { HashLink } from "react-router-hash-link";
 // import ThemeToggler from '../ThemeToggler';
@@ -21,7 +21,7 @@ const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Link
+      <HashLink
         to={item.to}
         className={`text-17 flex font-medium hover:text-primary capitalized  ${
           path === item.to ? "text-primary " : " text-muted "
@@ -45,7 +45,7 @@ const HeaderLink: React.FC<{ item: HeaderItem }> = ({ item }) => {
             />
           </svg>
         )}
-      </Link>
+      </HashLink>
       {submenuOpen && (
         <div
           className={`absolute py-2 left-0 mt-0.5 w-60 bg-white dark:bg-darklight dark:text-white shadow-lg rounded-lg `}

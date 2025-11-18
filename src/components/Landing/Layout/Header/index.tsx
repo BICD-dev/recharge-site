@@ -34,10 +34,10 @@ const Header: React.FC = () => {
         <div className="hidden lg:flex items-center justify-between w-1/4">
           <Link to="/login">
             <button
-              className={`px-10 py-2 rounded-lg border capitalize transition 
+              className={`px-10 py-2 rounded-lg border capitalize transition cursor-pointer hover:bg-primary
                 ${isAuthPage
                   ? "text-gray-700 bg-white border-gray-700"
-                  : "bg-white text-primary border"
+                  : "bg-white "
                 }`}>
               Login
             </button>
@@ -45,7 +45,7 @@ const Header: React.FC = () => {
 
           <Link to="/register">
             <button
-              className={`px-10 py-2 rounded-lg capitalize transition border 
+              className={`px-10 py-2 rounded-lg capitalize transition border cursor-pointer hover:bg-white hover:text-black
                 ${isAuthPage
                   ? "text-white bg-primary border-primary"
                   : "text-black bg-primary"
