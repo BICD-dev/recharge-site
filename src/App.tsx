@@ -73,7 +73,13 @@ function App() {
         <Login />
         <Footer />
         </> } />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={
+          <>
+          <Header/>
+          <Register />
+          <Footer/>
+          </>}
+          />
 
         {/* Dashboard / VTU pages */}
         <Route
