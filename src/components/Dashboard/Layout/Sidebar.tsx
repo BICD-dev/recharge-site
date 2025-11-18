@@ -1,6 +1,6 @@
 // Sidebar.tsx
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 import {
   MdDashboard,
   MdLocalPhone,
@@ -9,41 +9,38 @@ import {
   MdReceipt,
   MdPerson,
   MdLogout,
-  MdMenu,
   MdClose,
 } from "react-icons/md";
-
+import {IoIosArrowForward} from "react-icons/io";
 const menuItems = [
-  { name: "Dashboard", icon: MdDashboard, path: "/dashboard/personal" },
+  { name: "Dashboard", icon: MdDashboard, path: "/dashboard/wallet" },
   { name: "Airtime", icon: MdLocalPhone, path: "/dashboard/airtime" },
   { name: "Data", icon: MdDataUsage, path: "/dashboard/data" },
   { name: "Electricity", icon: MdDataUsage, path: "/dashboard/electricity" },
   { name: "Cable", icon: MdDataUsage, path: "/dashboard/cable" },
   { name: "WAEC", icon: MdDataUsage, path: "/dashboard/waec" },
-  { name: "Wallet", icon: MdAccountBalanceWallet, path: "/dashboard/wallet" },
+  { name: "Wallet", icon: MdAccountBalanceWallet, path: "/dashboard/fund-wallet" },
   { name: "Transactions", icon: MdReceipt, path: "/dashboard/transactions" },
   { name: "Profile", icon: MdPerson, path: "/dashboard/profile" },
 ];
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   return (
     <>
 <div className="md:hidden flex flex-col gap-5 bg-white px-4 py-3 shadow-sm border-b border-gray-100">
+  <div></div>
   
-  <div className="flex items-center gap-2">
-    <img src="/images/logo/logo8.png" alt="brand_pic" width={40} height={40}/>
-    {/* <h1 className="text-gray-800 font-semibold text-lg">Datafy</h1> */}
-  </div>
 
   <button
     onClick={toggleSidebar}
     className="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 active:scale-95 transition-all flex items-center justify-center"
   >
-    {isOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
+    {isOpen ? <MdClose size={24} /> : <IoIosArrowForward size={24} />}
   </button>
 </div>
 
@@ -56,6 +53,7 @@ const Sidebar = () => {
         } md:translate-x-0 md:static transition-transform duration-300`}
       >
         <div className="flex flex-col h-screen justify-between">
+          
           {/* Menu */}
           <nav className="mt-8 flex-1 pt-10">
             {menuItems.map((item) => (
@@ -81,6 +79,7 @@ const Sidebar = () => {
             onClick={() => {
               // TODO: Add logout logic
               console.log("Logout clicked");
+              navigate("/");
             }}
           >
             <MdLogout size={24} />

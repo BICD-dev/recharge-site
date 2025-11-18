@@ -1,26 +1,28 @@
 // Topbar.tsx
 import { MdNotifications } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 interface TopbarProps {
-  title: string;
   userName?: string;
   userAvatarUrl?: string;
 }
 
 const Topbar: React.FC<TopbarProps> = ({
-  title,
   userName = "User",
   userAvatarUrl,
 }) => {
   return (
     <header className="flex justify-between items-center bg-white px-6 py-4 shadow-md">
-      {/* Page Title */}
-      <h1 className="text-2xl font-semibold text-primary">{title}</h1>
+      {/* logo */}
+      <div className="flex items-center gap-2">
+      <Link to="/"><img src="/images/logo/logo8.png" alt="brand_pic" width={40} height={40}/></Link>
+    {/* <h1 className="text-gray-800 font-semibold text-lg">Datafy</h1> */}
+  </div>
 
       {/* Right side: notifications + avatar */}
       <div className="flex items-center gap-4">
         {/* Notifications */}
-        <button className="relative text-primary hover:text-primary-dark transition-colors">
+        <button className="relative text-black hover:text-primary-dark transition-colors">
           <MdNotifications size={28} />
           {/* Notification badge */}
           <span className="absolute top-0 right-0 inline-block w-2 h-2 bg-red-500 rounded-full"></span>
