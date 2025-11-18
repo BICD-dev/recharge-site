@@ -34,7 +34,7 @@ export default function ScrollToTop() {
   return (
     <div className="fixed bottom-8 right-8 z-999">
       <div className="flex gap-2.5 items-center">
-        <HashLink to={"#"} className="hidden lg:block   text-sm text-black font-medium px-4 py-3.5 leading-none rounded-lg text-nowrap">
+        <HashLink to={"#"} className="hidden lg:block text-sm text-black font-medium px-4 py-3.5 leading-none rounded-lg text-nowrap">
           <img src={"/images/footer/app-store-bedge.svg"} alt='play-store-bedge' width={126} height={23} />
         </HashLink>
         {isVisible && (

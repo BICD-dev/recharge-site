@@ -43,13 +43,13 @@ function App() {
         {/* automatic redirect to personal dashboard */}
          <Route
         path="/dashboard"
-        element={<Navigate to="/dashboard/personal" replace />}
+        element={<Navigate to="/dashboard/wallet" replace />}
       />
         <Route
           path="/dashboard/personal"
           element={
             <>
-              <Layout title="Dashboard">
+              <Layout>
               <Personal />
               </Layout>
             </>
@@ -85,7 +85,7 @@ function App() {
         <Route
           path="/dashboard/airtime"
           element={
-            <Layout title="Airtime">
+            <Layout>
               <Airtime />
             </Layout>
           }
@@ -93,7 +93,7 @@ function App() {
         <Route
           path="/dashboard/data"
           element={
-            <Layout title="Data">
+            <Layout>
               <Data />
             </Layout>
           }
@@ -101,7 +101,7 @@ function App() {
         <Route
           path="/dashboard/electricity"
           element={
-            <Layout title="Electricity">
+            <Layout>
               <Electricity />
             </Layout>
           }
@@ -109,7 +109,7 @@ function App() {
         <Route
           path="/dashboard/cable"
           element={
-            <Layout title="Cable">
+            <Layout>
               <Cable />
             </Layout>
           }
@@ -117,13 +117,13 @@ function App() {
         <Route
           path="/dashboard/waec"
           element={
-            <Layout title="WAEC">
+            <Layout>
               <Waec />
             </Layout>
           }
         />
         <Route path="/dashboard/wallet" element={
-          <Layout title="Wallet">
+          <Layout>
             <Wallet />
           </Layout>
         } />

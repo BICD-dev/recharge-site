@@ -5,9 +5,10 @@ export interface queryVTService {
 
 export interface Airtime {
     request_id:string,
-    serviceID:string,
+    serviceID:string, // mtn, glo, airtel, 9mobile
     phone:number,
     amount:number,
+    email?:string,
 }
 
 export interface Data {
