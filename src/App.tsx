@@ -21,6 +21,7 @@ import Waec from "./pages/features/Waec";
 import NotFound from "./components/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import Wallet from "./pages/features/Wallet";
+import FundWallet from "./components/Dashboard/Wallet/FundWallet";
 
 function App() {
   return (
@@ -43,7 +44,7 @@ function App() {
         {/* automatic redirect to personal dashboard */}
          <Route
         path="/dashboard"
-        element={<Navigate to="/dashboard/wallet" replace />}
+        element={<Navigate to="/dashboard/personal/user" replace />}
       />
         <Route
           path="/dashboard/personal"
@@ -122,12 +123,16 @@ function App() {
             </Layout>
           }
         />
-        <Route path="/dashboard/wallet" element={
+        <Route path="/dashboard/personal/user" element={
           <Layout>
             <Wallet />
           </Layout>
         } />
-
+        <Route path="/dashboard/fund-wallet" element={
+          <Layout>
+            <FundWallet/>
+          </Layout>
+        }/>
         {/* 404 */}
         <Route
           path="*"

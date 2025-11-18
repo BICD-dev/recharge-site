@@ -13,7 +13,7 @@ import {
 } from "react-icons/md";
 import {IoIosArrowForward} from "react-icons/io";
 const menuItems = [
-  { name: "Dashboard", icon: MdDashboard, path: "/dashboard/wallet" },
+  { name: "Dashboard", icon: MdDashboard, path: "/dashboard/personal/user" },
   { name: "Airtime", icon: MdLocalPhone, path: "/dashboard/airtime" },
   { name: "Data", icon: MdDataUsage, path: "/dashboard/data" },
   { name: "Electricity", icon: MdDataUsage, path: "/dashboard/electricity" },
