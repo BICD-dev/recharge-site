@@ -16,7 +16,6 @@ export interface Data {
     serviceID:string,
     billersCode:string,
     variation_code:string,
-    amount:number,
     phone:number,
 }
 

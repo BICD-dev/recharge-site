@@ -1,7 +1,9 @@
+import AirtimeForm from "@/components/Dashboard/Airtime/Airtimeform";
+
 const Airtime = () => {
     return ( 
-        <div className="h-screen flex justify-ceter items-center">
-             <p>Airtime</p>
+        <div className="h-screen flex justify-center ">
+             <AirtimeForm/>
         </div>
      );
 }
