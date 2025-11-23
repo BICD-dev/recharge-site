@@ -18,6 +18,8 @@
     "date-fns": "^4.1.0",
     "framer-motion": "^12.23.24",
     "helmet": "^8.1.0",
+    "input-otp": "^1.4.2",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.554.0",
     "react": "^19.1.1",
     "react-countup": "^6.5.3",

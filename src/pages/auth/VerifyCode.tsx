@@ -1,12 +1,145 @@
-import { useSearchParams } from "react-router-dom";
-
-const VerifyCode = () => {
-    const [params] = useSearchParams()
-    return ( 
-        <div>
-            
-        </div>
-     );
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useMemo, useState } from "react";
+import * as Yup from "yup";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { jwtDecode } from "jwt-decode";
+import { toast } from "sonner";
+import { sendVerificationCode, verifyCode } from "@/api/auth";
+interface MyJwtPayload {
+  userId: string;
+  email: string;
+  exp: number; // Expiration timestamp
 }
- 
+const VerifyCode = () => {
+  const navigate = useNavigate();
+  const [otp, setOtp] = useState("");
+  const [params] = useSearchParams();
+  const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState(params.get("verify_token") || "");
+
+  const otpSchema = Yup.object().shape({
+    otp: Yup.string().matches(
+      /^\d{6}$/,
+      "OTP must be 6 digits and only numbers"
+    ),
+  });
+  const maskedEmail = useMemo(() => {
+    if (!token) return "";
+    try {
+      const decoded = jwtDecode<MyJwtPayload>(token);
+      return decoded.email.replace(/(.{2}).+(@.+)/, "$1***$2");
+    } catch {
+      return "";
+    }
+  }, [token]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await otpSchema.validate({ otp });
+      //   decode the token and get email
+      if (token) {
+        const formData = {
+          verify_token: token,
+          code: otp,
+        };
+        //   verify the code
+        const result = await verifyCode(formData);
+        if (result.status == "success") {
+          toast.success(result.message);
+          navigate("/login");
+        } else {
+          toast.error(result.message);
+        }
+      }
+      setLoading(false);
+    } catch (err) {
+      toast.error(
+        err instanceof Yup.ValidationError ? err.message : "An error occurred"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleResend = async () => {
+    try {
+      setLoading(true);
+      if (token) {
+        const verify_token = token;
+        const result = await sendVerificationCode({ verify_token });
+        if (result.status == "success") {
+          toast.success(result.message);
+          setToken(result.data?.verify_token || token); 
+        }
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+       toast.error("Failed to resend OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+    // Logic to resend OTP
+    console.log("Resend OTP");
+  };
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-white p-4">
+      <div className="w-full max-w-sm bg-white rounded-2xl shadow-md p-6 border border-green-700">
+        <h1 className="text-2xl font-bold text-green-700 text-center mb-4">
+          Verify OTP
+        </h1>
+        <p className="text-center text-gray-600 mb-6">
+          Enter the 6-digit code sent to{" "}
+          <span className="text-green-700 font-semibold">{maskedEmail}</span>.
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="flex justify-center">
+            <InputOTP maxLength={6} value={otp} onChange={setOtp}>
+              <InputOTPGroup>
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+              </InputOTPGroup>
+              <InputOTPSeparator />
+              <InputOTPGroup>
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
+          </div>
+          <div>
+            <p>
+              Didn't get the code.{" "}
+              <button
+                onClick={handleResend}
+                disabled={loading}
+                className={`text-green-700 underline ${
+                  loading ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
+              >
+                Resend
+              </button>
+            </p>
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-green-700 hover:bg-green-800 text-white rounded-xl py-2"
+          >
+            {loading ? "Sending code..." : "Verify"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 export default VerifyCode;

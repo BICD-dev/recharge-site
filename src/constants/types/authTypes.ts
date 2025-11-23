@@ -12,3 +12,12 @@ export interface RegisterFormTypes {
     conf_password:string
 }
 
+export interface VerifyCodeFormTypes {
+    verify_token:string 
+    code:string
+}
+
+export interface ResendCodeFormTypes {
+    verify_token:string
+}
+

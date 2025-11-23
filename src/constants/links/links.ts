@@ -1,6 +1,8 @@
 export const authUrl = {
     loginUrl:"/auth/login",
-    signupUrl:"/auth/register"
+    signupUrl:"/auth/register",
+    sendCodeUrl:"/auth/send-verification-code",
+    verifyCodeUrl:"/auth/verify-code",
 }
 
 export const vtPassUrl = {
