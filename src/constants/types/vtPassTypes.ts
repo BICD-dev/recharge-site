@@ -4,7 +4,6 @@ export interface queryVTService {
 }
 
 export interface Airtime {
-    request_id:string,
     serviceID:string, // mtn, glo, airtel, 9mobile
     phone:number,
     amount:number,
@@ -12,7 +11,6 @@ export interface Airtime {
 }
 
 export interface Data {
-    request_id:string,
     serviceID:string,
     billersCode:string,
     variation_code:string,
@@ -20,7 +18,6 @@ export interface Data {
 }
 
 export interface CableTv {
-    request_id:string,
     serviceID:string,
     billersCode:string,
     variation_code:string,
@@ -37,7 +34,6 @@ export interface ElectricityMeterValidation {
 }
 
 export interface ElectricityPrepaid {
-    request_id:string,
     serviceID:string,
     billersCode:string,
     variation_code:string,
@@ -46,7 +42,6 @@ export interface ElectricityPrepaid {
 }
 
 export interface ElectricityPostpaid {
-    request_id:string,
     serviceID:string,
     billersCode:string,
     variation_code:string,
@@ -55,7 +50,6 @@ export interface ElectricityPostpaid {
 }
 
 export interface Education_Waec_PinCheck {
-    request_id:string,
     serviceID:string,
     variation_code:string, 
     quantity?:number,
@@ -70,7 +64,6 @@ export interface Education_Jamb_Profile_verification {
 }
 
 export interface Education_Jamb_Pin_Vending {
-    request_id:string,
     serviceID:string,
     variation_code:string,
     billersCode:string,
