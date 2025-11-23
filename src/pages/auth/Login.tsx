@@ -15,7 +15,7 @@ const loginSchema = Yup.object().shape({
     .required("Email is required"),
 
   password: Yup.string()
-    .min(4, "Password must be at least 4 characters")
+    .min(6, "Password must be at least 4 characters")
     .required("Password is required"),
 });
 
@@ -46,9 +46,21 @@ const Login = () => {
     try {
       await loginSchema.validate(formData, { abortEarly: false });
       const response = await login(formData);
+      // redirect for an inactive account
+      if(response.status =="failure" && response.code == 403){
+        const verify_token = response.data?.verify_token
+        // display the reason for the unsuccessful login, inactive account in this case
+        toast.error(response.message)
+        // navigate to the otp page
+        navigate(`/verify-otp/verify_token=${verify_token}`);
 
-      
-      navigate("/dashboard/personal");
+      }else if(response.status == "success"){
+        toast.success(response.message);
+        navigate("/dashboard"); // navigate to the dashboard on success
+      } else{
+        toast.error(response.message);
+        
+      }
     } catch (error:unknown) {
         toast.error("Network error. Please try again.");
     } finally {

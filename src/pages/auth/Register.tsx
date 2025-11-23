@@ -52,11 +52,18 @@ const Register = () => {
 
       setLoading(true);
       const response = await register(formData);
-
-      toast.success("Registration successful!");
-      console.log("Register response:", response.data);
-
-      navigate("/login");
+      if(response.status == "success"){
+      const verify_token = response.data?.verify_token
+        toast.success(response.message);
+        // put a timer for this
+        setTimeout(()=>{
+          toast.info(response.data?.verification) // show verificxion message 
+        },1500)
+        // display response data
+        console.log("Register response:", response.data);
+        // navigate to the verify otp page, thing is that we need to store the email...
+        navigate(`/verify-otp/verify_token=${verify_token}`);
+      };
     } catch (err) {
           toast.error("Network error. Please try again.");
         
