@@ -22,6 +22,7 @@ import NotFound from "./components/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import Wallet from "./pages/features/Wallet";
 import FundWallet from "./components/Dashboard/Wallet/FundWallet";
+import VerifyCode from "./pages/auth/VerifyCode";
 
 function App() {
   return (
@@ -81,7 +82,13 @@ function App() {
           <Footer/>
           </>}
           />
-
+        <Route path="/verify-otp" element={
+          <>
+          <Header/>
+          <VerifyCode/>
+          <Footer/>
+          </>
+        } />
         {/* Dashboard / VTU pages */}
         <Route
           path="/dashboard/airtime"

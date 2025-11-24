@@ -43,7 +43,6 @@ const VerifyCode = () => {
     setLoading(true);
     try {
       await otpSchema.validate({ otp });
-      //   decode the token and get email
       if (token) {
         const formData = {
           verify_token: token,
@@ -51,12 +50,10 @@ const VerifyCode = () => {
         };
         //   verify the code
         const result = await verifyCode(formData);
-        if (result.status == "success") {
-          toast.success(result.message);
+          toast.success(result.data.message);
           navigate("/login");
-        } else {
-          toast.error(result.message);
-        }
+      } else{
+        toast.error("Invalid or missing verification token.");
       }
       setLoading(false);
     } catch (err) {
@@ -73,24 +70,31 @@ const VerifyCode = () => {
       if (token) {
         const verify_token = token;
         const result = await sendVerificationCode({ verify_token });
-        if (result.status == "success") {
-          toast.success(result.message);
-          setToken(result.data?.verify_token || token); 
-        }
+          toast.success(result.data.message);
+          setToken(result.data.data?.verify_token || token); 
+        } else{
+            toast.error("Invalid or missing verification token.");
       }
       setLoading(false);
-    } catch (error) {
-      console.error(error);
-       toast.error("Failed to resend OTP. Please try again.");
+    } catch (err) {
+      console.error(err);
+      if ((err as any)?.response) {
+        const status = (err as any).response.status;
+        const message =
+          (err as any).response.data?.message || "Something went wrong";
+
+        toast.error(message);
+      } else {
+        // fallback for network errors
+        toast.error("Network error. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
-    // Logic to resend OTP
-    console.log("Resend OTP");
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-white p-4">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-md p-6 border border-green-700">
+      <div className="w-full max-w-sm bg-white rounded-2xl p-6 border shadow-lg">
         <h1 className="text-2xl font-bold text-green-700 text-center mb-4">
           Verify OTP
         </h1>
@@ -132,7 +136,7 @@ const VerifyCode = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-700 hover:bg-green-800 text-white rounded-xl py-2"
+            className={loading ? "bg-gray-300 w-full py-3 rounded-lg text-white font-semibold" : "bg-green-700 hover:bg-green-800 w-full py-3 rounded-lg text-white font-semibold cursor-pointer"}
           >
             {loading ? "Sending code..." : "Verify"}
           </button>

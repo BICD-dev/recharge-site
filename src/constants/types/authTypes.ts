@@ -4,12 +4,11 @@ export interface LoginFormTypes {
 }
 
 export interface RegisterFormTypes {
-    firstname:string,
-    lastname:string,
+    first_name:string,
+    last_name:string,
     email:string,
     phone:string,
-    password:string,
-    conf_password:string
+    password:string
 }
 
 export interface VerifyCodeFormTypes {

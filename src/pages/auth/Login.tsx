@@ -46,23 +46,30 @@ const Login = () => {
     try {
       await loginSchema.validate(formData, { abortEarly: false });
       const response = await login(formData);
-      // redirect for an inactive account
-      if(response.status =="failure" && response.code == 403){
-        const verify_token = response.data?.verify_token
-        // display the reason for the unsuccessful login, inactive account in this case
-        toast.error(response.message)
-        // navigate to the otp page
-        navigate(`/verify-otp/verify_token=${verify_token}`);
-
-      }else if(response.status == "success"){
-        toast.success(response.message);
+      
+        toast.success(response.data.message);
+        localStorage.setItem("token", response.data?.data?.token || "");
         navigate("/dashboard"); // navigate to the dashboard on success
-      } else{
-        toast.error(response.message);
-        
+      
+    } catch (err: unknown) {
+      const errorAny = err as any;
+
+      // Handle Yup validation errors
+      if (errorAny?.name === "ValidationError" && Array.isArray(errorAny.errors)) {
+        errorAny.errors.forEach((e: string) => toast.error(e));
       }
-    } catch (error:unknown) {
-        toast.error("Network error. Please try again.");
+      // Handle HTTP / API errors (e.g., axios style)
+      else if (errorAny?.response?.status === 403 || errorAny?.code === 403) {
+        const verify_token = errorAny?.response?.data?.data?.verify_token;
+        // display the reason for the unsuccessful login, inactive account in this case
+        toast.error(errorAny?.response?.data?.message || errorAny?.message || "Account inactive");
+        // navigate to the otp page
+        // navigate(`/verify-otp?verify_token=${verify_token}`);
+        navigate(`/verify-otp?verify_token=${encodeURIComponent(verify_token)}`);
+
+      } else {
+        toast.error(errorAny?.response?.data?.message || errorAny?.message || "Network error. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

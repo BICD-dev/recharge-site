@@ -79,7 +79,7 @@ const Sidebar = () => {
             onClick={() => {
               // TODO: Add logout logic
               console.log("Logout clicked");
-              navigate("/");
+              navigate("/login");
             }}
           >
             <MdLogout size={24} />
