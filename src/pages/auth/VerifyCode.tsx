@@ -79,7 +79,7 @@ const VerifyCode = () => {
     } catch (err) {
       console.error(err);
       if ((err as any)?.response) {
-        const status = (err as any).response.status;
+        // const status = (err as any).response.status;
         const message =
           (err as any).response.data?.message || "Something went wrong";
 
