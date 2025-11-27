@@ -14,7 +14,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ title, amount, buttonText, on
       {buttonText && (
         <button
           onClick={onButtonClick}
-          className="mt-4 px-4 py-2 bg-[#60da68] text-white rounded-xl font-medium hover:bg-[#60da68] transition"
+          className="mt-4 px-4 py-2 bg-[#60da68] cursor-pointer text-white rounded-md font-medium hover:bg-[#60da68] transition"
         >
           {buttonText}
         </button>

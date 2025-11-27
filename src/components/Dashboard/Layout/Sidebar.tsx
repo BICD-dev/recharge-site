@@ -10,15 +10,18 @@ import {
   MdPerson,
   MdLogout,
   MdClose,
+  MdLightbulb,
+  MdCastForEducation,
+  MdCable,
 } from "react-icons/md";
 import {IoIosArrowForward} from "react-icons/io";
 const menuItems = [
   { name: "Dashboard", icon: MdDashboard, path: "/dashboard/personal/user" },
   { name: "Airtime", icon: MdLocalPhone, path: "/dashboard/airtime" },
   { name: "Data", icon: MdDataUsage, path: "/dashboard/data" },
-  { name: "Electricity", icon: MdDataUsage, path: "/dashboard/electricity" },
-  { name: "Cable", icon: MdDataUsage, path: "/dashboard/cable" },
-  { name: "WAEC", icon: MdDataUsage, path: "/dashboard/waec" },
+  { name: "Electricity", icon: MdLightbulb, path: "/dashboard/electricity" },
+  { name: "Cable", icon: MdCable, path: "/dashboard/cable" },
+  { name: "WAEC", icon: MdCastForEducation, path: "/dashboard/waec" },
   { name: "Wallet", icon: MdAccountBalanceWallet, path: "/dashboard/fund-wallet" },
   { name: "Transactions", icon: MdReceipt, path: "/dashboard/transactions" },
   { name: "Profile", icon: MdPerson, path: "/dashboard/profile" },

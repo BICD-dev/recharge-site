@@ -4,7 +4,10 @@ export const authUrl = {
     sendCodeUrl:"/auth/send-verification-code",
     verifyCodeUrl:"/auth/verify-code",
 }
-
+export const walletUrl = {
+    fundUrl:"/wallet/fund",
+    balanceUrl:"/wallet"
+}
 export const vtPassUrl = {
     airtimeUrl:"/vtpass/airtime/buy",
     dataUrl:"/vtpass/data/buy",
