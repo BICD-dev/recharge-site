@@ -14,7 +14,7 @@ const ReferralCard: React.FC<ReferralCardProps> = ({ referralCode, onCopy, descr
         <span className="font-mono text-lg tracking-wider">{referralCode}</span>
         <button
           onClick={onCopy}
-          className="ml-auto px-3 py-1.5 bg-[#60da68] text-white rounded-lg hover:bg-[#60da68] transition"
+          className="ml-auto px-3 py-1.5 bg-[#60da68] text-white rounded-lg hover:bg-[#60da68] transition cursor-pointer"
         >
           Copy
         </button>

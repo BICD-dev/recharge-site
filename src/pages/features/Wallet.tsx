@@ -19,17 +19,17 @@ const Wallet = () => {
   const [amount, setAmount] = useState("");
   const [search, setSearch] = useState("");
   const features = [
+    { name: "Airtime", icon: <BsPhoneFill size={28} />, link: "/dashboard/airtime" },
+    { name: "Data", icon: <GiNetworkBars size={28} />, link: "/dashboard/data" },
     {
       name: "Electricity",
       icon: <MdElectricBolt size={28} />,
-      link: "/electricity",
+      link: "/dashboard/electricity",
     },
-    { name: "Cable TV", icon: <FaTv size={28} />, link: "/cable" },
-    { name: "Airtime", icon: <BsPhoneFill size={28} />, link: "/airtime" },
-    { name: "Data", icon: <GiNetworkBars size={28} />, link: "/data" },
-    { name: "WAEC Pin", icon: <IoSchool size={28} />, link: "/waec" },
-    { name: "JAMB Pin", icon: <IoSchool size={28} />, link: "/jamb" },
-    { name: "KYC", icon: <FaUserCheck size={28} />, link: "/kyc" },
+    { name: "Cable TV", icon: <FaTv size={28} />, link: "/dashboard/cable" },
+    { name: "WAEC Pin", icon: <IoSchool size={28} />, link: "/dashboard/waec" },
+    { name: "JAMB Pin", icon: <IoSchool size={28} />, link: "/dashboard/jamb" },
+    { name: "KYC", icon: <FaUserCheck size={28} />, link: "/dashboard/kyc" },
   ];
 
   const filtered = features.filter((f) =>
@@ -82,7 +82,7 @@ const Wallet = () => {
       <ReferralCard
         referralCode={referralCode}
         onCopy={handleCopy}
-        description="Share this code with your friends. You earn a bonus when they sign up."
+        description="Share this code with your friends. You earn a bonus when they register."
       />
       {/* Search Bar */}
       <div className="relative">
@@ -99,18 +99,18 @@ const Wallet = () => {
       {/* Features Header */}
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-bold">Services</h2>
-        <Link to="/services" className="text-green-700 font-semibold">
+        <Link to="" className="text-green-700 font-semibold">
           View All
         </Link>
       </div>
 
       {/* Features Grid */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
         {filtered.map((f) => (
           <Link
             to={f.link}
             key={f.name}
-            className="flex flex-col items-center bg-white shadow-md rounded-2xl p-4 hover:bg-green-50 transition"
+            className="flex flex-col items-center bg-white  rounded-2xl p-4 hover:bg-green-50 transition"
           >
             <div className="text-green-700 mb-2">{f.icon}</div>
             <span className="text-sm font-medium text-gray-800 text-center">
