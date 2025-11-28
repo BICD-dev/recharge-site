@@ -1,7 +1,9 @@
+import ElectricityForm from "@/components/Dashboard/Electricity/ElectricityForm";
+
 const Electricity = () => {
     return ( 
-        <div className="h-screen flex justify-ceter items-center">
-            Electricity
+        <div className="h-screen flex justify-center items-center">
+            <ElectricityForm/>
         </div>
      );
 }
