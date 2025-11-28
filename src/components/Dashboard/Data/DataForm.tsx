@@ -18,7 +18,6 @@ const DataForm = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Data>({
-    request_id: "",
     billersCode:"",
     variation_code:"",
     serviceID: "",

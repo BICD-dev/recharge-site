@@ -3,7 +3,12 @@ import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { fundWallet, verifyFunds } from "@/api/wallet";
-const FundWallet = ({ show, onClose }) => {
+interface FundWalletProps {
+  show: boolean;               // `show` determines if the modal is visible
+  onClose: () => void;         // `onClose` is a callback function with no arguments
+}
+
+const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
   const [email, setEmail] = useState("");
   const [amount, setAmount] = useState<number | "">("");
   const [loading, setLoading] = useState(false);
