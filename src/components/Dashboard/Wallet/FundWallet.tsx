@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
-import { Toaster, toast } from "sonner";
-import axiosClient from "@/api/AxiosClient";
+import { toast } from "sonner";
 import { fundWallet, verifyFunds } from "@/api/wallet";
-import { useNavigate } from "react-router-dom";
 const FundWallet = ({ show, onClose }) => {
   const [email, setEmail] = useState("");
   const [amount, setAmount] = useState<number | "">("");
@@ -15,21 +12,24 @@ const FundWallet = ({ show, onClose }) => {
   const [searchParams] = useSearchParams();
   const reference = searchParams.get("reference");
 
-  const handleFunding = async (e:React.FormEvent) => {
+  const handleFunding = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true)
     console.log("entered here")
     try {
       const result = await fundWallet({ email, amount });
       console.log("result: ", result)
       // redirect on success
       toast.info("Redirecting to paystack");
-      window.location.href = result.data.data?.authorization_url!;
+      setLoading(false);
+      window.location.href = result.data.data?.authorization_url;
     } catch (error: any) {
       console.log("Error funding wallet:", error);
       toast.error(error.message || "An error occurred");
+      setLoading(false);
     }
   };
-
+// handle reference when paystack redirects back
   useEffect(() => {
     if (!reference) return;
   

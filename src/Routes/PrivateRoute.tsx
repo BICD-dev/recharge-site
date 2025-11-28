@@ -43,7 +43,7 @@ const PrivateRoute = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!isCheckingAuth && !isAuthenticated) {
-      navigate("/auth/login", { replace: true });
+      navigate("/login", { replace: true });
     }
   }, [isCheckingAuth, isAuthenticated, navigate]);
 

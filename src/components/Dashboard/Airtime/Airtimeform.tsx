@@ -21,7 +21,6 @@ const AirtimeForm = () => {
     serviceID: "",
     phone: 0,
     amount: 0,
-    request_id: "",
   });
 
   const [loading, setLoading] = useState(false);

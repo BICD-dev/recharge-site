@@ -12,7 +12,7 @@ import Faq from '../components/Landing/Home/Faq'
 
 export default function Home() {
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Hero />
       <Work />
       <GlobalReach/>

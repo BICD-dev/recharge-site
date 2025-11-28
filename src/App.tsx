@@ -23,6 +23,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Wallet from "./pages/features/Wallet";
 import FundWallet from "./components/Dashboard/Wallet/FundWallet";
 import VerifyCode from "./pages/auth/VerifyCode";
+import PrivateRoute from "./Routes/PrivateRoute";
 
 function App() {
   return (
@@ -42,21 +43,7 @@ function App() {
             </>
           }
         />
-        {/* automatic redirect to personal dashboard */}
-         <Route
-        path="/dashboard"
-        element={<Navigate to="/dashboard/personal/user" replace />}
-      />
-        <Route
-          path="/dashboard/personal"
-          element={
-            <>
-              <Layout>
-              <Personal />
-              </Layout>
-            </>
-          }
-        />
+       
         <Route
           path="/about"
           element={
@@ -90,56 +77,27 @@ function App() {
           </>
         } />
         {/* Dashboard / VTU pages */}
+        {/* Protect ALL dashboard routes */}
         <Route
-          path="/dashboard/airtime"
+          path="/dashboard/*"
           element={
-            <Layout>
-              <Airtime />
-            </Layout>
+            <PrivateRoute>
+              <Layout>
+                <Routes>
+                  <Route path="" element={<Navigate to="personal/user" replace />} />
+                  <Route path="personal" element={<Personal />} />
+                  <Route path="airtime" element={<Airtime />} />
+                  <Route path="data" element={<Data />} />
+                  <Route path="electricity" element={<Electricity />} />
+                  <Route path="cable" element={<Cable />} />
+                  <Route path="waec" element={<Waec />} />
+                  <Route path="personal/user" element={<Wallet />} />
+                </Routes>
+              </Layout>
+            </PrivateRoute>
           }
         />
-        <Route
-          path="/dashboard/data"
-          element={
-            <Layout>
-              <Data />
-            </Layout>
-          }
-        />
-        <Route
-          path="/dashboard/electricity"
-          element={
-            <Layout>
-              <Electricity />
-            </Layout>
-          }
-        />
-        <Route
-          path="/dashboard/cable"
-          element={
-            <Layout>
-              <Cable />
-            </Layout>
-          }
-        />
-        <Route
-          path="/dashboard/waec"
-          element={
-            <Layout>
-              <Waec />
-            </Layout>
-          }
-        />
-        <Route path="/dashboard/personal/user" element={
-          <Layout>
-            <Wallet />
-          </Layout>
-        } />
-        <Route path="/dashboard/fund-wallet" element={
-          <Layout>
-            <FundWallet/>
-          </Layout>
-        }/>
+
         {/* 404 */}
         <Route
           path="*"

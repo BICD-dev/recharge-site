@@ -29,14 +29,14 @@ const CardSlider = () => {
     infinite: true,
     autoplaySpeed: 1500,
     speed: 300,
-    slidesToShow: 4,
+    slidesToShow: 2,
     slidesToScroll: 1,
     cssEase: 'ease-in-out',
     responsive: [
       {
         breakpoint: 479,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
         },
       },
       {
@@ -48,7 +48,7 @@ const CardSlider = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 2,
         },
       },
     ],
@@ -90,7 +90,7 @@ const CardSlider = () => {
                       const key = Object.keys(prices).find(
                         priceKey => priceKey.toLowerCase() === item.title.toLowerCase()
                       );
-                      return key ? prices[key].usd : 'Loading...';
+                      return key ? prices[key].usd : '..';
                     })()}
                   </p>
                 </div>
