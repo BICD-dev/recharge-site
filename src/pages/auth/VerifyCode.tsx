@@ -64,6 +64,7 @@ const VerifyCode = () => {
       setLoading(false);
     }
   };
+
   const handleResend = async () => {
     try {
       setLoading(true);
@@ -122,15 +123,14 @@ const VerifyCode = () => {
           <div>
             <p>
               Didn't get the code.{" "}
-              <button
+              <a
                 onClick={handleResend}
-                disabled={loading}
                 className={`text-green-700 underline ${
                   loading ? "cursor-not-allowed" : "cursor-pointer"
                 }`}
               >
                 Resend
-              </button>
+              </a>
             </p>
           </div>
           <button
