@@ -70,11 +70,13 @@ const Wallet = () => {
           onButtonClick={() => {
             setShowModal(true);
           }}
+          loading={!amount}
         />
         <BalanceCard
           title="Referral Balance"
           amount="₦ 9,500"
           buttonText="Withdraw"
+          loading={false}
         />
       </div>
 

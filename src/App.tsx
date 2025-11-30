@@ -5,7 +5,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Landing/Layout/Header";
 import Footer from "./components/Landing/Layout/Footer";
 import Home from "./pages/Home";
-import Personal from "./pages/Personal";
 import About from "./pages/About";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -21,9 +20,11 @@ import Waec from "./pages/features/Waec";
 import NotFound from "./components/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import Wallet from "./pages/features/Wallet";
-import FundWallet from "./components/Dashboard/Wallet/FundWallet";
 import VerifyCode from "./pages/auth/VerifyCode";
 import PrivateRoute from "./Routes/PrivateRoute";
+import ScrollToDashboardTop from "./components/ScrollToTop/dashboardScroll";
+import ProfilePage from "./pages/Profile";
+import TransactionsPage from "./pages/Transactions";
 
 function App() {
   return (
@@ -82,16 +83,18 @@ function App() {
           path="/dashboard/*"
           element={
             <PrivateRoute>
+                <ScrollToDashboardTop />
               <Layout>
                 <Routes>
                   <Route path="" element={<Navigate to="personal/user" replace />} />
-                  <Route path="personal" element={<Personal />} />
                   <Route path="airtime" element={<Airtime />} />
                   <Route path="data" element={<Data />} />
                   <Route path="electricity" element={<Electricity />} />
                   <Route path="cable" element={<Cable />} />
                   <Route path="waec" element={<Waec />} />
                   <Route path="personal/user" element={<Wallet />} />
+                  <Route path="profile" element={<ProfilePage />} />
+                  <Route path="transactions" element={<TransactionsPage />} />
                 </Routes>
               </Layout>
             </PrivateRoute>
