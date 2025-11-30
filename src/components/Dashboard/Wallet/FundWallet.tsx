@@ -15,7 +15,7 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
   const presetAmounts = [1000, 2000, 5000, 10000, 50000, 100000];
 //   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const reference = searchParams.get("reference");
+  const [reference, setReference] = useState(searchParams.get("reference"));
 
   const handleFunding = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

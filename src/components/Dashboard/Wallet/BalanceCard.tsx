@@ -1,16 +1,28 @@
-
 interface BalanceCardProps {
   title: string;
-  amount: string | number;
+  amount?: string | number;
   buttonText: string;
   onButtonClick?: () => void;
+  loading?: boolean;
 }
 
-const BalanceCard: React.FC<BalanceCardProps> = ({ title, amount, buttonText, onButtonClick }) => {
+const BalanceCard: React.FC<BalanceCardProps> = ({ 
+  title, 
+  amount, 
+  buttonText, 
+  onButtonClick,
+  loading 
+}) => {
   return (
     <div className="bg-white p-6 rounded-2xl shadow flex flex-col justify-between">
       <p className="text-sm text-gray-500">{title}</p>
-      <h2 className="text-3xl font-bold text-gray-900 mt-2">{amount}</h2>
+
+      {loading ? (
+        <div className="h-8 w-32 bg-gray-200 animate-pulse rounded-md mt-2"></div>
+      ) : (
+        <h2 className="text-3xl font-bold text-gray-900 mt-2">{amount}</h2>
+      )}
+
       {buttonText && (
         <button
           onClick={onButtonClick}

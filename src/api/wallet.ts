@@ -48,7 +48,7 @@ export const walletBalance = async ()=>{
 }
 
 export const verifyFunds = async (reference:string)=>{
-    const response = axiosClient.post("/wallet/verify", { reference });
+    const response:verifyPayment = await axiosClient.post("/wallet/verify", { reference });
     return response;
 
 }
