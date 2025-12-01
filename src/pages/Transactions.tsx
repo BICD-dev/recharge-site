@@ -28,7 +28,7 @@ export default function TransactionsPage() {
   });
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-6 w-full flex flex-col gap-4">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-3 w-full flex flex-col gap-4">
       <h1 className="text-2xl font-bold text-green-700">Transactions</h1>
 
       <Card className="bg-white rounded-2xl shadow-md">

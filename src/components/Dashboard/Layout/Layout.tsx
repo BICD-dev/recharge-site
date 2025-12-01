@@ -26,14 +26,16 @@ export default function Layout({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  return (
-    <div className="flex w-full h-screen gap-4">
-      <Sidebar />
+ return (
+  <div className="flex w-full h-screen overflow-hidden">
+    <Sidebar />
 
-      <div className="flex flex-col flex-1 bg-gray-50">
-        <Topbar userName={userName || "User"} />
-        <main className="p-6 md:p-6 overflow-y-scroll">{children}</main>
-      </div>
+    <div className="flex flex-col flex-1 bg-gray-50 min-w-0">
+      <Topbar userName={userName || "User"} />
+      <main className="p-3 md:p-6 overflow-y-auto overflow-x-hidden">
+        {children}
+      </main>
     </div>
-  );
-}
+  </div>
+)
+};

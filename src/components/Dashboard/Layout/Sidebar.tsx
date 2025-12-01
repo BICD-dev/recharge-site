@@ -3,13 +3,10 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   MdDashboard,
-  MdAccountBalanceWallet,
   MdReceipt,
-  MdPerson,
   MdLogout,
   MdClose,
   MdSettings,
-  MdSecurity,
   MdHelpCenter,
 } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
@@ -17,14 +14,7 @@ import { IoIosArrowForward } from "react-icons/io";
 const menuItems = [
   { name: "Dashboard", icon: MdDashboard, path: "/dashboard/personal/user" },
   { name: "Transactions", icon: MdReceipt, path: "/dashboard/transactions" },
-  {
-    name: "Wallet",
-    icon: MdAccountBalanceWallet,
-    path: "/dashboard/fund-wallet",
-  },
-  { name: "Profile", icon: MdPerson, path: "/dashboard/profile" },
   { name: "Settings", icon: MdSettings, path: "/dashboard/settings" },
-  { name: "Security", icon: MdSecurity, path: "/dashboard/security" },
   { name: "Support", icon: MdHelpCenter, path: "/dashboard/support" },
 ];
 
@@ -67,29 +57,28 @@ const Sidebar = () => {
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center 
-    ${mobileOpen ? "justify-start gap-3 px-4" : "pl-6 justify-start gap-3"}  
-    py-3 m-2 rounded-lg transition-colors
-    hover:bg-[#60da68] hover:text-white 
-    ${isActive ? "bg-[#60da68] text-white" : "text-gray-700"}`
+                `flex items-center py-3 px-4 m-2 rounded-lg transition-all
+       ${mobileOpen ? "justify-start" : "md:justify-center justify-start"}
+       ${
+         isActive
+           ? "bg-green-600 text-white"
+           : "text-gray-700 hover:bg-green-100"
+       }
+      `
               }
               onClick={() => setMobileOpen(false)}
             >
-              <item.icon
-                size={mobileOpen ? 24 : 30}
-                className={`transition-all duration-200`}
-              />
+              <item.icon size={24} className="shrink-0" />
 
-              {/* Hide text when mobile sidebar is collapsed */}
               <span
                 className={`
-                  font-medium pl-4 whitespace-nowrap transition-all duration-200
-                  ${
-                    mobileOpen
-                      ? "opacity-100 w-auto"
-                      : "opacity-0 w-0 md:opacity-100 md:w-auto"
-                  }
-                `}
+        font-medium whitespace-nowrap transition-all duration-300
+        ${
+          mobileOpen
+            ? "opacity-100 ml-3"
+            : "opacity-0 w-0 overflow-hidden md:opacity-100 md:w-auto md:ml-3"
+        }
+      `}
               >
                 {item.name}
               </span>

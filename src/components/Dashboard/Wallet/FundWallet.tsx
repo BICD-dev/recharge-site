@@ -23,7 +23,7 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
     console.log("entered here")
     try {
       const result = await fundWallet({ email, amount });
-      console.log("result: ", result)
+      // console.log("result: ", result)
       // redirect on success
       toast.info("Redirecting to paystack");
       setLoading(false);

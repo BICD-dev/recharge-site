@@ -12,7 +12,7 @@ import {
 import * as Yup from "yup";
 import type { Airtime } from "../../../constants/types/vtPassTypes";
 import { useNavigate } from "react-router-dom";
-import { buyAirtime } from "../../../api/vtpass";
+import { buyAirtime } from "../../../api/purchase";
 
 const AirtimeForm = () => {
   const navigate = useNavigate();
@@ -71,68 +71,104 @@ const AirtimeForm = () => {
   };
 
   return (
-    <div className="rounded-3xl py-8 px-8 w-[90%] md:w-[70%] bg-gray-50 min-h-screen mx-auto">
-
-      <h1 className="text-3xl font-extrabold uppercase text-center mt-4">Buy Airtime</h1>
-      <p className="text-center mt-3 text-sm text-gray-700 font-medium">
-        Stay Connected! Top-up online — MTN, 9mobile, Glo & Airtel
-      </p>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-8 mt-12">
-
-        {/* Provider Select */}
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Select Provider</label>
-          <Select onValueChange={handleSelectChange}>
-            <SelectTrigger className="w-full border-2 py-3 cursor-pointer">
-              <SelectValue placeholder="Choose a network" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Providers</SelectLabel>
-                <SelectItem value="mtn">MTN</SelectItem>
-                <SelectItem value="airtel">Airtel</SelectItem>
-                <SelectItem value="glo">Glo</SelectItem>
-                <SelectItem value="9mobile">9mobile</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+    <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 py-6 px-4 ">
+      <div className="max-w-2xl mx-auto">
+        
+        {/* Header Card */}
+        <div className="y p-8 mb-6">
+          <div className="text-center">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+              Buy Airtime
+            </h1>
+            <p className="text-gray-600 text-sm md:text-base">
+              Stay Connected! Top-up online — MTN, 9mobile, Glo & Airtel
+            </p>
+          </div>
         </div>
 
-        {/* Phone + Amount */}
-        <div className="flex gap-6 flex-col md:flex-row w-full">
-          <span className="flex flex-col gap-1 w-full">
-            <label htmlFor="phone" className="text-sm font-medium">Phone Number</label>
-            <input
-              type="tel"
-              name="phone"
-              onChange={handleChange}
-              className="px-4 py-3 border border-gray-500 rounded-md"
-              placeholder="Enter phone number"
-            />
-          </span>
+        {/* Form Card */}
+        <div className=" ">
+          <form onSubmit={handleSubmit} className="space-y-6">
 
-          <span className="flex flex-col gap-1 w-full">
-            <label htmlFor="amount" className="text-sm font-medium">Amount</label>
-            <input
-              type="number"
-              name="amount"
-              onChange={handleChange}
-              className="px-4 py-3 border border-gray-500 rounded-md"
-              placeholder="Enter amount"
-            />
-          </span>
+            {/* Provider Select */}
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700">
+                Select Provider
+              </label>
+              <Select onValueChange={handleSelectChange}>
+                <SelectTrigger className="w-full h-12 border-2 border-gray-200 hover:border-green-500 focus:border-green-500 transition-colors rounded-lg">
+                  <SelectValue placeholder="Choose a network" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Providers</SelectLabel>
+                    <SelectItem value="mtn">MTN</SelectItem>
+                    <SelectItem value="airtel">Airtel</SelectItem>
+                    <SelectItem value="glo">Glo</SelectItem>
+                    <SelectItem value="9mobile">9mobile</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Phone + Amount */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label htmlFor="phone" className="text-sm font-semibold text-gray-700">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  onChange={handleChange}
+                  className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg 
+                           focus:outline-none focus:border-green-500 focus:ring-2 
+                           focus:ring-green-100 transition-all"
+                  placeholder="080 1234 5678"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="amount" className="text-sm font-semibold text-gray-700">
+                  Amount
+                </label>
+                <input
+                  type="number"
+                  name="amount"
+                  onChange={handleChange}
+                  className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg 
+                           focus:outline-none focus:border-green-500 focus:ring-2 
+                           focus:ring-green-100 transition-all"
+                  placeholder="₦ 1,000"
+                />
+              </div>
+            </div>
+
+            <button
+              className="w-full h-12 md:h-14 bg-green-500 hover:bg-green-500 
+                       text-white font-semibold rounded-lg transition-all 
+                       transform hover:scale-[1.02] active:scale-[0.98]
+                       disabled:opacity-50 disabled:cursor-not-allowed 
+                       disabled:hover:scale-100 shadow-lg shadow-green-500/30 px-1"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Processing...
+                </span>
+              ) : (
+                "CONFIRM PURCHASE"
+              )}
+            </button>
+          </form>
         </div>
 
-        <button
-          className="uppercase text-white bg-green-700 py-4 px-10 text-[0.9rem] rounded-md
-                     font-semibold cursor-pointer disabled:opacity-50"
-          type="submit"
-          disabled={loading}
-        >
-          {loading ? "Processing..." : "Confirm Purchase"}
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

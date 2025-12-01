@@ -12,7 +12,7 @@ import {
 import * as Yup from "yup";
 import type { Data } from "../../../constants/types/vtPassTypes";
 import { useNavigate } from "react-router-dom";
-import { buyData } from "../../../api/vtpass";
+import { buyData } from "../../../api/purchase";
 
 const DataForm = () => {
   const navigate = useNavigate();

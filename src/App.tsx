@@ -23,8 +23,8 @@ import Wallet from "./pages/features/Wallet";
 import VerifyCode from "./pages/auth/VerifyCode";
 import PrivateRoute from "./Routes/PrivateRoute";
 import ScrollToDashboardTop from "./components/ScrollToTop/dashboardScroll";
-import ProfilePage from "./pages/Profile";
 import TransactionsPage from "./pages/Transactions";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -93,8 +93,8 @@ function App() {
                   <Route path="cable" element={<Cable />} />
                   <Route path="waec" element={<Waec />} />
                   <Route path="personal/user" element={<Wallet />} />
-                  <Route path="profile" element={<ProfilePage />} />
                   <Route path="transactions" element={<TransactionsPage />} />
+                  <Route path="settings" element={<Settings />} />
                 </Routes>
               </Layout>
             </PrivateRoute>

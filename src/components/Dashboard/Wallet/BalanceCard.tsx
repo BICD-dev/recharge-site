@@ -20,7 +20,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
       {loading ? (
         <div className="h-8 w-32 bg-gray-200 animate-pulse rounded-md mt-2"></div>
       ) : (
-        <h2 className="text-3xl font-bold text-gray-900 mt-2">{amount}</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mt-2">₦ {" "}{amount?.toLocaleString()}</h2>
       )}
 
       {buttonText && (
