@@ -8,8 +8,8 @@ import {
   MdClose,
   MdSettings,
   MdHelpCenter,
+  MdMenu,
 } from "react-icons/md";
-import { IoIosArrowForward } from "react-icons/io";
 
 const menuItems = [
   { name: "Dashboard", icon: MdDashboard, path: "/dashboard/personal/user" },
@@ -24,97 +24,93 @@ const Sidebar = () => {
 
   return (
     <>
+      {/* Mobile Toggle Button - Only show on mobile */}
+      <button
+        onClick={() => setMobileOpen(!mobileOpen)}
+        className={`
+          md:hidden fixed top-1/2 -translate-y-1/2 z-50
+          p-3 rounded-r-xl shadow-lg
+          transition-all duration-300 ease-in-out
+          ${
+            mobileOpen
+              ? "left-64 bg-red-500 hover:bg-red-600"
+              : "left-0 bg-green-600 hover:bg-green-700"
+          }
+          text-white active:scale-95
+        `}
+      >
+        {mobileOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
+      </button>
+
       {/* Sidebar */}
       <div
         className={`
-    fixed top-0 left-0 h-full bg-white shadow-md z-50
-    transition-all duration-300 flex flex-col justify-between
-
-    /* Desktop: always full width */
-    md:static md:translate-x-0 md:w-64
-
-    /* Mobile collapsed: wider and shows only icons */
-    ${mobileOpen ? " w-64 translate-x-0" : "w-20 translate-x-0 md:w-64 static"}
-  `}
+          h-full bg-white shadow-xl flex flex-col
+          w-64
+          
+          /* Mobile: fixed and slide in/out */
+           top-0 left-0 z-40
+          transition-transform duration-300 ease-in-out
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+          
+          /* Desktop: static, always visible, no animation */
+          md:translate-x-0 md:static md:shadow-md md:z-auto
+        `}
       >
-        <div className="md:hidden flex flex-col gap-5 bg-white px-4 py-3 shadow-sm border-b border-gray-100">
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 w-fit rounded-xl bg-gray-100 hover:bg-gray-200 active:scale-95 transition-all flex items-center justify-center"
-          >
-            {mobileOpen ? (
-              <MdClose size={28} />
-            ) : (
-              <IoIosArrowForward size={28} />
-            )}
-          </button>
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-6 border-b border-gray-200">
+          <h2 className="text-xl font-bold text-green-600">Menu</h2>
         </div>
-        <div className="text-white">space</div>
-        {/* MENU */}
-        <nav className="mt-6 flex-1">
+
+        {/* Navigation Menu */}
+        <nav className="flex-1 py-4 overflow-y-auto">
           {menuItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center py-3 px-4 m-2 rounded-lg transition-all
-       ${mobileOpen ? "justify-start" : "md:justify-center justify-start"}
-       ${
-         isActive
-           ? "bg-green-600 text-white"
-           : "text-gray-700 hover:bg-green-100"
-       }
-      `
+                `flex items-center gap-3 py-3 px-6 mx-3 my-1 rounded-lg 
+                transition-all duration-200
+                ${
+                  isActive
+                    ? "bg-green-600 text-white shadow-md"
+                    : "text-gray-700 hover:bg-green-50 hover:text-green-600"
+                }
+                `
               }
               onClick={() => setMobileOpen(false)}
             >
-              <item.icon size={24} className="shrink-0" />
-
-              <span
-                className={`
-        font-medium whitespace-nowrap transition-all duration-300
-        ${
-          mobileOpen
-            ? "opacity-100 ml-3"
-            : "opacity-0 w-0 overflow-hidden md:opacity-100 md:w-auto md:ml-3"
-        }
-      `}
-              >
-                {item.name}
-              </span>
+              <item.icon size={22} className="shrink-0" />
+              <span className="font-medium">{item.name}</span>
             </NavLink>
           ))}
         </nav>
 
-        {/* LOGOUT */}
-        <button
-          className="flex items-center gap-3 px-4 py-3 text-red-500 border border-red-500 
-            hover:bg-red-500 hover:text-white transition-colors rounded-lg m-2 mb-6 cursor-pointer"
-          onClick={() => navigate("/login")}
-        >
-          <MdLogout size={24} />
-
-          <span
-            className={`
-              font-medium transition-all duration-200
-              ${
-                mobileOpen
-                  ? "opacity-100 w-auto"
-                  : "opacity-0 w-0 md:opacity-100 md:w-auto"
-              }
-            `}
+        {/* Logout Button */}
+        <div className="p-4 border-t border-gray-200">
+          <button
+            className="flex items-center gap-3 w-full px-4 py-3 
+              text-red-500 border-2 border-red-500 rounded-lg
+              hover:bg-red-500 hover:text-white 
+              transition-all duration-200 font-medium
+              active:scale-95"
+            onClick={() => {
+              setMobileOpen(false);
+              navigate("/login");
+            }}
           >
-            Logout
-          </span>
-        </button>
+            <MdLogout size={22} />
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-30 z-40 md:hidden"
+          className="fixed inset-0 bg-black/50 z-30 md:hidden backdrop-blur-sm transition-opacity duration-300"
           onClick={() => setMobileOpen(false)}
-        ></div>
+        />
       )}
     </>
   );

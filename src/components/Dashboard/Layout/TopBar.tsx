@@ -38,9 +38,9 @@ const Topbar: React.FC<TopbarProps> = ({
             />
           ) : (
             <Link to="/dashboard/settings">
-              <div className="w-10 h-10 rounded-full bg-[#60da68] flex items-center justify-center text-white font-bold">
-                {userName.charAt(0)}
-              </div>
+              <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+            <span className="text-green-600 font-semibold text-sm">{userName.charAt(0)}</span>
+          </div>
             </Link>
           )}
           <span className="text-[#60da68] font-medium hidden md:inline">
