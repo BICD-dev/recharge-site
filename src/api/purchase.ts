@@ -6,56 +6,78 @@ import type {
   queryVTService 
 } from "../constants/types/vtPassTypes";
 import axiosClient from "./AxiosClient";
-import axios, { AxiosError } from "axios";
 
-const requestWrapper = async <T>(url: string, payload: T) => {
-  try {
-    const response = await axiosClient.post(url, payload);
-    return { success: true, data: response.data };
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      // error is now typed as AxiosError
-      return { success: false, error: error.response?.data?.message || error.message };
-    }
+interface AirtimeResponse {
+  data: {
+    status: string;
+    code: number;
+    message: string;
+    data?: {
+        reference: string;
+        purchaseStatus: string;
+    };
+    error?: undefined;
+}
+}
 
-    // fallback for non-Axios errors
-    if (error instanceof Error) {
-      return { success: false, error: error.message };
-    }
-
-    return { success: false, error: "Unknown error occurred" };
-  }
-};
 
 // Airtime
-export const buyAirtime = (data: Airtime) => requestWrapper(vtPassUrl.airtimeUrl, data);
+export const buyAirtime = async (data: Airtime) => {
+  const response:AirtimeResponse = await axiosClient.post(vtPassUrl.airtimeUrl, data);
+  return response;
+};
 
 // Data
-export const buyData = (data: Data) => requestWrapper(vtPassUrl.dataUrl, data);
-
+export const buyData = async (data: Data) => {
+  const response = await axiosClient.post(vtPassUrl.dataUrl, data);
+  return response;
+};
+export const getDataPlans = async (serviceID: string) => {
+  const response = await axiosClient.get(`${import.meta.env.VITE_TEST_VT_API_URL}service-variations?`, {
+    params: { serviceID },
+    headers: {
+      "api-key": import.meta.env.VITE_VT_API_KEY,
+      "public-key": import.meta.env.VITE_VT_PUBLIC_KEY,
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
 // Cable TV
-export const buyCableTv = (data: CableTv) => requestWrapper(vtPassUrl.cableUrl, data);
+export const buyCableTv = async (data: CableTv) => {
+  const response = await axiosClient.post(vtPassUrl.cableUrl, data);
+  return response;
+};
 
 // Electricity
-export const buyElectricityPostpaid = (data: ElectricityPostpaid) =>
-  requestWrapper(vtPassUrl.electricityUrl, data);
+export const buyElectricityPostpaid = async (data: ElectricityPostpaid) => {
+  const response = await axiosClient.post(vtPassUrl.electricityUrl, data);
+  return response;
+};
 
-export const buyElectricityPrepaid = (data: ElectricityPrepaid) =>
-  requestWrapper(vtPassUrl.electricityUrl, data);
+export const buyElectricityPrepaid = async (data: ElectricityPrepaid) => {
+  const response = await axiosClient.post(vtPassUrl.electricityUrl, data);
+  return response;
+};
 
-export const validateElectricityMeter = (data: ElectricityMeterValidation) =>
-  requestWrapper(vtPassUrl.electricityValidateUrl, data);
+export const validateElectricityMeter = async (data: ElectricityMeterValidation) => {
+  const response = await axiosClient.post(vtPassUrl.electricityValidateUrl, data);
+  return response;
+};
 
 // Education
-export const buyWaecPin = (data: Education_Waec_PinCheck) =>
-  requestWrapper(vtPassUrl.waecPinUrl, data);
+export const buyWaecPin = async (data: Education_Waec_PinCheck) => {
+  const response = await axiosClient.post(vtPassUrl.waecPinUrl, data);
+  return response;
+};
 
-export const validateJambPin = (data: Education_Jamb_Profile_verification) =>
-  requestWrapper(vtPassUrl.jambValidationUrl, data);
+export const validateJambPin = async (data: Education_Jamb_Profile_verification) => {
+  const response = await axiosClient.post(vtPassUrl.jambValidationUrl, data);
+  return response;
+};
 
-export const buyJambPin = (data: Education_Jamb_Pin_Vending) =>
-  requestWrapper(vtPassUrl.jambPinUrl, data);
+export const buyJambPin = async (data: Education_Jamb_Pin_Vending) => {
+  const response = await axiosClient.post(vtPassUrl.jambPinUrl, data);
+  return response;
+};
 
-// Query VTPass service
-export const queryVTPass = (request_id: queryVTService) =>
-  requestWrapper(vtPassUrl.queryServiceUrl, request_id);

@@ -12,7 +12,7 @@ export const walletUrl = {
 } as const;
 
 export const vtPassUrl = {
-    airtimeUrl:"/purchase/airtime/buy",
+    airtimeUrl:"/purchase/airtime",
     dataUrl:"/purchase/data/buy",
     cableUrl:"/purchase/cable/buy",
     electricityUrl:"/purchase/electricity/buy",
