@@ -42,7 +42,6 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
       try {
         const result = await verifyFunds(reference);
         toast.success(result.data.message || "Wallet funded successfully!");
-        setAmount(result.data.data?.amount) //set the amount
       } catch (error: any) {
         console.error("Payment could not be verified:", error);
         toast.error(error?.message || "An error occurred");

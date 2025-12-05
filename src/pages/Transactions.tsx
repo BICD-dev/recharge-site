@@ -1,20 +1,53 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table";
 import { motion } from "framer-motion";
 
-export default function TransactionsPage() {
-  const [filter, setFilter] = useState("all");
-  const [transactions, setTransactions] = useState([]);
+// ----------------------------
+// TYPES
+// ----------------------------
+type TransactionStatus = "pending" | "completed" | "failed";
 
+interface Transaction {
+  id: number;
+  reference: string;
+  amount: number;
+  status: TransactionStatus;
+  createdAt: string; // ISO date string from DB
+}
+
+type FilterType = "all" | TransactionStatus;
+
+export default function TransactionsPage() {
+  const [filter, setFilter] = useState<FilterType>("all");
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+//  fethc function
   useEffect(() => {
     async function fetchTxns() {
       try {
-        const res = await fetch("/api/transactions");
-        const data = await res.json();
-        setTransactions(data);
+        // API not ready, so we'll mock an empty array for now
+        // Replace with your real endpoint later
+        // const res = await fetch("/api/transactions");
+        // const data = await res.json();
+        // setTransactions(data);
+
+        setTransactions([]); // temporary placeholder
       } catch (error) {
         console.error("Failed to fetch transactions", error);
       }
@@ -22,18 +55,23 @@ export default function TransactionsPage() {
     fetchTxns();
   }, []);
 
+  
   const filteredTxns = transactions.filter((txn) => {
     if (filter === "all") return true;
     return txn.status === filter;
   });
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-3 w-full flex flex-col gap-4">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="p-3 w-full flex flex-col gap-4"
+    >
       <h1 className="text-2xl font-bold text-green-700">Transactions</h1>
 
       <Card className="bg-white rounded-2xl shadow-md">
         <CardContent className="p-4 flex items-center gap-4">
-          <Select onValueChange={(v) => setFilter(v)}>
+          <Select onValueChange={(v: FilterType) => setFilter(v)}>
             <SelectTrigger className="w-[200px] border-green-700 text-green-700">
               <SelectValue placeholder="Filter status" />
             </SelectTrigger>
@@ -47,6 +85,7 @@ export default function TransactionsPage() {
         </CardContent>
       </Card>
 
+      {/* TRANSACTIONS TABLE */}
       <Card className="bg-white rounded-2xl shadow-md">
         <CardContent className="p-0 overflow-hidden">
           <Table>
@@ -58,12 +97,14 @@ export default function TransactionsPage() {
                 <TableHead className="text-white">Date</TableHead>
               </TableRow>
             </TableHeader>
+
             <TableBody>
               {filteredTxns.length > 0 ? (
                 filteredTxns.map((txn) => (
                   <TableRow key={txn.id}>
                     <TableCell>{txn.reference}</TableCell>
                     <TableCell>₦{txn.amount}</TableCell>
+
                     <TableCell>
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-semibold capitalize ${
@@ -77,7 +118,12 @@ export default function TransactionsPage() {
                         {txn.status}
                       </span>
                     </TableCell>
-                    <TableCell>{new Date(txn.createdAt).toLocaleString()}</TableCell>
+
+                    <TableCell>
+                      {txn.createdAt
+                        ? new Date(txn.createdAt).toLocaleString()
+                        : "—"}
+                    </TableCell>
                   </TableRow>
                 ))
               ) : (

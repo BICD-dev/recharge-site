@@ -3,9 +3,9 @@ export const authUrl = {
     signupUrl:"/auth/register",
     sendCodeUrl:"/auth/send-verification-code",
     verifyCodeUrl:"/auth/verify-code",
+    verifyPinUrl:"/auth/verify-pin",
 } as const;
 
-console.log("Module Name:", name);
 export const walletUrl = {
     fundUrl:"/wallet/fund",
     balanceUrl:"/wallet"
@@ -22,3 +22,4 @@ export const vtPassUrl = {
     jambValidationUrl:"/purchase/education/jamb/validate",
     queryServiceUrl:"/purchase/query-service",
 } as const;
+

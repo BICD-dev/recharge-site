@@ -14,7 +14,11 @@ import type { Airtime } from "../../../constants/types/vtPassTypes";
 import { useNavigate } from "react-router-dom";
 import { buyAirtime } from "../../../api/purchase";
 
-const AirtimeForm = () => {
+interface AirtimeFormProps {
+  onNext: (data: Airtime) => void;
+}
+
+const AirtimeForm: React.FC<AirtimeFormProps> = ({ onNext })=> {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Airtime>({
@@ -49,25 +53,32 @@ const AirtimeForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
       await schema.validate(formData, { abortEarly: false });
-      setLoading(true);
-
-      const result = await buyAirtime(formData);
-      console.log("Airtime purchase response:", result);
-
-      toast.success("Airtime purchase successful!");
-
-    } catch (error) {
+      onNext(formData); // ⬅⬅ Pass data to parent component
+    } catch (error:any) {
       if (error instanceof Yup.ValidationError) {
         error.inner.forEach((err) => toast.error(err.message));
-      } else {
-        toast.error("An unexpected error occurred.");
       }
-    } finally {
-      setLoading(false);
     }
+    // try {
+    //   await schema.validate(formData, { abortEarly: false });
+    //   setLoading(true);
+
+    //   const result = await buyAirtime(formData);
+    //   // console.log("Airtime purchase response:", result);
+
+    //   toast.success(result.data.message || "Airtime purchased successfully!");
+
+    // } catch (error:any) {
+    //   if (error instanceof Yup.ValidationError) {
+    //     error.inner.forEach((err) => toast.error(err.message));
+    //   } else {
+    //     toast.error(error.response?.data?.message || "An error occurred during purchase");
+    //   }
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (
@@ -105,7 +116,7 @@ const AirtimeForm = () => {
                     <SelectItem value="mtn">MTN</SelectItem>
                     <SelectItem value="airtel">Airtel</SelectItem>
                     <SelectItem value="glo">Glo</SelectItem>
-                    <SelectItem value="9mobile">9mobile</SelectItem>
+                    <SelectItem value="etisalat">9mobile</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>

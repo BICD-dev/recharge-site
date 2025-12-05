@@ -1,9 +1,8 @@
-import { vtPassUrl } from "../constants/links/links";
+import { authUrl, vtPassUrl } from "../constants/links/links";
 import type { 
   Airtime, CableTv, Data, Education_Jamb_Pin_Vending, 
   Education_Jamb_Profile_verification, Education_Waec_PinCheck, 
-  ElectricityMeterValidation, ElectricityPostpaid, ElectricityPrepaid, 
-  queryVTService 
+  ElectricityMeterValidation, ElectricityPostpaid, ElectricityPrepaid
 } from "../constants/types/vtPassTypes";
 import axiosClient from "./AxiosClient";
 
@@ -19,8 +18,18 @@ interface AirtimeResponse {
     error?: undefined;
 }
 }
-
-
+interface PinResponse {
+  data: {
+    status: string;
+    code: number;
+    message: string;
+    error?: undefined;
+  };
+}
+export const validatePin = async (pin: string) => {
+  const response:PinResponse = await axiosClient.post(authUrl.verifyPinUrl, { pin });
+  return response;
+}
 // Airtime
 export const buyAirtime = async (data: Airtime) => {
   const response:AirtimeResponse = await axiosClient.post(vtPassUrl.airtimeUrl, data);
