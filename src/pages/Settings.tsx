@@ -1,19 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { User, Lock, Bell, Shield, CreditCard, LogOut } from "lucide-react";
+import { User, Lock, Bell, Shield, CreditCard, LogOut, Key } from "lucide-react";
 import ProfilePage from "@/components/Dashboard/Settings/ProfilePage";
+import TransactionPinSetup from "@/components/Dashboard/TransactioPin/TransactionPinSetup";
+import { jwtDecode } from "jwt-decode"; // Install: npm install jwt-decode
+import { setPin } from "@/api/user";
+
+interface DecodedToken {
+  userId: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  role: string;
+  transaction_pin_set: boolean;
+}
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState("profile");
+  const [hasPinSet, setHasPinSet] = useState(false);
   const [notifications, setNotifications] = useState({
     email: true,
     push: false,
     sms: true,
   });
 
+  // Check if transaction PIN is set from token
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // or however you store your token
+    if (token) {
+      try {
+        const decoded = jwtDecode<DecodedToken>(token);
+        setHasPinSet(decoded.transaction_pin_set);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+  }, []);
+
   const tabs = [
     { id: "profile", label: "Profile", icon: User },
     { id: "security", label: "Security", icon: Lock },
+    { id: "transaction-pin", label: "Transaction PIN", icon: Key },
     { id: "notifications", label: "Notifications", icon: Bell },
     { id: "privacy", label: "Privacy", icon: Shield },
     { id: "billing", label: "Billing", icon: CreditCard },
@@ -22,6 +50,22 @@ const Settings = () => {
   const handleSave = () => {
     toast.success("Settings saved successfully!");
   };
+
+  const handleSetPin = async (pin: string) => {
+    try {
+      // Call your API to set the PIN
+      const response = await setPin(pin);
+      // Update the token in localStorage
+      if (response.data.data?.token) {
+        localStorage.setItem("token", response.data.data?.token);
+      }
+
+      toast.success("Transaction PIN set successfully!");
+    } catch (error: any) {
+      throw new Error(error.message || "Failed to set PIN");
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 py-8 px-4">
@@ -79,6 +123,22 @@ const Settings = () => {
               {/* Profile Settings */}
               {activeTab === "profile" && (
                 <ProfilePage />
+              )}
+              {/* Transaction PIN */}
+              {activeTab === "transaction-pin" && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-1">Transaction PIN</h2>
+                    <p className="text-sm text-gray-600">
+                      Secure your transactions with a 4-digit PIN
+                    </p>
+                  </div>
+                  
+                  <TransactionPinSetup 
+                    onPinSet={handleSetPin}
+                    hasPinSet={hasPinSet}
+                  />
+                </div>
               )}
 
               {/* Security Settings */}

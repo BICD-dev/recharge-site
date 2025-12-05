@@ -13,7 +13,11 @@ interface AirtimeData {
 }
 const Airtime = () => {
   const [step, setStep] = useState(1);
-  const [airtimeData, setAirtimeData] = useState<AirtimeData>({});
+  const [airtimeData, setAirtimeData] = useState<AirtimeData>({
+    serviceID: "",
+    phone: "",
+    amount: 0,
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 

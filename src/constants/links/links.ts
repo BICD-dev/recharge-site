@@ -23,3 +23,6 @@ export const vtPassUrl = {
     queryServiceUrl:"/purchase/query-service",
 } as const;
 
+export const userUrl = {
+    setPinUrl:"/user/set-pin",
+} as const;

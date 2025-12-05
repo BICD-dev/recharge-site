@@ -1,8 +1,4 @@
 import { useEffect, useState } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -59,7 +55,7 @@ export default function ProfilePage() {
                   </div>
 
                   <div className="flex items-center gap-6">
-                    <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                    <div className="w-20 h-20 bg-linear-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
                       {user.firstName.charAt(0).toUpperCase()}
                     </div>
                     <button className="px-4 py-2 border-2 border-green-600 text-green-600 rounded-lg font-medium hover:bg-green-50 transition-all">
@@ -74,7 +70,7 @@ export default function ProfilePage() {
                         type="text"
                         value={user.firstName} 
                         disabled
-                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all bg-gray-300"
+                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all bg-gray-100"
                       />
                     </div>
 
@@ -84,7 +80,7 @@ export default function ProfilePage() {
                         type="text"
                         value={user.lastName} 
                         disabled
-                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all bg-gray-300"
+                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all bg-gray-100"
                       />
                     </div>
 
@@ -94,7 +90,7 @@ export default function ProfilePage() {
                         type="email"
                         value={user.email} 
                         disabled
-                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all bg-gray-300"
+                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all bg-gray-100"
                       />
                     </div>
 
