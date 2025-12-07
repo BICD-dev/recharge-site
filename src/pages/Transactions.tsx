@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectTrigger,
@@ -17,18 +16,20 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { motion } from "framer-motion";
+import { getTransactionHistory } from "@/api/wallet";
 
 // ----------------------------
 // TYPES
 // ----------------------------
-type TransactionStatus = "pending" | "completed" | "failed";
+type TransactionStatus = "pending" | "completed" | "failed" | "success";
 
 interface Transaction {
   id: number;
   reference: string;
-  amount: number;
+  amount: string | number;
   status: TransactionStatus;
-  createdAt: string; // ISO date string from DB
+  purpose: string;
+  created_at: string; // Changed from Date to string since API returns ISO string
 }
 
 type FilterType = "all" | TransactionStatus;
@@ -36,30 +37,38 @@ type FilterType = "all" | TransactionStatus;
 export default function TransactionsPage() {
   const [filter, setFilter] = useState<FilterType>("all");
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [loading, setLoading] = useState(false);
 
-//  fethc function
+  // Fetch function
   useEffect(() => {
     async function fetchTxns() {
       try {
-        // API not ready, so we'll mock an empty array for now
-        // Replace with your real endpoint later
-        // const res = await fetch("/api/transactions");
-        // const data = await res.json();
-        // setTransactions(data);
-
-        setTransactions([]); // temporary placeholder
+        setLoading(true);
+        const response = await getTransactionHistory();
+        console.log("transaction history: ", response.data.data);
+        
+        // Handle the nested array structure from backend
+        const txnData = response.data.data;
+        const flattenedData = Array.isArray(txnData[0]) ? txnData[0] : txnData;
+        
+        setTransactions(flattenedData || []);
       } catch (error) {
         console.error("Failed to fetch transactions", error);
+        setTransactions([]);
+      } finally {
+        setLoading(false);
       }
     }
     fetchTxns();
   }, []);
 
-  
+  // Filter transactions based on selected filter
   const filteredTxns = transactions.filter((txn) => {
     if (filter === "all") return true;
     return txn.status === filter;
   });
+
+  console.log("Filtered Transactions: ", filteredTxns);
 
   return (
     <motion.div
@@ -71,7 +80,10 @@ export default function TransactionsPage() {
 
       <Card className="bg-white rounded-2xl shadow-md">
         <CardContent className="p-4 flex items-center gap-4">
-          <Select onValueChange={(v: FilterType) => setFilter(v)}>
+          <Select 
+            value={filter}
+            onValueChange={(v: FilterType) => setFilter(v)}
+          >
             <SelectTrigger className="w-[200px] border-green-700 text-green-700">
               <SelectValue placeholder="Filter status" />
             </SelectTrigger>
@@ -79,6 +91,7 @@ export default function TransactionsPage() {
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="success">Success</SelectItem>
               <SelectItem value="failed">Failed</SelectItem>
             </SelectContent>
           </Select>
@@ -88,53 +101,66 @@ export default function TransactionsPage() {
       {/* TRANSACTIONS TABLE */}
       <Card className="bg-white rounded-2xl shadow-md">
         <CardContent className="p-0 overflow-hidden">
-          <Table>
-            <TableHeader className="bg-green-700 text-white">
-              <TableRow>
-                <TableHead className="text-white">Reference</TableHead>
-                <TableHead className="text-white">Amount</TableHead>
-                <TableHead className="text-white">Status</TableHead>
-                <TableHead className="text-white">Date</TableHead>
-              </TableRow>
-            </TableHeader>
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <p className="text-gray-500">Loading transactions...</p>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader className="bg-green-700 text-white">
+                <TableRow>
+                  <TableHead className="text-white">Reference</TableHead>
+                  <TableHead className="text-white">Purpose</TableHead>
+                  <TableHead className="text-white">Amount</TableHead>
+                  <TableHead className="text-white">Status</TableHead>
+                  <TableHead className="text-white">Date</TableHead>
+                </TableRow>
+              </TableHeader>
 
-            <TableBody>
-              {filteredTxns.length > 0 ? (
-                filteredTxns.map((txn) => (
-                  <TableRow key={txn.id}>
-                    <TableCell>{txn.reference}</TableCell>
-                    <TableCell>₦{txn.amount}</TableCell>
-
-                    <TableCell>
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs font-semibold capitalize ${
-                          txn.status === "completed"
-                            ? "bg-green-700 text-white"
-                            : txn.status === "pending"
-                            ? "bg-yellow-500 text-white"
-                            : "bg-red-600 text-white"
-                        }`}
-                      >
-                        {txn.status}
-                      </span>
-                    </TableCell>
-
-                    <TableCell>
-                      {txn.createdAt
-                        ? new Date(txn.createdAt).toLocaleString()
-                        : "—"}
+              <TableBody>
+                {filteredTxns.length > 0 ? (
+                  filteredTxns.map((txn) => (
+                    <TableRow key={txn.id}>
+                      <TableCell className="font-mono text-xs">
+                        {txn.reference}
+                      </TableCell>
+                      <TableCell className="capitalize">{txn.purpose}</TableCell>
+                      <TableCell className="font-semibold">
+                        ₦{typeof txn.amount === 'string' 
+                          ? parseFloat(txn.amount).toLocaleString()
+                          : txn.amount?.toLocaleString()
+                        }
+                      </TableCell>
+                      <TableCell>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-semibold capitalize ${
+                            txn.status === "completed" || txn.status === "success"
+                              ? "bg-green-700 text-white"
+                              : txn.status === "pending"
+                              ? "bg-yellow-500 text-white"
+                              : "bg-red-600 text-white"
+                          }`}
+                        >
+                          {txn.status}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        {txn.created_at
+                          ? new Date(txn.created_at).toLocaleString()
+                          : "—"}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={5} className="text-center py-6 text-gray-500">
+                      No transactions found.
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={4} className="text-center py-6 text-gray-500">
-                    No transactions found.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                )}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
     </motion.div>

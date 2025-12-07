@@ -6,6 +6,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle2, XCircle, Lock } from 'lucide-react';
 import { validatePin } from '@/api/purchase';
 import { toast } from 'sonner';
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 // 1. Make it accept props
 interface TransactionPinInputProps {
@@ -17,7 +19,15 @@ interface TransactionPinInputProps {
     phone: string;
   };
 }
-
+interface DecodedToken {
+  userId: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  role: string;
+  transaction_pin_set: boolean;
+}
 
 
 const TransactionPinInput: React.FC<TransactionPinInputProps> = ({ onSuccess, onCancel, transactionDetails }) => {
@@ -26,10 +36,29 @@ const TransactionPinInput: React.FC<TransactionPinInputProps> = ({ onSuccess, on
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-
+  const navigate = useNavigate();
   // Focus first input on mount
   useEffect(() => {
     inputRefs.current[0]?.focus();
+  }, []);
+ // Check if transaction PIN is set from token
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // or however you store your token
+    if (token) {
+      try {
+        const decoded = jwtDecode<DecodedToken>(token);
+        // check if transaction pin is not set
+        if(!decoded.transaction_pin_set){
+          toast.error("Please set your transaction PIN before proceeding.");
+          navigate('/dashboard/settings'); // Redirect to settings if PIN is not set
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else{
+      toast.info("Login expired. Please login again.");
+      navigate('/login'); // Redirect to login if no token is found
+    }
   }, []);
 
   const handleChange = (index: number, value: string) => {

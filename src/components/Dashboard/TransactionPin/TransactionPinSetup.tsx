@@ -96,7 +96,7 @@ const TransactionPinSetup = ({ onPinSet, hasPinSet }: TransactionPinSetupProps) 
     return (
       <div className="p-6 bg-green-50 rounded-lg border-2 border-green-200">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center shrink-0">
             <Lock className="text-green-600" size={24} />
           </div>
           <div className="flex-1">
@@ -136,7 +136,7 @@ const TransactionPinSetup = ({ onPinSet, hasPinSet }: TransactionPinSetupProps) 
     <div className="space-y-6">
       <div className="p-4 bg-yellow-50 rounded-lg border-2 border-yellow-200">
         <div className="flex items-start gap-3">
-          <Lock className="text-yellow-600 mt-0.5 flex-shrink-0" size={20} />
+          <Lock className="text-yellow-600 mt-0.5 shrink-0" size={20} />
           <div>
             <h3 className="font-semibold text-yellow-900 mb-1">Set Up Transaction PIN</h3>
             <p className="text-sm text-yellow-700">

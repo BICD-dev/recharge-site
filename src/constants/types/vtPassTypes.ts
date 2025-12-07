@@ -14,7 +14,7 @@ export interface Data {
     serviceID:string,
     billersCode:string,
     variation_code:string,
-    phone:number,
+    phone:string,
 }
 
 export interface CableTv {
@@ -22,7 +22,7 @@ export interface CableTv {
     billersCode:string,
     variation_code:string,
     amount:number,
-    phone:number,
+    phone:string,
     subscription_type:string,
     quantity?:number,
 }
@@ -38,7 +38,7 @@ export interface ElectricityPrepaid {
     billersCode:string,
     variation_code:string,
     amount:number,
-    phone:number,
+    phone:string,
 }
 
 export interface ElectricityPostpaid {
@@ -46,7 +46,7 @@ export interface ElectricityPostpaid {
     billersCode:string,
     variation_code:string,
     amount:number,
-    phone:number,
+    phone:string,
 }
 
 export interface Education_Waec_PinCheck {
@@ -54,7 +54,7 @@ export interface Education_Waec_PinCheck {
     variation_code:string, 
     quantity?:number,
     amount?:number, //use amount to validate if the user can pay for the service. done in the backend though
-    phone:number,
+    phone:string,
 }
 
 export interface Education_Jamb_Profile_verification {

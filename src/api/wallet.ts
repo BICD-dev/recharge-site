@@ -52,3 +52,8 @@ export const verifyFunds = async (reference:string)=>{
     return response;
 
 }
+
+export const getTransactionHistory = async ()=>{
+    const response = await axiosClient.get("/wallet/transactions");
+    return response;
+}

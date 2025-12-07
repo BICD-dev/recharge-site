@@ -13,9 +13,9 @@ export const walletUrl = {
 
 export const vtPassUrl = {
     airtimeUrl:"/purchase/airtime",
-    dataUrl:"/purchase/data/buy",
-    cableUrl:"/purchase/cable/buy",
-    electricityUrl:"/purchase/electricity/buy",
+    dataUrl:"/purchase/data",
+    cableUrl:"/purchase/cable-tv",
+    electricityUrl:"/purchase/electricity",
     electricityValidateUrl:"/purchase/electricity/validate",
     waecPinUrl:"/purchase/education/waec/buy",
     jambPinUrl:"/purchase/education/jamb/buy",

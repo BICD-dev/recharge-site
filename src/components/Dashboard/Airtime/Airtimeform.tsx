@@ -23,7 +23,7 @@ const AirtimeForm: React.FC<AirtimeFormProps> = ({ onNext })=> {
 
   const [formData, setFormData] = useState<Airtime>({
     serviceID: "",
-    phone: 0,
+    phone: "",
     amount: 0,
   });
 
@@ -61,24 +61,6 @@ const AirtimeForm: React.FC<AirtimeFormProps> = ({ onNext })=> {
         error.inner.forEach((err) => toast.error(err.message));
       }
     }
-    // try {
-    //   await schema.validate(formData, { abortEarly: false });
-    //   setLoading(true);
-
-    //   const result = await buyAirtime(formData);
-    //   // console.log("Airtime purchase response:", result);
-
-    //   toast.success(result.data.message || "Airtime purchased successfully!");
-
-    // } catch (error:any) {
-    //   if (error instanceof Yup.ValidationError) {
-    //     error.inner.forEach((err) => toast.error(err.message));
-    //   } else {
-    //     toast.error(error.response?.data?.message || "An error occurred during purchase");
-    //   }
-    // } finally {
-    //   setLoading(false);
-    // }
   };
 
   return (

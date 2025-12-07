@@ -95,7 +95,7 @@ const Login = () => {
       <div className="w-full h-full bg-green-700 flex flex-col justify-center items-center gap-40 p-6">
         <h2 className="text-white text-3xl font-bold">Welcome Back</h2>
         <p className="text-white">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. repellendus tenetur culpa sequi animi nulla, modi nisi amet adipisci voluptas rem?
+          Stay connected and manage your account effortlessly. Log in to continue your payments, purchases, and everyday transactions without stress.
         </p>
       </div>
     </motion.div>

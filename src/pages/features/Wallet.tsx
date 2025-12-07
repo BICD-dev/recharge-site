@@ -19,8 +19,16 @@ const Wallet = () => {
   const [amount, setAmount] = useState("");
   const [search, setSearch] = useState("");
   const features = [
-    { name: "Airtime", icon: <BsPhoneFill size={28} />, link: "/dashboard/airtime" },
-    { name: "Data", icon: <GiNetworkBars size={28} />, link: "/dashboard/data" },
+    {
+      name: "Airtime",
+      icon: <BsPhoneFill size={28} />,
+      link: "/dashboard/airtime",
+    },
+    {
+      name: "Data",
+      icon: <GiNetworkBars size={28} />,
+      link: "/dashboard/data",
+    },
     {
       name: "Electricity",
       icon: <MdElectricBolt size={28} />,
@@ -42,9 +50,8 @@ const Wallet = () => {
       const response = await walletBalance();
       // console.log(response)
       setAmount(response.data.data?.amount);
-      
-    } catch (error:any) {
-      console.error(error)
+    } catch (error: any) {
+      console.error(error);
     }
   };
   // function to handle the copying of details such as referral codes
@@ -55,7 +62,7 @@ const Wallet = () => {
 
   //  get balance on page render
   useEffect(() => {
-    getBalance()
+    getBalance();
   }, []);
   return (
     <div className="p-4 md:p-6 space-y-6 w-full">
@@ -64,18 +71,21 @@ const Wallet = () => {
       {/* Balance Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <BalanceCard
-          title="Wallet Balance"
+          title="Current Balance"
           amount={Number(amount)}
           buttonText="Fund Wallet"
-          onButtonClick={() => {
-            setShowModal(true);
-          }}
+          onButtonClick={() => setShowModal(true)}
+          variant="gradient"
+          showIcon={true}
+          showLastUpdated={true}
           loading={!amount}
         />
         <BalanceCard
           title="Referral Balance"
-          amount={9500.02}
+          amount={0.00}
           buttonText="Withdraw"
+          onButtonClick={() => console.log("Withdraw")}
+          variant="white" 
           loading={false}
         />
       </div>

@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { User, Lock, Bell, Shield, CreditCard, LogOut, Key } from "lucide-react";
 import ProfilePage from "@/components/Dashboard/Settings/ProfilePage";
-import TransactionPinSetup from "@/components/Dashboard/TransactioPin/TransactionPinSetup";
+import TransactionPinSetup from "@/components/Dashboard/TransactionPin/TransactionPinSetup";
 import { jwtDecode } from "jwt-decode"; // Install: npm install jwt-decode
 import { setPin } from "@/api/user";
+import BalanceCard from "@/components/Dashboard/Wallet/BalanceCard";
 
 interface DecodedToken {
   userId: string;
@@ -27,7 +28,7 @@ const Settings = () => {
 
   // Check if transaction PIN is set from token
   useEffect(() => {
-    const token = localStorage.getItem("token"); // or however you store your token
+    const token = localStorage.getItem("token");
     if (token) {
       try {
         const decoded = jwtDecode<DecodedToken>(token);
@@ -306,16 +307,7 @@ const Settings = () => {
                     <p className="text-sm text-gray-600">Manage your payment methods and billing history</p>
                   </div>
 
-                  <div className="p-6 bg-gradient-to-br from-green-500 to-green-600 rounded-lg text-white">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <p className="text-sm opacity-90 mb-1">Current Balance</p>
-                        <h3 className="text-3xl font-bold">₦25,430.00</h3>
-                      </div>
-                      <CreditCard size={32} className="opacity-80" />
-                    </div>
-                    <p className="text-sm opacity-90">Last updated: Today</p>
-                  </div>
+                  {/* <BalanceCard amount={1234}/> */}
 
                   <div className="space-y-4">
                     <h3 className="font-semibold text-gray-900">Payment Methods</h3>

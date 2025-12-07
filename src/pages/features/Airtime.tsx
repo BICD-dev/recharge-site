@@ -1,11 +1,13 @@
 import AirtimeForm from "@/components/Dashboard/Airtime/Airtimeform";
-import TransactionPinInput from "@/components/Dashboard/TransactioPin/TransactionPinInput";
+import TransactionPinInput from "@/components/Dashboard/TransactionPin/TransactionPinInput";
 import StepIndicator from "@/components/StepIndicator";
 import { useState } from "react";
-import { buyAirtime } from "@/api/purchase"
+import { buyAirtime } from "@/api/purchase";
 import { toast } from "sonner";
-import AirtimeSuccess from "@/components/Dashboard/Status_pages/AirtimeSuccess";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
+import SuccessPage from "@/components/Dashboard/Status_pages/SuccessPage";
+import FailedPage from "@/components/Dashboard/Status_pages/FailurePage";
+import LoadingPage from "@/components/Dashboard/Status_pages/LoadingPage";
 interface AirtimeData {
   serviceID: string;
   phone: string;
@@ -19,6 +21,8 @@ const Airtime = () => {
     amount: 0,
   });
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<"success" | "failure" | null>(null);
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
   const handleAirtimeNext = (data: any) => {
@@ -32,22 +36,30 @@ const Airtime = () => {
     try {
       const payload = {
         ...airtimeData,
-        pin: pinValue
+        pin: pinValue,
       };
 
       console.log("Final Payload to Backend:", payload);
-
+      setLoading(true);
       const result = await buyAirtime(payload);
-
+      setStatus(result.data.status === "success" ? "success" : "failure");
+      setError(
+        result.data.status === "failure" && result.data.message
+          ? result.data.message
+          : ""
+      );
       toast.success(result.data.message || "Airtime purchased successfully!");
-
+      setLoading(false);
       setStep(3);
-
     } catch (error: any) {
       toast.error(
-        error.response?.data?.message ||
-          "An error occurred during purchase"
+        error.response?.data?.message || "An error occurred during purchase"
       );
+      setStatus("failure");
+      setError(
+        error.response?.data?.message || "An error occurred during purchase"
+      );
+      setStep(3);
     } finally {
       setLoading(false);
     }
@@ -57,11 +69,9 @@ const Airtime = () => {
     <div className="h-screen flex flex-col mt-4 justify-center items-center">
       <StepIndicator currentStep={step} />
 
-      {step === 1 && (
-        <AirtimeForm onNext={handleAirtimeNext} />
-      )}
+      {step === 1 && !loading && <AirtimeForm onNext={handleAirtimeNext} />}
 
-      {step === 2 && (
+      {step === 2 && !loading && (
         <TransactionPinInput
           onSuccess={handlePinSuccess}
           transactionDetails={{
@@ -72,15 +82,28 @@ const Airtime = () => {
         />
       )}
 
-      {step === 3 && (
-        <AirtimeSuccess
-        formData={airtimeData}
-        onGoHome={() => navigate('/dashboard')}
-        onDownloadReceipt={() => console.log("Download receipt")}
-      />
-  )
-};
-  </div>
+      {loading && (
+        <LoadingPage purpose="Airtime" formData={airtimeData} />
+      )}
+
+      {step === 3 && !loading && (status === "success" ? (
+        <SuccessPage
+          purpose="Airtime"
+          formData={airtimeData}
+          onGoHome={() => navigate("/dashboard")}
+          onDownloadReceipt={() => console.log("Download receipt")}
+        />
+      ) : (
+        <FailedPage
+          purpose="Airtime"
+          formData={airtimeData}
+          errorMessage={error}
+          onGoHome={() => navigate("/dashboard")}
+          onRetry={() => setStep(1)}
+        />
+      ) )}
+
+    </div>
   );
 };
 

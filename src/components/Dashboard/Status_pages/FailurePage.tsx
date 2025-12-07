@@ -1,16 +1,26 @@
-import { CheckCircle2, Phone, DollarSign, Calendar, Download, Home } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { XCircle, Phone, DollarSign, Calendar, Home, RefreshCcw, AlertCircle } from 'lucide-react';
 
-interface AirtimeSuccessProps {
-    formData: {
-        amount: number;
-        phone: string;
-        serviceID: string;
-    };
-    onGoHome: () => void;
-    onDownloadReceipt: () => void;
+interface FailedProps {
+  purpose: string;
+  formData: {
+    variation_name?: string;
+    variation_amount?: number;
+    amount?: number;
+    phone: string;
+    serviceID: string;
+  };
+  errorMessage?: string;
+  onGoHome: () => void;
+  onRetry: () => void;
 }
-const AirtimeSuccess: React.FC<AirtimeSuccessProps> = ({ formData, onGoHome, onDownloadReceipt }) => {
+
+const FailedPage: React.FC<FailedProps> = ({ 
+  purpose, 
+  formData, 
+  errorMessage = "An unexpected error occurred",
+  onGoHome, 
+  onRetry 
+}) => {
   const formatDate = () => {
     return new Date().toLocaleDateString('en-US', {
       year: 'numeric',
@@ -22,25 +32,40 @@ const AirtimeSuccess: React.FC<AirtimeSuccessProps> = ({ formData, onGoHome, onD
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8">
-      {/* Success Icon */}
+    <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8 h-screen">
+      {/* Failed Icon */}
       <div className="flex justify-center mb-6">
         <div className="relative">
-          <div className="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-50 animate-pulse"></div>
-          <div className="relative bg-green-500 rounded-full p-4">
-            <CheckCircle2 className="w-16 h-16 text-white" strokeWidth={2.5} />
+          <div className="absolute inset-0 bg-red-400 rounded-full blur-xl opacity-50 animate-pulse"></div>
+          <div className="relative bg-red-500 rounded-full p-4">
+            <XCircle className="w-16 h-16 text-white" strokeWidth={2.5} />
           </div>
         </div>
       </div>
 
-      {/* Success Message */}
+      {/* Failed Message */}
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Purchase Successful!
+          Transaction Failed
         </h1>
         <p className="text-gray-600">
-          Your airtime has been delivered successfully
+          Your {purpose} purchase could not be completed
         </p>
+      </div>
+
+      {/* Error Message */}
+      <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 mb-6">
+        <div className="flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 shrink-0" />
+          <div>
+            <h3 className="font-semibold text-red-900 text-sm mb-1">
+              Error Details
+            </h3>
+            <p className="text-sm text-red-700">
+              {errorMessage}
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Transaction Details */}
@@ -53,7 +78,7 @@ const AirtimeSuccess: React.FC<AirtimeSuccessProps> = ({ formData, onGoHome, onD
             <div>
               <p className="text-sm text-gray-600">Amount</p>
               <p className="text-lg font-semibold text-gray-900">
-                ₦{airtimeData?.amount?.toLocaleString()}
+                ₦{(formData.amount || formData.variation_amount)?.toLocaleString()}
               </p>
             </div>
           </div>
@@ -67,7 +92,7 @@ const AirtimeSuccess: React.FC<AirtimeSuccessProps> = ({ formData, onGoHome, onD
             <div>
               <p className="text-sm text-gray-600">Phone Number</p>
               <p className="text-lg font-semibold text-gray-900">
-                {airtimeData?.phone}
+                {formData?.phone}
               </p>
             </div>
           </div>
@@ -83,18 +108,18 @@ const AirtimeSuccess: React.FC<AirtimeSuccessProps> = ({ formData, onGoHome, onD
             <div>
               <p className="text-sm text-gray-600">Network Provider</p>
               <p className="text-lg font-semibold text-gray-900">
-                {airtimeData?.serviceID}
+                {formData?.serviceID}
               </p>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="bg-green-100 rounded-full p-2">
-            <Calendar className="w-5 h-5 text-green-600" />
+          <div className="bg-gray-200 rounded-full p-2">
+            <Calendar className="w-5 h-5 text-gray-600" />
           </div>
           <div>
-            <p className="text-sm text-gray-600">Transaction Date</p>
+            <p className="text-sm text-gray-600">Attempted At</p>
             <p className="text-sm font-medium text-gray-900">
               {formatDate()}
             </p>
@@ -105,11 +130,11 @@ const AirtimeSuccess: React.FC<AirtimeSuccessProps> = ({ formData, onGoHome, onD
       {/* Action Buttons */}
       <div className="space-y-3">
         <button
-          onClick={onDownloadReceipt}
-          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
+          onClick={onRetry}
+          className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
         >
-          <Download className="w-5 h-5" />
-          Download Receipt
+          <RefreshCcw className="w-5 h-5" />
+          Try Again
         </button>
         
         <button
@@ -121,28 +146,20 @@ const AirtimeSuccess: React.FC<AirtimeSuccessProps> = ({ formData, onGoHome, onD
         </button>
       </div>
 
-      {/* Reference Info */}
+      {/* Help Section */}
       <div className="mt-6 pt-6 border-t border-gray-200">
-        <p className="text-xs text-gray-500 text-center">
+        <p className="text-xs text-gray-500 text-center mb-2">
           Transaction ID: {Math.random().toString(36).substring(2, 15).toUpperCase()}
+        </p>
+        <p className="text-xs text-gray-500 text-center">
+          Need help? Contact support at{' '}
+          <a href="mailto:support@datafy.com" className="text-green-600 hover:underline">
+            support@datafy.com
+          </a>
         </p>
       </div>
     </div>
   );
 };
-export default AirtimeSuccess;
-// // Example usage
-// export default function App() {
-//   const sampleData = {
-//     amount: 5000,
-//     phone: "0812 345 6789",
-//     serviceID: "MTN"
-//   };
-//   const navigate = useNavigate()
 
-//   return (
-//     <div className="min-h-screen bg-linear-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
-      
-//     </div>
-//   );
-// }
+export default FailedPage;

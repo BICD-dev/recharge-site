@@ -13,6 +13,6 @@ interface SetPinResponse {
     };
 }
 export const setPin = async (pin: string) => {
-  const response: SetPinResponse = await axiosClient.post(userUrl.setPinUrl, { pin });
+  const response: SetPinResponse = await axiosClient.put(userUrl.setPinUrl, { pin });
   return response;
 };
