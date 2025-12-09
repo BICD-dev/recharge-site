@@ -19,11 +19,11 @@ export interface Data {
 
 export interface CableTv {
     serviceID:string,
-    billersCode:string,
-    variation_code:string,
+    billersCode:string, //smartcard number for dstv
     amount:number,
-    phone:string,
-    subscription_type:string,
+    variation_code:string, 
+    phone?:string,
+    subscription_type?:"change" | "renew",
     quantity?:number,
 }
 

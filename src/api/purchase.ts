@@ -5,7 +5,18 @@ import type {
   ElectricityMeterValidation, ElectricityPostpaid, ElectricityPrepaid
 } from "../constants/types/vtPassTypes";
 import axiosClient from "./AxiosClient";
+import axios from "axios";
 
+interface CableTvRequest {
+  serviceID: string;
+  billersCode: string; //smartcard number for dstv
+  amount: number;
+  variation_code: string;
+  phone?: string;
+  subscription_type?: "change" | "renew";
+  quantity?: number;
+  pin: string;
+}
 interface AirtimeResponse {
   data: {
     status: string;
@@ -26,6 +37,20 @@ interface PinResponse {
     error?: undefined;
   };
 }
+export interface VerifyResponseContent {
+  Customer_Name?: string;
+  Status?: string;
+  Due_Date?: string;
+  Smartcard_Number?: string;
+  Customer_Type?: string;
+  // ... other fields depending on service (DSTV, GOTV, Startimes)
+  [key: string]: any;
+}
+
+interface VerifyResponse {
+  code: number;
+  content: VerifyResponseContent;
+}
 export const validatePin = async (pin: string) => {
   const response:PinResponse = await axiosClient.post(authUrl.verifyPinUrl, { pin });
   return response;
@@ -41,8 +66,8 @@ export const buyData = async (data: Data) => {
   const response = await axiosClient.post(vtPassUrl.dataUrl, data);
   return response;
 };
-export const getDataPlans = async (serviceID: string) => {
-  const response = await axiosClient.get(`${import.meta.env.VITE_TEST_VT_API_URL}service-variations?`, {
+export const getVariations = async (serviceID: string) => {
+  const response = await axios.get(`${import.meta.env.VITE_TEST_VT_API_URL}service-variations?`, {
     params: { serviceID },
     headers: {
       "api-key": import.meta.env.VITE_VT_API_KEY,
@@ -53,9 +78,28 @@ export const getDataPlans = async (serviceID: string) => {
   return response;
 };
 // Cable TV
-export const buyCableTv = async (data: CableTv) => {
+export const buyCableTv = async (data:CableTvRequest) => {
   const response = await axiosClient.post(vtPassUrl.cableUrl, data);
   return response;
+};
+
+export const verifySmartCardApi = async (data: { billersCode: string; serviceID: "dstv" | "gotv" | "startimes",}):Promise<VerifyResponse> => {
+  const response = await axios.post(`${import.meta.env.VITE_TEST_VT_API_URL}merchant-verify`, data, {
+    auth: {
+      username: import.meta.env.VITE_APP_VTPASS_EMAIL,
+      password: import.meta.env.VITE_APP_VTPASS_PASSWORD,
+    },
+  headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.data.code !== "000") {
+      // non-success (e.g. invalid smartcard)
+      throw new Error(`VTpass verify failed with code ${response.data.code}`);
+    }
+
+    return response.data;
+  
 };
 
 // Electricity

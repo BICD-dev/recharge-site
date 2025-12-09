@@ -21,6 +21,8 @@ export const vtPassUrl = {
     jambPinUrl:"/purchase/education/jamb/buy",
     jambValidationUrl:"/purchase/education/jamb/validate",
     queryServiceUrl:"/purchase/query-service",
+    cableValidateUrl:"/purchase/cable-tv/validate",
+    variationsUrl:"/purchase/variations",
 } as const;
 
 export const userUrl = {

@@ -49,14 +49,19 @@ const Data = () => {
       setStatus(result.data.status === "success" ? "success" : "failure");
       setError(result.data.status === "failure" && result.data.message ? result.data.message : "");
       toast.success(result.data.message);
-
       setStep(3);
       setLoading(false);
+
     } catch (error: any) {
       toast.error(
         error.response?.data?.message ||
           "An error occurred during purchase"
       );
+      setStatus("failure");
+      setError(
+        error.response?.data?.message || "An error occurred during purchase"
+      );
+      setStep(3);
     } finally {
       setLoading(false);
     }

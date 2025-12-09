@@ -1,42 +1,52 @@
-import { CheckCircle2, Phone, DollarSign, Calendar, Download, Home } from 'lucide-react';
+import {
+  CheckCircle2,
+  Download,
+  Home,
+} from "lucide-react";
 
 interface SuccessProps {
   purpose: string;
-    formData: {
-        variation_name?:string;
-        variation_amount?: number;
-        amount?: number;
-        phone: string;
-        serviceID: string;
-    };
-    onGoHome: () => void;
-    onDownloadReceipt: () => void;
+  formData: {
+    variation_name?: string;
+    variation_amount?: number;
+    amount?: number;
+    phone: string;
+    serviceID: string;
+  };
+  onGoHome: () => void;
+  onDownloadReceipt: () => void;
 }
-const SuccessPage: React.FC<SuccessProps> = ({purpose, formData, onGoHome, onDownloadReceipt }) => {
+const SuccessPage: React.FC<SuccessProps> = ({
+  purpose,
+  formData,
+  onGoHome,
+  onDownloadReceipt,
+}) => {
+  const displayAmount = formData.amount || formData.variation_amount;
   const formatDate = () => {
-    return new Date().toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8 h-screen">
+    <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8 h-screen my-2">
       {/* Success Icon */}
       <div className="flex justify-center mb-6">
         <div className="relative">
           <div className="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-50 animate-pulse"></div>
-          <div className="relative bg-green-500 rounded-full p-4">
+          <div className="relative bg-green-700 rounded-full p-4">
             <CheckCircle2 className="w-16 h-16 text-white" strokeWidth={2.5} />
           </div>
         </div>
       </div>
 
       {/* Success Message */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-2">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Purchase Successful!
         </h1>
@@ -44,62 +54,91 @@ const SuccessPage: React.FC<SuccessProps> = ({purpose, formData, onGoHome, onDow
           Your {purpose} has been delivered successfully
         </p>
       </div>
+       <div className="bg-white text-gray-900 rounded-xl p-6 mb-6 flex flex-col items-center">
+        {/* <p className="text-sm opacity-80 mb-1">Amount</p> */}
+        <p className="text-3xl font-semibold mb-4">₦ {displayAmount}</p>
+      </div>
 
       {/* Transaction Details */}
-      <div className="bg-gray-50 rounded-xl p-6 mb-6 space-y-4">
-        <div className="flex items-center justify-between pb-4 border-b border-gray-200">
-          <div className="flex items-center gap-3">
-            <div className="bg-blue-100 rounded-full p-2">
-              <DollarSign className="w-5 h-5 text-blue-600" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-600">Amount</p>
-              <p className="text-lg font-semibold text-gray-900">
-                ₦ {formData.amount || formData.variation_amount}
-              </p>
-            </div>
+      {/* Quick Actions Section */}
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        {/* Share Receipt */}
+        <button
+          onClick={() => {
+            /* handle share */
+          }}
+          className="flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition"
+        >
+          <div className="bg-blue-100 p-3 rounded-full mb-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6 text-blue-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 12v.01M12 4v.01M20 12v.01M12 20v.01M7.76 7.76l.01.01M16.24 16.24l.01.01M7.76 16.24l.01.01M16.24 7.76l.01.01M9 12a3 3 0 116 0 3 3 0 01-6 0z"
+              />
+            </svg>
           </div>
-        </div>
-        <div className="flex items-center justify-between pb-4 border-b border-gray-200">
-          <div className="flex items-center gap-3">
-            <div className="bg-purple-100 rounded-full p-2">
-              <Phone className="w-5 h-5 text-purple-600" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-600">Phone Number</p>
-              <p className="text-lg font-semibold text-gray-900">
-                {formData?.phone}
-              </p>
-            </div>
-          </div>
-        </div>
+          <p className="text-sm font-medium text-gray-700">Share</p>
+        </button>
 
-        <div className="flex items-center justify-between pb-4 border-b border-gray-200">
-          <div className="flex items-center gap-3">
-            <div className="bg-orange-100 rounded-full p-2">
-              <div className="w-5 h-5 flex items-center justify-center text-orange-600 font-bold text-xs">
-                SIM
-              </div>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600">Network Provider</p>
-              <p className="text-lg font-semibold text-gray-900">
-                {formData?.serviceID}
-              </p>
-            </div>
+        {/* Add to Favorites */}
+        <button
+          onClick={() => {
+            /* handle favorite */
+          }}
+          className="flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition"
+        >
+          <div className="bg-pink-100 p-3 rounded-full mb-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6 text-pink-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 15l7-7 7 7"
+              />
+            </svg>
           </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="bg-green-100 rounded-full p-2">
-            <Calendar className="w-5 h-5 text-green-600" />
+          <p className="text-sm font-medium text-gray-700">Favorite</p>
+        </button>
+
+        {/* View Details */}
+        <button
+          onClick={() => {
+            /* handle view details */
+          }}
+          className="flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition"
+        >
+          <div className="bg-green-100 p-3 rounded-full mb-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6 text-green-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
           </div>
-          <div>
-            <p className="text-sm text-gray-600">Transaction Date</p>
-            <p className="text-sm font-medium text-gray-900">
-              {formatDate()}
-            </p>
-          </div>
-        </div>
+          <p className="text-sm font-medium text-gray-700">Details</p>
+        </button>
       </div>
 
       {/* Action Buttons */}
@@ -111,7 +150,7 @@ const SuccessPage: React.FC<SuccessProps> = ({purpose, formData, onGoHome, onDow
           <Download className="w-5 h-5" />
           Download Receipt
         </button>
-        
+
         <button
           onClick={onGoHome}
           className="w-full bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
@@ -122,11 +161,12 @@ const SuccessPage: React.FC<SuccessProps> = ({purpose, formData, onGoHome, onDow
       </div>
 
       {/* Reference Info */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
+      {/* <div className="mt-6 pt-6 border-t border-gray-200">
         <p className="text-xs text-gray-500 text-center">
-          Transaction ID: {Math.random().toString(36).substring(2, 15).toUpperCase()}
+          Transaction ID:{" "}
+          {Math.random().toString(36).substring(2, 15).toUpperCase()}
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

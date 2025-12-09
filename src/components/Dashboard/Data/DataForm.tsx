@@ -12,7 +12,7 @@ import {
 import * as Yup from "yup";
 import type { Data } from "../../../constants/types/vtPassTypes";
 import { useNavigate } from "react-router-dom";
-import { getDataPlans } from "../../../api/purchase";
+import { getVariations } from "../../../api/purchase";
 interface DataFormProps {
   onNext: (data: Data) => void;
 }
@@ -66,7 +66,7 @@ const handleProviderChange = async (value: string) => {
 
   try {
     setBundleLoading(true); // Start loading skeleton
-    const result = await getDataPlans(value);
+    const result = await getVariations(value);
     setVariations(result.data.content.variations);
   } catch (error) {
     toast.error("Failed to load data plans");
@@ -145,9 +145,7 @@ const handleProviderChange = async (value: string) => {
 
   {bundleLoading ? (
     // 🔵 Skeleton Loader
-    <div className="space-y-3">
-      <div className="h-10 w-full bg-gray-200 animate-pulse rounded-md" />
-      <div className="h-10 w-full bg-gray-200 animate-pulse rounded-md" />
+    <div className="space-y-1">
       <div className="h-10 w-full bg-gray-200 animate-pulse rounded-md" />
     </div>
   ) : variations.length === 0 ? (

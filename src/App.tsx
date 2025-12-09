@@ -25,6 +25,7 @@ import PrivateRoute from "./Routes/PrivateRoute";
 import ScrollToDashboardTop from "./components/ScrollToTop/dashboardScroll";
 import TransactionsPage from "./pages/Transactions";
 import Settings from "./pages/Settings";
+import AuthHeader from "./pages/auth/AuthHeader";
 
 function App() {
   return (
@@ -59,15 +60,13 @@ function App() {
         {/* Auth pages */}
         <Route path="/login" element={
           <>
-          <Header />
+          <AuthHeader logoUrl="/images/logo/logo8.png" />
         <Login />
-        <Footer />
         </> } />
         <Route path="/register" element={
           <>
-          <Header/>
+          <AuthHeader logoUrl="/images/logo/logo8.png"/>
           <Register />
-          <Footer/>
           </>}
           />
         <Route path="/verify-otp" element={
