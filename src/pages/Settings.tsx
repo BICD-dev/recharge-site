@@ -4,7 +4,7 @@ import { User, Lock, Bell, Shield, CreditCard, LogOut, Key } from "lucide-react"
 import ProfilePage from "@/components/Dashboard/Settings/ProfilePage";
 import TransactionPinSetup from "@/components/Dashboard/TransactionPin/TransactionPinSetup";
 import { jwtDecode } from "jwt-decode"; // Install: npm install jwt-decode
-import { setPin } from "@/api/user";
+import { fetchUser, setPin } from "@/api/user";
 import BalanceCard from "@/components/Dashboard/Wallet/BalanceCard";
 
 interface DecodedToken {
@@ -27,17 +27,21 @@ const Settings = () => {
   });
 
   // Check if transaction PIN is set from token
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const decoded = jwtDecode<DecodedToken>(token);
-        setHasPinSet(decoded.transaction_pin_set);
-      } catch (error) {
-        console.error("Error decoding token:", error);
+  useEffect( () => {
+    const fetchUserDetails = async ()=>{
+      const result = await fetchUser();
+      if(result.data.data){
+        try {
+          setHasPinSet(result.data.data?.transaction_pin_set);
+        } catch (error:any) {
+          console.error("Error getting user detals:", error);
+          toast.error(error)
+        }
       }
+
     }
-  }, []);
+    fetchUserDetails()
+    }, []);
 
   const tabs = [
     { id: "profile", label: "Profile", icon: User },
@@ -54,13 +58,9 @@ const Settings = () => {
 
   const handleSetPin = async (pin: string) => {
     try {
-      // Call your API to set the PIN
+      // Call API to set the PIN
       const response = await setPin(pin);
-      // Update the token in localStorage
-      if (response.data.data?.token) {
-        localStorage.setItem("token", response.data.data?.token);
-      }
-
+      // show success message
       toast.success("Transaction PIN set successfully!");
     } catch (error: any) {
       throw new Error(error.message || "Failed to set PIN");

@@ -26,5 +26,6 @@ export const vtPassUrl = {
 } as const;
 
 export const userUrl = {
+    getUser:"/user",
     setPinUrl:"/user/set-pin",
 } as const;
