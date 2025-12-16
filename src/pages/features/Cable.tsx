@@ -90,7 +90,7 @@ const Cable = () => {
         />
       )}
   {loading && (
-        <LoadingPage purpose="Data" formData={data} />
+        <LoadingPage purpose="Cable" formData={data} />
       )}
       {step === 3 && !loading && (
   status === "success" ? (

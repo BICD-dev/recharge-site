@@ -1,4 +1,9 @@
+
 import React, { useState } from 'react';
+
+interface AvatarSelectionProps {
+	onSelectAvatar: (avatarUrl: string) => void;
+}
 
 interface AvatarOption {
 	id: number;
@@ -13,7 +18,8 @@ const avatarOptions: AvatarOption[] = [
 	// Add more avatars as needed
 ];
 
-const AvatarSelection: React.FC = () => {
+
+const AvatarSelection: React.FC<AvatarSelectionProps> = ({ onSelectAvatar }) => {
 	const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null);
 
 	const handleAvatarClick = (id: number) => {
@@ -22,7 +28,12 @@ const AvatarSelection: React.FC = () => {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		// Submission logic to be implemented by user
+		if (selectedAvatar !== null) {
+			const avatar = avatarOptions.find((a) => a.id === selectedAvatar);
+			if (avatar) {
+				onSelectAvatar(avatar.src);
+			}
+		}
 	};
 
 	return (
