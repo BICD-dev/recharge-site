@@ -6,10 +6,9 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle2, XCircle, Lock } from 'lucide-react';
 import { validatePin } from '@/api/purchase';
 import { toast } from 'sonner';
-import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '@/hooks/useUser';
 
-// 1. Make it accept props
 interface TransactionPinInputProps {
   onSuccess: (pin: string) => void;
   onCancel?: () => void;
@@ -19,50 +18,51 @@ interface TransactionPinInputProps {
     phone: string;
   };
 }
-interface DecodedToken {
-  userId: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  role: string;
-  transaction_pin_set: boolean;
-}
 
+const TransactionPinInput: React.FC<TransactionPinInputProps> = ({
+  onSuccess,
+  onCancel,
+  transactionDetails
+}) => {
 
-const TransactionPinInput: React.FC<TransactionPinInputProps> = ({ onSuccess, onCancel, transactionDetails }) => {
+  const navigate = useNavigate();
+
+  // ---- USER HOOK ----
+  const { data: user, isLoading, isError } = useUser();
+
+  // ---- PIN STATE ----
   const [pin, setPin] = useState(['', '', '', '']);
   const [isVerifying, setIsVerifying] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const navigate = useNavigate();
-  // Focus first input on mount
+
+  // Focus first input when loaded
   useEffect(() => {
-    inputRefs.current[0]?.focus();
-  }, []);
- // Check if transaction PIN is set from token
-  useEffect(() => {
-    const token = localStorage.getItem("token"); // or however you store your token
-    if (token) {
-      try {
-        const decoded = jwtDecode<DecodedToken>(token);
-        // check if transaction pin is not set
-        if(!decoded.transaction_pin_set){
-          toast.error("Please set your transaction PIN before proceeding.");
-          navigate('/dashboard/settings'); // Redirect to settings if PIN is not set
-        }
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
-    } else{
-      toast.info("Login expired. Please login again.");
-      navigate('/login'); // Redirect to login if no token is found
+    if (!isLoading) {
+      inputRefs.current[0]?.focus();
     }
-  }, []);
+  }, [isLoading]);
+
+  // ---- HANDLE USER + PIN STATUS ----
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (isError || !user) {
+      toast.info("Login expired. Please login again.");
+      navigate("/login");
+      return;
+    }
+
+    if (!user.transaction_pin_set) {
+      toast.error("Please set your transaction PIN before proceeding.");
+      navigate("/dashboard/settings");
+    }
+
+  }, [isLoading, isError, user, navigate]);
+
 
   const handleChange = (index: number, value: string) => {
-    // Only allow numbers
     if (value && !/^\d$/.test(value)) return;
 
     const newPin = [...pin];
@@ -71,20 +71,14 @@ const TransactionPinInput: React.FC<TransactionPinInputProps> = ({ onSuccess, on
     setError('');
     setSuccess(false);
 
-    // Auto-focus next input
-    if (value && index < 3) {
-      inputRefs.current[index + 1]?.focus();
-    }
+    if (value && index < 3) inputRefs.current[index + 1]?.focus();
 
-    // Auto-submit when all 4 digits are entered
     if (index === 3 && value) {
-      const fullPin = [...newPin.slice(0, 3), value].join('');
-      handleSubmit(fullPin);
+      handleSubmit([...newPin.slice(0, 3), value].join(''));
     }
   };
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    // Handle backspace
     if (e.key === 'Backspace' && !pin[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
@@ -93,11 +87,10 @@ const TransactionPinInput: React.FC<TransactionPinInputProps> = ({ onSuccess, on
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text').slice(0, 4);
-    
-    // Only allow if it's 4 digits
+
     if (/^\d{4}$/.test(pastedData)) {
-      const newPin = pastedData.split('');
-      setPin(newPin);
+      const arr = pastedData.split('');
+      setPin(arr);
       inputRefs.current[3]?.focus();
       handleSubmit(pastedData);
     }
@@ -107,24 +100,19 @@ const TransactionPinInput: React.FC<TransactionPinInputProps> = ({ onSuccess, on
     setIsVerifying(true);
     setError('');
 
-    // Simulate API call
-    // await new Promise(resolve => setTimeout(resolve, 1000));
     try {
-      const response = await validatePin(pinValue);
-      toast.success(response.data.message || "PIN verified successfully!");
-      setIsVerifying(false);
+      const res = await validatePin(pinValue);
+      toast.success(res.data?.message ?? "PIN verified successfully");
       setSuccess(true);
       onSuccess(pinValue);
-    } catch (error: any) {
-      setError(error.response?.data?.message || "Failed to verify PIN. Please try again.");
+    } catch (err: any) {
+      setError(err?.response?.data?.message ?? "Failed to verify PIN. Please try again.");
       setPin(['', '', '', '']);
       inputRefs.current[0]?.focus();
-    setIsVerifying(false);
-
+    } finally {
+      setIsVerifying(false);
     }
-
   };
-
 
   const handleReset = () => {
     setPin(['', '', '', '']);
@@ -132,6 +120,19 @@ const TransactionPinInput: React.FC<TransactionPinInputProps> = ({ onSuccess, on
     setSuccess(false);
     inputRefs.current[0]?.focus();
   };
+
+  // ---- LOADING STATE ----
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        Loading user details...
+      </div>
+    );
+  }
+
+  // If user not loaded OR redirected, don't render PIN fields
+  if (!user?.transaction_pin_set) return null;
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
@@ -149,93 +150,68 @@ const TransactionPinInput: React.FC<TransactionPinInputProps> = ({ onSuccess, on
         </CardHeader>
 
         <CardContent className="space-y-6">
-          {/* PIN Input */}
+
           <div className="space-y-2">
-            <Label className="text-sm font-medium text-gray-700">Transaction PIN</Label>
+            <Label>Transaction PIN</Label>
+
             <div className="flex gap-3 justify-center">
               {pin.map((digit, index) => (
                 <Input
                   key={index}
-                  ref={(el) => { inputRefs.current[index] = el; }}
+                  ref={(el) => {
+                    inputRefs.current[index] = el;
+                  }}
                   type="password"
-                  inputMode="numeric"
                   maxLength={1}
+                  inputMode="numeric"
                   value={digit}
                   onChange={(e) => handleChange(index, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
                   onPaste={index === 0 ? handlePaste : undefined}
                   disabled={isVerifying || success}
-                  className={`w-14 h-14 text-center text-2xl font-semibold transition-all
-                    ${success ? 'border-green-500 bg-green-50' : ''}
-                    ${error ? 'border-red-500 bg-red-50' : ''}
-                    ${!success && !error ? 'border-gray-300 focus:border-green-500' : ''}
-                  `}
+                  className="w-14 h-14 text-center text-2xl"
                 />
               ))}
             </div>
           </div>
 
-          {/* Status Messages */}
           {isVerifying && (
-            <Alert className="border-blue-200 bg-blue-50">
-              <AlertDescription className="text-center text-blue-800">
-                Verifying PIN...
-              </AlertDescription>
+            <Alert>
+              <AlertDescription>Verifying PIN...</AlertDescription>
             </Alert>
           )}
 
           {error && (
-            <Alert className="border-red-200 bg-red-50">
-              <div className="flex items-center gap-2">
-                <XCircle className="w-4 h-4 text-red-600" />
-                <AlertDescription className="text-red-800">{error}</AlertDescription>
-              </div>
+            <Alert>
+              <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
 
           {success && (
-            <Alert className="border-green-200 bg-green-50">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-600" />
-                <AlertDescription className="text-green-800">
-                  PIN verified successfully!
-                </AlertDescription>
-              </div>
+            <Alert>
+              <AlertDescription>PIN verified successfully!</AlertDescription>
             </Alert>
           )}
 
-          {/* Helper Text */}
-          <div className="space-y-2">
-            <p className="text-xs text-center text-gray-500">
-              Your PIN is encrypted and secure
-            </p>
-            {!success && (
-              <p 
-                className="text-xs text-center text-green-600 hover:underline cursor-pointer"
-                onClick={handleReset}
-              >
-                Clear PIN
-              </p>
-            )}
-          </div>
+          <p className="text-xs text-center text-green-600 cursor-pointer" onClick={handleReset}>
+            Clear PIN
+          </p>
 
-          {/* Transaction Details */}
-          <div className="pt-4 border-t border-gray-200">
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Amount:</span>
-                <span className="font-semibold">{transactionDetails.amount}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Service:</span>
-                <span className="font-semibold">{transactionDetails.service}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Phone:</span>
-                <span className="font-semibold">{transactionDetails.phone}</span>
-              </div>
+          <div className="pt-4 border-t">
+            <div className="flex justify-between">
+              <span>Amount:</span>
+              <span>{transactionDetails.amount}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Service:</span>
+              <span>{transactionDetails.service}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Phone:</span>
+              <span>{transactionDetails.phone}</span>
             </div>
           </div>
+
         </CardContent>
       </Card>
     </div>
