@@ -10,7 +10,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import type { ElectricityPrepaid } from "@/constants/types/vtPassTypes";
 
 // ALL NIGERIAN STATES
 const nigeriaStates = [
@@ -19,17 +20,20 @@ const nigeriaStates = [
   "Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger",
   "Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara","FCT"
 ];
-
-const ElectricityForm = () => {
+interface ElectricityFormProps {
+  onNext: (data: ElectricityPrepaid) => void;
+}
+const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ElectricityPrepaid>({
     meter_number: "",
     meter_type: "",
-    state: "",
     amount: 0,
     phone: "",
-    email: "",
+    serviceID: "",
+    billersCode: "",
+    variation_code: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -70,7 +74,8 @@ const ElectricityForm = () => {
       toast.success("Electricity purchase order submitted!");
 
       // navigate or send API call here
-
+      // send payload to the next step
+      onNext(formData);
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         error.inner.forEach((err) => toast.error(err.message));
@@ -84,7 +89,15 @@ const ElectricityForm = () => {
 
   return (
     <div className="rounded-3xl py-8 px-8 w-[90%] md:w-[70%] bg-gray-50 min-h-screen mx-auto">
-
+      {/* Back button */}
+        <div className="mb-4">
+          <Link
+            to="/dashboard/personal/user"
+            className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            ← Back to Dashboard
+          </Link>
+        </div>
       <h1 className="text-3xl font-extrabold uppercase text-center mt-4">Buy Electricity</h1>
       <p className="text-center mt-3 text-sm text-gray-700 font-medium">
         Purchase electricity tokens safely and instantly.

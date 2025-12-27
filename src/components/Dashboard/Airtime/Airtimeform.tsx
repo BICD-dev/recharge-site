@@ -13,7 +13,7 @@ import * as Yup from "yup";
 import type { Airtime } from "../../../constants/types/vtPassTypes";
 import { useNavigate } from "react-router-dom";
 import { buyAirtime } from "../../../api/purchase";
-
+import { Link } from "react-router-dom";
 interface AirtimeFormProps {
   onNext: (data: Airtime) => void;
 }
@@ -66,7 +66,15 @@ const AirtimeForm: React.FC<AirtimeFormProps> = ({ onNext })=> {
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 py-6 px-4 ">
       <div className="max-w-2xl mx-auto">
-        
+        {/* Back button */}
+        <div className="mb-4">
+          <Link
+            to="/dashboard/personal/user"
+            className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            ← Back to Dashboard
+          </Link>
+        </div>
         {/* Header Card */}
         <div className="y p-8 mb-6">
           <div className="text-center">

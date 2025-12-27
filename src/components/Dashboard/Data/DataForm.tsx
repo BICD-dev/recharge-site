@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import * as Yup from "yup";
 import type { Data } from "../../../constants/types/vtPassTypes";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getVariations } from "../../../api/purchase";
 interface DataFormProps {
   onNext: (data: Data) => void;
@@ -107,6 +107,15 @@ const handleProviderChange = async (value: string) => {
 
   return (
     <div className="rounded-3xl py-8 px-8 w-[90%] md:w-[70%] bg-gray-50 min-h-screen mx-auto">
+      {/* Back button */}
+        <div className="mb-4">
+          <Link
+            to="/dashboard/personal/user"
+            className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            ← Back to Dashboard
+          </Link>
+        </div>
       <h1 className="text-3xl font-extrabold uppercase text-center mt-4">
         Buy Data Here!
       </h1>

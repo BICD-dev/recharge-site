@@ -15,6 +15,7 @@ import { getVariations, verifySmartCardApi } from "@/api/purchase";
 import type { VerifyResponseContent } from "@/api/purchase";
 import { Alert } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 interface CableFormProps {
   onNext: (data: CableTv) => void;
 }
@@ -179,6 +180,16 @@ const CableForm: React.FC<CableFormProps> = ({ onNext }) => {
 
   return (
     <div className="rounded-3xl py-8 px-8 w-[90%] md:w-[70%] bg-gray-50 min-h-screen mx-auto">
+      {/* Back button */}
+        <div className="mb-4">
+          <Link
+            to="/dashboard/personal/user"
+            className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            ← Back to Dashboard
+          </Link>
+        </div>
+      
       <h1 className="text-3xl font-extrabold uppercase text-center">
         Cable Subscription
       </h1>
