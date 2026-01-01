@@ -15,7 +15,7 @@ import Airtime from "./pages/features/Airtime";
 import Data from "./pages/features/Data";
 import Electricity from "./pages/features/Electricity";
 import Cable from "./pages/features/Cable";
-import Waec from "./pages/features/Waec";
+import Waec from "./pages/features/WaecRegistrationPin";
 
 import NotFound from "./components/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
@@ -26,6 +26,9 @@ import ScrollToDashboardTop from "./components/ScrollToTop/dashboardScroll";
 import TransactionsPage from "./pages/Transactions";
 import Settings from "./pages/Settings";
 import AuthHeader from "./pages/auth/AuthHeader";
+import Onboarding from "./pages/auth/Onboarding";
+import WaecRegistrationPin from "./pages/features/WaecRegistrationPin";
+
 
 function App() {
   return (
@@ -76,6 +79,13 @@ function App() {
           <Footer/>
           </>
         } />
+        <Route path="/onboarding" element={
+          <>
+          <Header/>
+          <Onboarding/>
+          <Footer/>
+          </>
+        }/>
         {/* Dashboard / VTU pages */}
         {/* Protect ALL dashboard routes */}
         <Route
@@ -90,7 +100,7 @@ function App() {
                   <Route path="data" element={<Data />} />
                   <Route path="electricity" element={<Electricity />} />
                   <Route path="cable" element={<Cable />} />
-                  <Route path="waec" element={<Waec />} />
+                  <Route path="waec" element={<WaecRegistrationPin />} />
                   <Route path="personal/user" element={<Wallet />} />
                   <Route path="transactions" element={<TransactionsPage />} />
                   <Route path="settings" element={<Settings />} />

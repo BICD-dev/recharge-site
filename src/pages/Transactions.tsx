@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Select,
@@ -16,11 +16,8 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { motion } from "framer-motion";
-import { getTransactionHistory } from "@/api/wallet";
+import { useWalletTransactions } from "@/hooks/useWallet";
 
-// ----------------------------
-// TYPES
-// ----------------------------
 type TransactionStatus = "pending" | "completed" | "failed" | "success";
 
 interface Transaction {
@@ -29,46 +26,28 @@ interface Transaction {
   amount: string | number;
   status: TransactionStatus;
   purpose: string;
-  created_at: string; // Changed from Date to string since API returns ISO string
+  created_at: string;
 }
 
 type FilterType = "all" | TransactionStatus;
 
 export default function TransactionsPage() {
   const [filter, setFilter] = useState<FilterType>("all");
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [loading, setLoading] = useState(false);
 
-  // Fetch function
-  useEffect(() => {
-    async function fetchTxns() {
-      try {
-        setLoading(true);
-        const response = await getTransactionHistory();
-        console.log("transaction history: ", response.data.data);
-        
-        // Handle the nested array structure from backend
-        const txnData = response.data.data;
-        const flattenedData = Array.isArray(txnData[0]) ? txnData[0] : txnData;
-        
-        setTransactions(flattenedData || []);
-      } catch (error) {
-        console.error("Failed to fetch transactions", error);
-        setTransactions([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchTxns();
-  }, []);
+  const {
+    data,
+    isLoading,
+    isError,
+  } = useWalletTransactions();
 
-  // Filter transactions based on selected filter
-  const filteredTxns = transactions.filter((txn) => {
-    if (filter === "all") return true;
-    return txn.status === filter;
-  });
+  // Normalize backend response structure
+  const transactions: Transaction[] = Array.isArray(data?.data?.[0])
+    ? data.data[0]
+    : data?.data || [];
 
-  console.log("Filtered Transactions: ", filteredTxns);
+  const filteredTxns = transactions.filter((txn) =>
+    filter === "all" ? true : txn.status === filter
+  );
 
   return (
     <motion.div
@@ -78,6 +57,7 @@ export default function TransactionsPage() {
     >
       <h1 className="text-2xl font-bold text-green-700">Transactions</h1>
 
+      {/* FILTER */}
       <Card className="bg-white rounded-2xl shadow-md">
         <CardContent className="p-4 flex items-center gap-4">
           <Select 
@@ -98,14 +78,23 @@ export default function TransactionsPage() {
         </CardContent>
       </Card>
 
-      {/* TRANSACTIONS TABLE */}
+      {/* TABLE */}
       <Card className="bg-white rounded-2xl shadow-md">
         <CardContent className="p-0 overflow-hidden">
-          {loading ? (
+
+          {isLoading && (
             <div className="flex items-center justify-center py-8">
               <p className="text-gray-500">Loading transactions...</p>
             </div>
-          ) : (
+          )}
+
+          {isError && (
+            <div className="flex items-center justify-center py-8">
+              <p className="text-red-600">Failed to load transactions.</p>
+            </div>
+          )}
+
+          {!isLoading && !isError && (
             <Table>
               <TableHeader className="bg-green-700 text-white">
                 <TableRow>
@@ -124,13 +113,17 @@ export default function TransactionsPage() {
                       <TableCell className="font-mono text-xs">
                         {txn.reference}
                       </TableCell>
-                      <TableCell className="capitalize">{txn.purpose}</TableCell>
-                      <TableCell className="font-semibold">
-                        ₦{typeof txn.amount === 'string' 
-                          ? parseFloat(txn.amount).toLocaleString()
-                          : txn.amount?.toLocaleString()
-                        }
+
+                      <TableCell className="capitalize">
+                        {txn.purpose}
                       </TableCell>
+
+                      <TableCell className="font-semibold">
+                        ₦{typeof txn.amount === "string"
+                          ? parseFloat(txn.amount).toLocaleString()
+                          : txn.amount?.toLocaleString()}
+                      </TableCell>
+
                       <TableCell>
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-semibold capitalize ${
@@ -144,6 +137,7 @@ export default function TransactionsPage() {
                           {txn.status}
                         </span>
                       </TableCell>
+
                       <TableCell>
                         {txn.created_at
                           ? new Date(txn.created_at).toLocaleString()

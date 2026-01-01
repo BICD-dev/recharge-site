@@ -82,10 +82,7 @@ const Login = () => {
   <div className="flex w-[90%] md:w-[70%] lg:w-[60%] bg-white rounded-3xl overflow-hidden shadow-lg">
 
     {/* LEFT SIDE - IMAGE PANEL (Desktop Only) */}
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+    <div
       className="hidden md:flex md:w-1/2 bg-contain bg-center"
       style={{
         // backgroundImage: `url(${loginImage})`
@@ -98,13 +95,10 @@ const Login = () => {
           Stay connected and manage your account effortlessly. Log in to continue your payments, purchases, and everyday transactions without stress.
         </p>
       </div>
-    </motion.div>
+    </div>
 
     {/* RIGHT SIDE - LOGIN FORM */}
-    <motion.div
-      initial={{ x: -200, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+    <div
       className="w-full md:w-1/2 px-8 py-10"
     >
       <h1 className="text-3xl font-bold uppercase text-center">Login</h1>
@@ -161,7 +155,7 @@ const Login = () => {
           </Link>
         </p>
       </form>
-    </motion.div>
+    </div>
 
   </div>
 </div>

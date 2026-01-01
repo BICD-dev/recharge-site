@@ -3,19 +3,8 @@ import { toast } from "sonner";
 import { User, Lock, Bell, Shield, CreditCard, LogOut, Key } from "lucide-react";
 import ProfilePage from "@/components/Dashboard/Settings/ProfilePage";
 import TransactionPinSetup from "@/components/Dashboard/TransactionPin/TransactionPinSetup";
-import { jwtDecode } from "jwt-decode"; // Install: npm install jwt-decode
-import { fetchUser, setPin } from "@/api/user";
 import BalanceCard from "@/components/Dashboard/Wallet/BalanceCard";
-
-interface DecodedToken {
-  userId: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  role: string;
-  transaction_pin_set: boolean;
-}
+import { useSetPin, useUser } from "@/hooks/useUser";
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState("profile");
@@ -25,23 +14,14 @@ const Settings = () => {
     push: false,
     sms: true,
   });
+  const { mutateAsync: setTransactionPin, isPending } = useSetPin();
+  const { data: userData, isLoading, isError } = useUser();
 
-  // Check if transaction PIN is set from token
-  useEffect( () => {
-    const fetchUserDetails = async ()=>{
-      const result = await fetchUser();
-      if(result.data.data){
-        try {
-          setHasPinSet(result.data.data?.transaction_pin_set);
-        } catch (error:any) {
-          console.error("Error getting user detals:", error);
-          toast.error(error)
-        }
-      }
-
+  useEffect(() => {
+    if (userData) {
+      setHasPinSet(Boolean(userData.transaction_pin_set));
     }
-    fetchUserDetails()
-    }, []);
+  }, [userData]);
 
   const tabs = [
     { id: "profile", label: "Profile", icon: User },
@@ -58,21 +38,19 @@ const Settings = () => {
 
   const handleSetPin = async (pin: string) => {
     try {
-      // Call API to set the PIN
-      const response = await setPin(pin);
-      // show success message
+      await setTransactionPin(pin);
+
       toast.success("Transaction PIN set successfully!");
+
+      setHasPinSet(true);
     } catch (error: any) {
-      throw new Error(error.message || "Failed to set PIN");
+      toast.error(error?.message || "Failed to set PIN");
     }
   };
-
 
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
             Settings
@@ -83,8 +61,6 @@ const Settings = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          
-          {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-sm p-2">
               <nav className="space-y-1">
@@ -107,7 +83,6 @@ const Settings = () => {
                 })}
               </nav>
 
-              {/* Logout Button */}
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-all">
                   <LogOut size={20} />
@@ -117,15 +92,10 @@ const Settings = () => {
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="lg:col-span-3">
             <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
-              
-              {/* Profile Settings */}
-              {activeTab === "profile" && (
-                <ProfilePage />
-              )}
-              {/* Transaction PIN */}
+              {activeTab === "profile" && <ProfilePage />}
+
               {activeTab === "transaction-pin" && (
                 <div className="space-y-6">
                   <div>
@@ -134,7 +104,7 @@ const Settings = () => {
                       Secure your transactions with a 4-digit PIN
                     </p>
                   </div>
-                  
+
                   <TransactionPinSetup 
                     onPinSet={handleSetPin}
                     hasPinSet={hasPinSet}
@@ -142,7 +112,6 @@ const Settings = () => {
                 </div>
               )}
 
-              {/* Security Settings */}
               {activeTab === "security" && (
                 <div className="space-y-6">
                   <div>
@@ -196,7 +165,6 @@ const Settings = () => {
                 </div>
               )}
 
-              {/* Notifications Settings */}
               {activeTab === "notifications" && (
                 <div className="space-y-6">
                   <div>
@@ -263,7 +231,6 @@ const Settings = () => {
                 </div>
               )}
 
-              {/* Privacy Settings */}
               {activeTab === "privacy" && (
                 <div className="space-y-6">
                   <div>
@@ -299,15 +266,12 @@ const Settings = () => {
                 </div>
               )}
 
-              {/* Billing Settings */}
               {activeTab === "billing" && (
                 <div className="space-y-6">
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-1">Billing & Payment</h2>
                     <p className="text-sm text-gray-600">Manage your payment methods and billing history</p>
                   </div>
-
-                  {/* <BalanceCard amount={1234}/> */}
 
                   <div className="space-y-4">
                     <h3 className="font-semibold text-gray-900">Payment Methods</h3>
