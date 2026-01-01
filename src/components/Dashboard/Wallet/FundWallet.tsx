@@ -2,53 +2,62 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
-import { fundWallet, verifyFunds } from "@/api/wallet";
+import { useFundWallet, useVerifyFunds } from "@/hooks/useWallet";
+
 interface FundWalletProps {
-  show: boolean;               // `show` determines if the modal is visible
-  onClose: () => void;         // `onClose` is a callback function with no arguments
+  show: boolean;
+  onClose: () => void;
 }
 
 const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
   const [email, setEmail] = useState("");
   const [amount, setAmount] = useState<number | "">("");
-  const [loading, setLoading] = useState(false);
   const presetAmounts = [1000, 2000, 5000, 10000, 50000, 100000];
-//   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [reference, setReference] = useState(searchParams.get("reference"));
 
-  const handleFunding = async (e:React.FormEvent<HTMLFormElement>) => {
+  const [searchParams] = useSearchParams();
+  const reference = searchParams.get("reference");
+
+  // 🔥 React-Query Mutations
+  const fundMutation = useFundWallet();
+  const verifyMutation = useVerifyFunds();
+
+  // ⛽ Fund Wallet Handler
+  const handleFunding = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true)
-    console.log("entered here")
+
+    if (!amount || Number(amount) <= 0) {
+      toast.error("Enter a valid amount");
+      return;
+    }
+
     try {
-      const result = await fundWallet({ email, amount });
-      // console.log("result: ", result)
-      // redirect on success
-      toast.info("Redirecting to paystack");
-      setLoading(false);
-      window.location.href = result.data.data?.authorization_url;
-    } catch (error: any) {
-      console.log("Error funding wallet:", error);
-      toast.error(error.message || "An error occurred");
-      setLoading(false);
+      const res = await fundMutation.mutateAsync({
+        email,
+        amount
+      });
+
+      const url = res?.data?.data?.authorization_url;
+      if (!url) throw new Error("Payment URL not returned");
+
+      toast.info("Redirecting to Paystack...");
+      window.location.href = url;
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message || "Unable to fund wallet");
     }
   };
-// handle reference when paystack redirects back
+
+  // 🔍 Verify Payment on Redirect
   useEffect(() => {
     if (!reference) return;
-  
-    const verifyPayment = async () => {
-      try {
-        const result = await verifyFunds(reference);
-        toast.success(result.data.message || "Wallet funded successfully!");
-      } catch (error: any) {
-        console.error("Payment could not be verified:", error);
-        toast.error(error?.message || "An error occurred");
-      }
-    };
-  
-    verifyPayment();
+
+    verifyMutation.mutate(reference, {
+      onSuccess: (res: any) => {
+        toast.success(res?.data?.message || "Wallet funded successfully");
+      },
+      onError: (err: any) => {
+        toast.error(err?.response?.data?.message || "Verification failed");
+      },
+    });
   }, [reference]);
 
   return (
@@ -60,15 +69,6 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          {/* <Toaster
-    position="top-center"
-    theme="light"
-    toastOptions={{
-      className: "bg-white text-black border border-green-600",
-      duration: 4000,
-    }}
-/> */}
-
           <motion.div
             className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative"
             initial={{ scale: 0.95 }}
@@ -76,23 +76,24 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
             exit={{ scale: 0.95 }}
           >
             <button
-              className="absolute top-2 right-3 text- text-gray-400 hover:text-white hover:bg-red-500 text-xl cursor-pointer"
+              className="absolute top-2 right-3 text-gray-400 hover:bg-red-500 hover:text-white rounded px-2"
               onClick={onClose}
             >
               &times;
             </button>
 
             <h2 className="text-2xl font-bold mb-4 text-green-700 text-center">
-              Fund you Wallet
+              Fund your Wallet
             </h2>
 
+            {/* QUICK AMOUNTS */}
             <div className="grid grid-cols-2 gap-3 mb-4">
               {presetAmounts.map((amt) => (
                 <button
                   key={amt}
                   onClick={() => setAmount(amt)}
-                  className={`p-2 rounded-lg font-semibold text-center ${
-                    amount == amt
+                  className={`p-2 rounded-lg font-semibold ${
+                    amount === amt
                       ? "bg-green-600 text-white"
                       : "border border-gray-300"
                   }`}
@@ -100,22 +101,14 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
                   ₦{amt.toLocaleString()}
                 </button>
               ))}
+
               <input
                 type="number"
                 value={amount}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  const value = e.target.value;
-
-                  // Allow empty string
-                  if (value === "") {
-                    setAmount("");
-                    return;
-                  }
-
-                  // Convert to number
-                  setAmount(Number(value));
-                }}
-                placeholder="Name your own amount, maybe ₦25,000?"
+                onChange={(e) =>
+                  setAmount(e.target.value === "" ? "" : Number(e.target.value))
+                }
+                placeholder="Enter custom amount"
                 className="col-span-2 border rounded p-2 mt-2"
               />
             </div>
@@ -124,7 +117,6 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
               <input
                 type="email"
                 placeholder="Your Email (optional)"
-                
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full border p-3 rounded focus:ring-2 focus:ring-green-500"
@@ -132,10 +124,10 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={fundMutation.isPending}
                 className="w-full bg-green-600 hover:bg-green-700 text-white p-3 rounded font-semibold flex justify-center"
               >
-                {loading ? (
+                {fundMutation.isPending ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
                   `Fund ₦${amount || 0}`

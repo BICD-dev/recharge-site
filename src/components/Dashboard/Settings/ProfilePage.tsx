@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-interface JwtPayload {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  [key: string]: any; // for other properties
-}
+import { useUser } from "@/hooks/useUser"; 
+
 export default function ProfilePage() {
+  const { data: userData, isLoading, isError } = useUser();
+
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -20,133 +16,110 @@ export default function ProfilePage() {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Sync fetched user -> local state
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decoded = jwtDecode<JwtPayload>(token);
-      const { first_name, last_name, email, phone } = decoded;
+    if (userData) {
+      setUser({
+        firstName: userData.first_name ?? "",
+        lastName: userData.last_name ?? "",
+        email: userData.email ?? "",
+        phone: userData.phone ?? "",
+      });
 
-      setUser({ firstName: first_name || "", lastName: last_name || "", email, phone });
-      setPhone(phone);
+      setPhone(userData.phone ?? "");
     }
-  }, []);
+  }, [userData]);
 
   const handleUpdatePhone = async () => {
     setLoading(true);
     try {
-      // Example API call
+      // Example API call placeholder
       await new Promise((res) => setTimeout(res, 1200));
 
       setUser((prev) => ({ ...prev, phone }));
       toast.success("Phone number updated successfully");
     } catch (error) {
-        console.error("Error updating phone number:", error);
+      console.error("Error updating phone number:", error);
       toast.error("Could not update phone number");
     } finally {
       setLoading(false);
     }
   };
 
+  if (isLoading) {
+    return <p>Loading profile…</p>;
+  }
+
+  if (isError || !userData) {
+    return <p>Unable to load user profile.</p>;
+  }
+
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className=" w-full flex flex-col gap-6">
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-1">Profile Information</h2>
-                    <p className="text-sm text-gray-600">Update your personal details</p>
-                  </div>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full flex flex-col gap-6">
 
-                  <div className="flex items-center gap-6">
-                    <div className="w-20 h-20 bg-linear-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                      {user.firstName.charAt(0).toUpperCase()}
-                    </div>
-                    <button className="px-4 py-2 border-2 border-green-600 text-green-600 rounded-lg font-medium hover:bg-green-50 transition-all">
-                      Change Photo
-                    </button>
-                  </div>
+      <div>
+        <h2 className="text-2xl font-bold text-gray-900 mb-1">Profile Information</h2>
+        <p className="text-sm text-gray-600">Update your personal details</p>
+      </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-700">First Name</label>
-                      <input
-                        type="text"
-                        value={user.firstName} 
-                        disabled
-                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all bg-gray-100"
-                      />
-                    </div>
+      <div className="flex items-center gap-6">
+        <div className="w-20 h-20 bg-linear-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+          {user.firstName.charAt(0).toUpperCase()}
+        </div>
+        <button className="px-4 py-2 border-2 border-green-600 text-green-600 rounded-lg font-medium hover:bg-green-50 transition-all">
+          Change Photo
+        </button>
+      </div>
 
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-700">Last Name</label>
-                      <input
-                        type="text"
-                        value={user.lastName} 
-                        disabled
-                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all bg-gray-100"
-                      />
-                    </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700">First Name</label>
+          <input
+            type="text"
+            value={user.firstName}
+            disabled
+            className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg bg-gray-100"
+          />
+        </div>
 
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-700">Email</label>
-                      <input
-                        type="email"
-                        value={user.email} 
-                        disabled
-                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all bg-gray-100"
-                      />
-                    </div>
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700">Last Name</label>
+          <input
+            type="text"
+            value={user.lastName}
+            disabled
+            className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg bg-gray-100"
+          />
+        </div>
 
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-700">Phone Number</label>
-                      <input
-                        type="tel"
-                        value={user.phone} 
-                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all"
-                      />
-                    </div>
-                  </div>
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700">Email</label>
+          <input
+            type="email"
+            value={user.email}
+            disabled
+            className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg bg-gray-100"
+          />
+        </div>
 
-                  <button
-                    onClick={handleUpdatePhone}
-                    className="w-full md:w-auto px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-green-600/30 cursor-pointer"
-                  >
-                    Save Changes
-                  </button>
-                
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700">Phone Number</label>
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg"
+          />
+        </div>
+      </div>
 
-      {/* <Card className="rounded-2xl shadow-md bg-white">
-        <CardHeader>
-          <CardTitle className="text-green-700">Personal Information</CardTitle>
-        </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label className="text-green-700">First Name</Label>
-            <Input value={user.firstName} disabled className="bg-gray-200" />
-          </div>
-          <div>
-            <Label className="text-green-700">Last Name</Label>
-            <Input value={user.lastName} disabled className="bg-gray-200" />
-          </div>
-          <div>
-            <Label className="text-green-700">Email</Label>
-            <Input value={user.email} disabled className="bg-gray-200" />
-          </div>
-          <div>
-            <Label className="text-green-700">Phone Number</Label>
-            <Input value={phone} onChange={(e) => setPhone(e.target.value)} className="border-green-700" />
-          </div>
-
-          <div className="md:col-span-2 flex justify-end">
-            <Button
-              onClick={handleUpdatePhone}
-              disabled={loading}
-              className="bg-green-700 text-white hover:bg-green-800 cursor-pointer"
-            >
-              {loading ? "Updating..." : "Update Phone Number"}
-            </Button>
-          </div>
-        </CardContent>
-      </Card> */}
-
-      
+      <button
+        onClick={handleUpdatePhone}
+        disabled={loading}
+        className="w-full md:w-auto px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all"
+      >
+        {loading ? "Updating..." : "Save Changes"}
+      </button>
     </motion.div>
   );
 }

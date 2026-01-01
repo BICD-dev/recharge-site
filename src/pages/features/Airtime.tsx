@@ -2,12 +2,13 @@ import AirtimeForm from "@/components/Dashboard/Airtime/Airtimeform";
 import TransactionPinInput from "@/components/Dashboard/TransactionPin/TransactionPinInput";
 import StepIndicator from "@/components/StepIndicator";
 import { useState } from "react";
-import { buyAirtime } from "@/api/purchase";
 import { toast } from "sonner";
-import { data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SuccessPage from "@/components/Dashboard/Status_pages/SuccessPage";
 import FailedPage from "@/components/Dashboard/Status_pages/FailurePage";
 import LoadingPage from "@/components/Dashboard/Status_pages/LoadingPage";
+import { useBuyAirtime } from "@/hooks/usePurchase";
+
 interface AirtimeData {
   serviceID: string;
   phone: string;
@@ -25,6 +26,8 @@ const Airtime = () => {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
+  const { mutateAsync: purchaseAirtime } = useBuyAirtime();
+
   const handleAirtimeNext = (data: any) => {
     setAirtimeData(data);
     setStep(2);
@@ -39,17 +42,19 @@ const Airtime = () => {
         pin: pinValue,
       };
 
-      console.log("Final Payload to Backend:", payload);
-      setLoading(true);
-      const result = await buyAirtime(payload);
-      setStatus(result.data.status === "success" ? "success" : "failure");
+      const result = await purchaseAirtime(payload);
+      setStatus(result.data?.status === "success" ? "success" : "failure");
       setError(
-        result.data.status === "failure" && result.data.message
+        result.data?.status === "failure" && result.data?.message
           ? result.data.message
           : ""
       );
-      toast.success(result.data.message || "Airtime purchased successfully!");
-      setLoading(false);
+
+      // show backend message if present (hook already shows a toast)
+      if (result.data?.message) {
+        toast(result.data.message);
+      }
+
       setStep(3);
     } catch (error: any) {
       toast.error(
@@ -82,9 +87,7 @@ const Airtime = () => {
         />
       )}
 
-      {loading && (
-        <LoadingPage purpose="Airtime" formData={airtimeData} />
-      )}
+      {loading && <LoadingPage purpose="Airtime" formData={airtimeData} />}
 
       {step === 3 && !loading && (status === "success" ? (
         <SuccessPage
@@ -101,8 +104,7 @@ const Airtime = () => {
           onGoHome={() => navigate("/dashboard")}
           onRetry={() => setStep(1)}
         />
-      ) )}
-
+      ))}
     </div>
   );
 };

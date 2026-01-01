@@ -17,6 +17,7 @@ const Register = () => {
     password: "",
     conf_password: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -30,8 +31,9 @@ const Register = () => {
       .matches(/^\d{10,15}$/, "Invalid phone number")
       .required("Phone is required"),
     password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required(),
+      .min(8, "Password must be at least 8 characters")
+      .matches(/^[A-Za-z0-9]{8,}$/,"Password not strong, only alphanumeric characters allowed")
+      .required("Password is required"),
     conf_password: Yup.string()
       .oneOf([Yup.ref("password")], "Passwords must match")
       .required("Confirm password is required"),
@@ -43,47 +45,102 @@ const Register = () => {
       ...prev,
       [name]: value,
     }));
+    
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  // Validate individual field on blur
+  const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    try {
+      await schema.validateAt(name, { [name]: value });
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        setErrors((prev) => ({
+          ...prev,
+          [name]: err.message,
+        }));
+      }
+    }
+  };
+
+  // Check if form is valid
+  const isFormValid = () => {
+    return (
+      formData.firstname.trim() !== "" &&
+      formData.lastname.trim() !== "" &&
+      formData.email.trim() !== "" &&
+      formData.phone.trim() !== "" &&
+      formData.password.trim() !== "" &&
+      formData.conf_password.trim() !== "" &&
+      Object.values(errors).every((error) => error === "")
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // i hvae to change the logic here... build the backend first
+
     try {
+      // Validate entire form
       await schema.validate(formData, { abortEarly: false });
+      setErrors({});
 
       setLoading(true);
       const body = {
         first_name: formData.firstname,
         last_name: formData.lastname,
-        phone:formData.phone,
+        phone: formData.phone,
         email: formData.email,
-        password: formData.password
-      }
+        password: formData.password,
+      };
       const response = await register(body);
 
-        const verify_token = response.data.data?.verify_token;
-        toast.success(response.data?.message);
-        // put a timer for this
-        setTimeout(() => {
-          toast.info(response.data.data?.verification); // show verificxion message
-        }, 1500);
-        // display response data
-        console.log("Register response:", response.data);
-        // navigate to the verify otp page, thing is that we need to store the email...
-        // navigate(`/verify-otp/verify_token=${verify_token}`);
-        navigate(
-          `/verify-otp?verify_token=${encodeURIComponent(response.data.data?.verify_token || "")}`
-        );
+      const verify_token = response.data.data?.verify_token;
+      toast.success(response.data?.message);
+      
+      // Put a timer for this
+      setTimeout(() => {
+        toast.info(response.data.data?.verification);
+      }, 1500);
+      
+      // Display response data
+      console.log("Register response:", response.data);
+      
+      // Navigate to the verify otp page
+      navigate(
+        `/verify-otp?verify_token=${encodeURIComponent(
+          response.data.data?.verify_token || ""
+        )}`
+      );
     } catch (err) {
-      // only handle HTTP / network errors
-      if ((err as any)?.response) {
-        const status = (err as any).response.status;
+      // Handle Yup validation errors
+      if (err instanceof Yup.ValidationError) {
+        const validationErrors: Record<string, string> = {};
+        err.inner.forEach((error) => {
+          if (error.path) {
+            validationErrors[error.path] = error.message;
+          }
+        });
+        setErrors(validationErrors);
+        toast.error("Please fix the errors in the form");
+      }
+      // Handle HTTP / network errors
+      else if ((err as any)?.response) {
         const message =
           (err as any).response.data?.message || "Something went wrong";
-
         toast.error(message);
       } else {
-        // fallback for network errors
+        // Fallback for network errors
         toast.error("Network error. Please try again.");
       }
     } finally {
@@ -95,10 +152,7 @@ const Register = () => {
     <div className="min-h-screen mt-16 md:mt-12 w-full flex justify-center items-center bg-gray-100 text-sm text-gray-700">
       <div className="w-full max-w-5xl bg-white rounded-3xl border shadow-md overflow-hidden grid grid-cols-1 md:grid-cols-2">
         {/* LEFT — FORM WITH ANIMATION */}
-        <motion.div
-          initial={{ x: 200, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+        <div
           className="py-10 px-8 md:px-12"
         >
           <h1 className="text-3xl font-bold uppercase text-center mb-2">
@@ -116,10 +170,19 @@ const Register = () => {
                 <input
                   type="text"
                   name="firstname"
+                  value={formData.firstname}
                   onChange={handleChange}
-                  className="px-4 py-2 border border-gray-500 rounded-sm"
+                  onBlur={handleBlur}
+                  className={`px-4 py-2 border rounded-sm ${
+                    errors.firstname ? "border-red-500" : "border-gray-500"
+                  }`}
                   placeholder="Enter your first name"
                 />
+                {errors.firstname && (
+                  <span className="text-red-500 text-xs mt-1">
+                    {errors.firstname}
+                  </span>
+                )}
               </span>
 
               <span className="flex flex-col gap-1 w-full">
@@ -127,10 +190,19 @@ const Register = () => {
                 <input
                   type="text"
                   name="lastname"
+                  value={formData.lastname}
                   onChange={handleChange}
-                  className="px-4 py-2 border border-gray-500 rounded-sm"
+                  onBlur={handleBlur}
+                  className={`px-4 py-2 border rounded-sm ${
+                    errors.lastname ? "border-red-500" : "border-gray-500"
+                  }`}
                   placeholder="Enter your last name"
                 />
+                {errors.lastname && (
+                  <span className="text-red-500 text-xs mt-1">
+                    {errors.lastname}
+                  </span>
+                )}
               </span>
             </div>
 
@@ -141,10 +213,19 @@ const Register = () => {
                 <input
                   type="email"
                   name="email"
+                  value={formData.email}
                   onChange={handleChange}
-                  className="px-4 py-2 border border-gray-500 rounded-sm"
+                  onBlur={handleBlur}
+                  className={`px-4 py-2 border rounded-sm ${
+                    errors.email ? "border-red-500" : "border-gray-500"
+                  }`}
                   placeholder="Enter Email Address"
                 />
+                {errors.email && (
+                  <span className="text-red-500 text-xs mt-1">
+                    {errors.email}
+                  </span>
+                )}
               </span>
 
               <span className="flex flex-col gap-1 w-full">
@@ -152,10 +233,19 @@ const Register = () => {
                 <input
                   type="text"
                   name="phone"
+                  value={formData.phone}
                   onChange={handleChange}
-                  className="px-4 py-2 border border-gray-500 rounded-sm"
+                  onBlur={handleBlur}
+                  className={`px-4 py-2 border rounded-sm ${
+                    errors.phone ? "border-red-500" : "border-gray-500"
+                  }`}
                   placeholder="Enter phone number"
                 />
+                {errors.phone && (
+                  <span className="text-red-500 text-xs mt-1">
+                    {errors.phone}
+                  </span>
+                )}
               </span>
             </div>
 
@@ -165,8 +255,12 @@ const Register = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
+                value={formData.password}
                 onChange={handleChange}
-                className="px-4 py-2 border border-gray-500 rounded-sm"
+                onBlur={handleBlur}
+                className={`px-4 py-2 border rounded-sm ${
+                  errors.password ? "border-red-500" : "border-gray-500"
+                }`}
                 placeholder="Password"
               />
               <span
@@ -175,6 +269,11 @@ const Register = () => {
               >
                 {showPassword ? <FiEyeOff /> : <FiEye />}
               </span>
+              {errors.password && (
+                <span className="text-red-500 text-xs mt-1">
+                  {errors.password}
+                </span>
+              )}
             </span>
 
             {/* CONFIRM PASSWORD */}
@@ -183,8 +282,12 @@ const Register = () => {
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 name="conf_password"
+                value={formData.conf_password}
                 onChange={handleChange}
-                className="px-4 py-2 border border-gray-500 rounded-sm"
+                onBlur={handleBlur}
+                className={`px-4 py-2 border rounded-sm ${
+                  errors.conf_password ? "border-red-500" : "border-gray-500"
+                }`}
                 placeholder="Confirm Password"
               />
               <span
@@ -193,13 +296,18 @@ const Register = () => {
               >
                 {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
               </span>
+              {errors.conf_password && (
+                <span className="text-red-500 text-xs mt-1">
+                  {errors.conf_password}
+                </span>
+              )}
             </span>
 
             {/* BUTTON */}
             <button
-              className="uppercase text-white bg-green-700 py-5 px-10 text-[0.8rem] rounded-sm cursor-pointer disabled:opacity-50"
+              className="uppercase text-white bg-green-700 py-5 px-10 text-[0.8rem] rounded-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               type="submit"
-              disabled={loading}
+              disabled={loading || !isFormValid()}
             >
               {loading ? "Registering..." : "Sign Up"}
             </button>
@@ -211,13 +319,10 @@ const Register = () => {
               </Link>
             </p>
           </form>
-        </motion.div>
+        </div>
 
         {/* RIGHT COLUMN — STATIC OR WITH SUBTLE FADE */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
+        <div
           className="hidden md:flex flex-col justify-center items-center bg-green-700 text-white p-10"
         >
           <h1 className="text-3xl font-bold mb-4 text-center">
@@ -226,7 +331,7 @@ const Register = () => {
           <p className="text-center text-white opacity-90">
             Secure, fast, and reliable data solutions for your everyday needs.
           </p>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

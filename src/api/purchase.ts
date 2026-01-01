@@ -118,7 +118,7 @@ export const validateElectricityMeter = async (data: ElectricityMeterValidation)
   return response;
 };
 
-// Education
+// Education -> waec reg pin
 export const buyWaecPin = async (data: Education_Waec_PinCheck) => {
   const response = await axiosClient.post(vtPassUrl.waecPinUrl, data);
   return response;

@@ -51,7 +51,7 @@ interface sendCodeResponse {
 }
 
 interface verifyCodeResponse {
-  data: { status: string; code: number; message: string };
+  data: { status: string; code: number; message: string; data:{token:string}};
 }
 export const login = async (data: LoginFormTypes) => {
   const response: loginResponse = await axiosClient.post(

@@ -51,15 +51,28 @@ const VerifyCode = () => {
         //   verify the code
         const result = await verifyCode(formData);
           toast.success(result.data.message);
-          navigate("/login");
+          // set token in the local storage
+          localStorage.setItem(token, result.data.data.token)
+          // navigate to the onboarding page
+          navigate("/onboarding");
       } else{
         toast.error("Invalid or missing verification token.");
       }
       setLoading(false);
-    } catch (err) {
-      toast.error(
-        err instanceof Yup.ValidationError ? err.message : "An error occurred"
-      );
+    } catch (err:any) {
+      const errorAny = err as any;
+
+      // Handle Yup validation errors
+      if (errorAny?.name === "ValidationError" && Array.isArray(errorAny.errors)) {
+        errorAny.errors.forEach((e: string) => toast.error(e));
+      }
+      // Handle HTTP / API errors (e.g., axios style)
+      else if (errorAny?.response?.status === 403 || errorAny?.code === 403) {
+        toast.error(errorAny?.response?.data?.message || errorAny?.message || "invalid code");
+        
+      } else {
+        toast.error(errorAny?.response?.data?.message || errorAny?.message || "Network error. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

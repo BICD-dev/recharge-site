@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchUser, setPin } from '@/api/user';
+import { fetchUser, onboardUser, setPin } from '@/api/user';
 import { toast } from 'react-hot-toast';
 
 // Query Keys
@@ -34,6 +34,20 @@ export function useSetPin() {
     },
     onError: (err: any) => {
       toast.error(err?.response?.data?.message || 'Failed to set PIN');
+    },
+  });
+}
+
+export function useUserOnboard(){
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data:{username:string,avatar_url:string}) => onboardUser(data),
+    onSuccess: (res)=>{
+      toast.success(res.data?.message ?? 'User Onboarding successfully')
+    },
+    onError: (err: any) => {
+      toast.error(err?.response?.data?.message || 'Failed to onboard user');
     },
   });
 }

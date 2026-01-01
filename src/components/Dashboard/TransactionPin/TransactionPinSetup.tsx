@@ -76,9 +76,9 @@ const TransactionPinSetup = ({ onPinSet, hasPinSet }: TransactionPinSetupProps) 
     try {
       await onPinSet(pinValue);
       setStep("success");
-      setTimeout(() => {
-        window.location.reload(); // Refresh to update token
-      }, 2000);
+      // setTimeout(() => {
+      //   // window.location.reload(); // Refresh to update token
+      // }, 2000);
     } catch (error: any) {
       toast.error(error.message || "Failed to set PIN");
     } finally {
