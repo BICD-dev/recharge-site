@@ -26,6 +26,8 @@ interface UserResponse {
       phone: string;
       is_active: boolean;
       transaction_pin_set: boolean;
+      avatar_url?: string;
+      is_onboarded: boolean;
     };
   };
 }

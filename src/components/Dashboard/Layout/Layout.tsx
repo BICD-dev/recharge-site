@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Sidebar />
 
       <div className="flex flex-col flex-1 bg-gray-50 min-w-0">
-        <Topbar userName={userName} />
+        <Topbar userName={userName} userAvatarUrl={user?.avatar_url} />
 
         <main className="flex-1 p-3 md:p-6 overflow-y-auto overflow-x-hidden">
           {children}
