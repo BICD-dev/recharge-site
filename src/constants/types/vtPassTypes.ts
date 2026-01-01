@@ -55,6 +55,8 @@ export interface Education_Waec_PinCheck {
     quantity?:number,
     amount?:number, //use amount to validate if the user can pay for the service. done in the backend though
     phone:string,
+    variation_amount:string;
+    
 }
 
 export interface Education_Jamb_Profile_verification {

@@ -17,7 +17,7 @@ export const vtPassUrl = {
     cableUrl:"/purchase/cable-tv",
     electricityUrl:"/purchase/electricity",
     electricityValidateUrl:"/purchase/electricity/validate",
-    waecPinUrl:"/purchase/education/waec/buy",
+    waecPinUrl:"/purchase/education/waec-reg",
     jambPinUrl:"/purchase/education/jamb/buy",
     jambValidationUrl:"/purchase/education/jamb/validate",
     queryServiceUrl:"/purchase/query-service",
@@ -26,6 +26,7 @@ export const vtPassUrl = {
 } as const;
 
 export const userUrl = {
-    getUser:"/user",
+    getUser:"/user/me",
     setPinUrl:"/user/set-pin",
+    onboardUrl:"/user/onboard",
 } as const;
