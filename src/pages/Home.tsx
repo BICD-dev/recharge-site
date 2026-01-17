@@ -6,7 +6,7 @@ import Portfolio from '../components/Landing/Home/portfolio'
 import Upgrade from '../components/Landing/Home/upgrade'
 import Perks from '../components/Landing/Home/perks'
 // import BrandLogo from '../components/Home/BrandLogo'
-import GlobalReach from '../components/Landing/Home/GlobalReach'
+// import GlobalReach from '../components/Landing/Home/GlobalReach'
 import Faq from '../components/Landing/Home/Faq'
 
 
@@ -15,7 +15,7 @@ export default function Home() {
     <main className="overflow-x-hidden">
       <Hero />
       <Work />
-      <GlobalReach/>
+      {/* <GlobalReach/> */}
       <TimeLine />
       <Platform />
       <Portfolio />

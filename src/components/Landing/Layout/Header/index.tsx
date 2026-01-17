@@ -13,7 +13,7 @@ const Header: React.FC = () => {
   const [navbarOpen, setNavbarOpen] = useState(false)
 
   return (
-    <header className={`fixed top-0 z-50 w-full transition-all bg-darkmode pt-3 pb-3`}>
+    <header className={`fixed top-0 z-50 w-full transition-all bg-dark_grey/70 backdrop-blur-3xl pt-3 pb-3`}>
       <div className="container px-4 flex items-center justify-between">
 
         {/* LOGO */}

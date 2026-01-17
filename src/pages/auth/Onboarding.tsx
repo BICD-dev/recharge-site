@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TransactionPinSetup from "@/components/Dashboard/TransactionPin/TransactionPinSetup";
 import AvatarSelection from "@/components/Dashboard/Onboarding/AvatarSelection";
 import { toast } from "react-hot-toast";
-import { useSetPin, useUserOnboard } from "@/hooks/useUser";
+import { useSetPin, useUser, useUserOnboard } from "@/hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiCheck, FiLock, FiUser, FiImage } from "react-icons/fi";
@@ -215,6 +215,30 @@ const Onboarding: React.FC = () => {
   const { mutateAsync: handleOnboarding } = useUserOnboard();
   const navigate = useNavigate();
 
+  // get user details 
+  const {data:userData, isLoading, isError} = useUser()
+  // check if the user is onboarded when the page is rendered
+  // if user is already onboarded, navigate to the dashboard
+  // else continue
+  // For the user to be directed here an access token has already been generated thus they are able to access the dashbard
+  useEffect(()=>{
+    const userOnboardingComplete = userData?.is_onboarded;
+    if(userOnboardingComplete){
+      // console.log("user aready onboarded")
+      toast.success("User Onboarding completed already")
+      navigate("/dashboard")
+    } else{
+    // console.log("user not onboarded")
+      // what if transaction pin is already set?
+      // in that case move to the next step 
+      // only transaction pin is being checked as it is the only onboarding element that ca be set independently
+      if(userData?.transaction_pin_set){
+        setStep(2)
+      }
+      return;
+    }
+  },[userData, navigate])
+
   const handlePinNext = () => {
     setStep(2);
   };
@@ -258,7 +282,18 @@ const Onboarding: React.FC = () => {
       setSubmitting(false);
     }
   };
-
+  if(isLoading){
+    return (<div>
+      User data is currently being fetched
+    </div>)
+  }
+if(isError){
+  return (
+    <div>
+      User data not gotten successfully
+    </div>
+  )
+}
   return (
     <div className="mt-20 min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50 flex flex-col items-center justify-center px-4 py-8">
       <motion.div

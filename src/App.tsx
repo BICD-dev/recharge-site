@@ -63,12 +63,12 @@ function App() {
         {/* Auth pages */}
         <Route path="/login" element={
           <>
-          <AuthHeader logoUrl="/images/logo/logo8.png" />
+          <AuthHeader logoUrl="/images/logo/logo6.png" />
         <Login />
         </> } />
         <Route path="/register" element={
           <>
-          <AuthHeader logoUrl="/images/logo/logo8.png"/>
+          <AuthHeader logoUrl="/images/logo/logo6.png"/>
           <Register />
           </>}
           />

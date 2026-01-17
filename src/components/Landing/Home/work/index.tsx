@@ -36,24 +36,24 @@ const services = [
 
 
   return (
-    <section className='' id='work'>
+    <section className='py-9' id='work'>
       <div className='container px-4 mx-auto lg:max-w-(--breakpoint-xl)'>
         <div ref={ref} className='grid grid-cols-12 items-center'>
           <motion.div
             {...bottomAnimation}
             className='lg:col-span-7 col-span-12'>
             <div className='flex flex-col gap-3'>
-              <p className="text-white font-medium">
+              <p className="text-slate-700 font-medium">
                 Why choose <span className='text-[#60da68]'>datafy</span>
               </p>
-              <h2 className='sm:text-40 text-30 text-white lg:w-full md:w-70% font-medium'>
+              <h2 className='sm:text-40 text-30 text-slate-700 lg:w-full md:w-70% font-medium'>
                 Features of the Datafy mobile application
               </h2>
             </div>
             <div className='grid md:grid-cols-2 gap-7 mt-11'>
               {services.map((service, index) => (
                 <div key={index} className='flex items-center gap-5'>
-                  <div className='p-3 bg-light_grey/30 rounded-full'>
+                  <div className='p-3 bg-light_grey rounded-full'>
                     <img
                       src={service.icon}
                       alt={`${service.text} icon`}
@@ -61,7 +61,7 @@ const services = [
                       height={25}
                     />
                   </div>
-                  <p className='text-white font-medium'>{service.text}</p>
+                  <p className='text-slate-700 font-medium'>{service.text}</p>
                 </div>
               ))}
             </div>

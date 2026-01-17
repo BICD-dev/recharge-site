@@ -63,7 +63,7 @@ const AuthHeader: React.FC<AuthHeaderProps> = ({
             >
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <span className="text-sm font-medium text-green-700">
-                Need Help?
+                Data Solutions
               </span>
             </motion.div>
           </div>

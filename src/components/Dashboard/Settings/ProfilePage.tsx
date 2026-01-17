@@ -63,10 +63,18 @@ export default function ProfilePage() {
       </div>
 
       <div className="flex items-center gap-6">
+        {userData?.avatar_url ? (
+            <img
+              src={userData.avatar_url}
+              alt={userData.first_name}
+              className="w-20 h-20 rounded-full object-cover border-2 border-green-700"
+            />
+          ) : (
         <div className="w-20 h-20 bg-linear-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
           {user.firstName.charAt(0).toUpperCase()}
         </div>
-        <button className="px-4 py-2 border-2 border-green-600 text-green-600 rounded-lg font-medium hover:bg-green-50 transition-all">
+          )}
+        <button className="px-4 py-2 border-2 border-green-600 text-green-600 rounded-lg font-medium hover:bg-green-50 transition-all cursor-pointer">
           Change Photo
         </button>
       </div>
@@ -77,7 +85,6 @@ export default function ProfilePage() {
           <input
             type="text"
             value={user.firstName}
-            disabled
             className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg bg-gray-100"
           />
         </div>
@@ -87,7 +94,6 @@ export default function ProfilePage() {
           <input
             type="text"
             value={user.lastName}
-            disabled
             className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg bg-gray-100"
           />
         </div>

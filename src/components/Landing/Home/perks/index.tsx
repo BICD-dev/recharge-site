@@ -2,7 +2,7 @@ import { perksData } from '../../../../constants/crypto-price/data'
 
 const Perks = () => {
   return (
-    <section className='pb-28 relative'>
+    <section className='py-28 relative bg-darkmode'>
       <div className='container px-4 relative z-2'>
         <div className='text-center'>
           <div className='flex flex-col gap-4'>

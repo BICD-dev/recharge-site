@@ -71,7 +71,7 @@ const Hero = () => {
 
   return (
     <section
-      className='relative py-24 pt-48 overflow-hidden z-1'
+      className='bg-darkmode relative py-24 pt-48 overflow-hidden z-1'
       id='main-banner'>
       <div className='container'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>

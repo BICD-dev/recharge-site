@@ -23,10 +23,10 @@ const TimeLine = () => {
             initial={{ y: '-100%', opacity: 0 }}
             transition={{ duration: 0.6 }}>
             <div className='flex flex-col gap-4'>
-              <p className='text-white font-medium'>
+              <p className='text-slate-700 font-medium'>
                 We deliver <span className='text-[#60da68]'>best solution</span>
               </p>
-              <h2 className='text-white sm:text-40 text-30 font-medium lg:w-80% mx-auto mb-20'>
+              <h2 className='text-slate-700 sm:text-40 text-30 font-medium lg:w-80% mx-auto mb-20'>
                 One application with multiple options to give you freedom of buying & selling
               </h2>
             </div>
@@ -47,8 +47,8 @@ const TimeLine = () => {
               </div>
               <div className='absolute lg::top-40 top-36 lg:left-0 -left-20 w-72 flex items-center gap-6'>
                 <div className='text-right'>
-                  <h5 className='text-muted text-28 mb-3'>Planning</h5>
-                  <p className='text-18 text-muted/60'>
+                  <h5 className='text-slate-600 text-28 mb-3'>Planning</h5>
+                  <p className='text-18 text-slate-600'>
                     Map the crypto projects scope with framer template
                   </p>
                 </div>
@@ -72,16 +72,16 @@ const TimeLine = () => {
                   />
                 </div>
                 <div className='text-left'>
-                  <h5 className='text-muted text-28 mb-3'>Refinement</h5>
-                  <p className='text-18 text-muted/60'>
+                  <h5 className='text-slate-600 text-28 mb-3'>Refinement</h5>
+                  <p className='text-18 text-slate-600/60'>
                   Refine & improve your crypto landing page
                   </p>
                 </div>
               </div>
               <div className='absolute lg:bottom-48 bottom-36 lg:left-0 -left-20 w-72 flex items-center gap-6'>
                 <div className='text-right'>
-                  <h5 className='text-muted text-28 mb-3'>Prototype</h5>
-                  <p className='text-18 text-muted/60'>
+                  <h5 className='text-slate-600 text-28 mb-3'>Prototype</h5>
+                  <p className='text-18 text-slate-600'>
                   Build crypto website test for your product
                   </p>
                 </div>
@@ -106,10 +106,10 @@ const TimeLine = () => {
                   />
                 </div>
                 <div className='text-left'>
-                  <h5 className='text-muted text-nowrap text-28 mb-3'>
+                  <h5 className='text-slate-600 text-nowrap text-28 mb-3'>
                     Support
                   </h5>
-                  <p className='text-18 text-muted/60'>
+                  <p className='text-18 text-slate-600'>
                   Deploy product live and ensure expert support
                   </p>
                 </div>
@@ -118,7 +118,7 @@ const TimeLine = () => {
             <div className='grid sm:grid-cols-2 gap-8 md:hidden'>
               {timelineData.map((item, index) => (
                 <div key={index} className='flex items-center gap-6'>
-                  <div className='bg-light_grey/45 p-6 rounded-full'>
+                  <div className='bg-dark_grey/45 p-6 rounded-full'>
                     <img
                       src={item.icon}
                       alt={item.title}
@@ -127,8 +127,8 @@ const TimeLine = () => {
                     />
                   </div>
                   <div className='text-start'>
-                    <h4 className='text-28 text-muted mb-2'>{item.title}</h4>
-                    <p className='text-muted/60 text-18'>{item.text}</p>
+                    <h4 className='text-28 text-slate-600 mb-2'>{item.title}</h4>
+                    <p className='text-slate-600 text-18'>{item.text}</p>
                   </div>
                 </div>
               ))}
