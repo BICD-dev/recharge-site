@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import * as purchaseApi from '@/api/purchase';
+import { walletKeys } from '@/hooks/useWallet';
 import type {
   Airtime,
   CableTv,
@@ -59,6 +60,8 @@ export function useBuyAirtime() {
     mutationFn: (data: Airtime) => purchaseApi.buyAirtime(data),
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: purchaseKeys.all });
+      qc.invalidateQueries({ queryKey: walletKeys.balance() });
+      qc.invalidateQueries({ queryKey: walletKeys.transactions() });
       toast.success('Airtime purchase successful');
     },
     onError: (err: any) => {
@@ -73,6 +76,8 @@ export function useBuyData() {
     mutationFn: (data: Data) => purchaseApi.buyData(data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: purchaseKeys.all });
+      qc.invalidateQueries({ queryKey: walletKeys.balance() });
+      qc.invalidateQueries({ queryKey: walletKeys.transactions() });
       toast.success('Data purchase successful');
     },
     onError: (err: any) => {
@@ -87,6 +92,8 @@ export function useBuyCableTv() {
     mutationFn: (data: any) => purchaseApi.buyCableTv(data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: purchaseKeys.all });
+      qc.invalidateQueries({ queryKey: walletKeys.balance() });
+      qc.invalidateQueries({ queryKey: walletKeys.transactions() });
       toast.success('Cable TV purchase successful');
     },
     onError: (err: any) => {
@@ -115,6 +122,8 @@ export function useBuyElectricityPostpaid() {
     mutationFn: (data: ElectricityPostpaid) => purchaseApi.buyElectricityPostpaid(data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: purchaseKeys.all });
+      qc.invalidateQueries({ queryKey: walletKeys.balance() });
+      qc.invalidateQueries({ queryKey: walletKeys.transactions() });
       toast.success('Electricity (postpaid) purchase successful');
     },
     onError: (err: any) => {
@@ -129,6 +138,8 @@ export function useBuyElectricityPrepaid() {
     mutationFn: (data: ElectricityPrepaid) => purchaseApi.buyElectricityPrepaid(data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: purchaseKeys.all });
+      qc.invalidateQueries({ queryKey: walletKeys.balance() });
+      qc.invalidateQueries({ queryKey: walletKeys.transactions() });
       toast.success('Electricity (prepaid) purchase successful');
     },
     onError: (err: any) => {

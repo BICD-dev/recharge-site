@@ -40,6 +40,7 @@ const CableForm: React.FC<CableFormProps> = ({ onNext }) => {
     amount: 0,
     phone: "",
     subscription_type: "renew",
+    quantity: 1,
   });
 
   const isSmartcardProvider = SMARTCARD_PROVIDERS.includes(formData.serviceID);
@@ -70,7 +71,11 @@ const CableForm: React.FC<CableFormProps> = ({ onNext }) => {
       then: (s) => s.required("Subscription type is required"),
       otherwise: (s) => s.notRequired(),
     }),
-
+    quatity: Yup.number().when("subscription_type", {
+      is: "change",
+      then: (n) => n.min(1, "Quantity must be at least 1"),
+      otherwise: (n) => n.notRequired(),
+    }),
   });
   // Update form field
   const updateField = (name: keyof CableTv, value: any) => {
@@ -94,6 +99,7 @@ const CableForm: React.FC<CableFormProps> = ({ onNext }) => {
       subscription_type: SMARTCARD_PROVIDERS.includes(provider)
         ? "renew"
         : undefined,
+        quantity: 1,
     });
 
     setBouquetData(null);

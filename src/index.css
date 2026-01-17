@@ -125,9 +125,9 @@ html {
   scroll-behavior: smooth;
 }
 
-section {
-  @apply bg-darkmode;
-}
+/* section {
+  @apply bg-white;
+} */
 
 /*
   ---break---
