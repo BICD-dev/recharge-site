@@ -28,6 +28,7 @@ import Settings from "./pages/Settings";
 import AuthHeader from "./pages/auth/AuthHeader";
 import Onboarding from "./pages/auth/Onboarding";
 import WaecRegistrationPin from "./pages/features/WaecRegistrationPin";
+import SupportPage from "./pages/Support";
 
 
 function App() {
@@ -104,6 +105,8 @@ function App() {
                   <Route path="personal/user" element={<Wallet />} />
                   <Route path="transactions" element={<TransactionsPage />} />
                   <Route path="settings" element={<Settings />} />
+                  <Route path="support" element={<SupportPage />} />
+
                 </Routes>
               </Layout>
             </PrivateRoute>
