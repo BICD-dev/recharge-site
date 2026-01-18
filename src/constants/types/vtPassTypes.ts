@@ -39,6 +39,8 @@ export interface ElectricityPrepaid {
     variation_code:string,
     amount:number,
     phone:string,
+    meter_number:string,
+    meter_type:string,
 }
 
 export interface ElectricityPostpaid {

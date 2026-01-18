@@ -5,8 +5,7 @@ import {
   FiClock, 
   FiChevronDown,
   FiSmartphone,
-  FiCreditCard,
-  FiCheckCircle
+  FiCreditCard
 } from 'react-icons/fi';
 import { 
   BsBook, 
@@ -120,7 +119,7 @@ const SupportPage: React.FC = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-emerald-600 to-emerald-800 text-white py-20">
+      <section className="bg-linear-to-br from-emerald-600 to-emerald-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-5xl font-extrabold mb-4 tracking-tight">
             How can we help you?
@@ -187,7 +186,7 @@ const SupportPage: React.FC = () => {
                     {faq.question}
                   </span>
                   <FiChevronDown 
-                    className={`text-emerald-600 text-xl flex-shrink-0 transition-transform ${
+                    className={`text-emerald-600 text-xl shrink-0 transition-transform ${
                       activeAccordion === index ? 'rotate-180' : ''
                     }`}
                   />
@@ -220,7 +219,7 @@ const SupportPage: React.FC = () => {
             
             <div className="space-y-6">
               <div className="flex items-start">
-                <div className="flex items-center justify-center w-12 h-12 bg-emerald-600 rounded-lg mr-4 flex-shrink-0">
+                <div className="flex items-center justify-center w-12 h-12 bg-emerald-600 rounded-lg mr-4 shrink-0">
                   <FiPhone className="text-white text-xl" />
                 </div>
                 <div>
@@ -231,7 +230,7 @@ const SupportPage: React.FC = () => {
               </div>
 
               <div className="flex items-start">
-                <div className="flex items-center justify-center w-12 h-12 bg-emerald-600 rounded-lg mr-4 flex-shrink-0">
+                <div className="flex items-center justify-center w-12 h-12 bg-emerald-600 rounded-lg mr-4 shrink-0">
                   <FiMail className="text-white text-xl" />
                 </div>
                 <div>
@@ -242,7 +241,7 @@ const SupportPage: React.FC = () => {
               </div>
 
               <div className="flex items-start">
-                <div className="flex items-center justify-center w-12 h-12 bg-emerald-600 rounded-lg mr-4 flex-shrink-0">
+                <div className="flex items-center justify-center w-12 h-12 bg-emerald-600 rounded-lg mr-4 shrink-0">
                   <FiClock className="text-white text-xl" />
                 </div>
                 <div>
