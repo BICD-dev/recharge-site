@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -25,8 +26,12 @@ axiosClient.interceptors.response.use(
 
     // CASE 1: Backend sends 401 Unauthorized
     if (status === 401) {
+      if(window.location.pathname !== '/login') {
+        toast.error("Session expired. Please log in again.");
       localStorage.removeItem("token");
       window.location.href = "/login";
+      } 
+
     }
 
     // CASE 2: Backend sends custom message like "Token expired"
