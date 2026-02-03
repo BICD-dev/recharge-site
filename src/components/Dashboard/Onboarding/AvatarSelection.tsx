@@ -15,6 +15,8 @@ interface AvatarOption {
 const avatarOptions: AvatarOption[] = [
   { id: 1, src: '/images/avatar/avatar1.png', alt: 'Avatar 1' },
   { id: 2, src: '/images/avatar/avatar2.jpeg', alt: 'Avatar 2' },
+  { id: 3, src: '/images/avatar/avatar3.png', alt: 'Avatar 3' },
+  { id: 4, src: '/images/avatar/avatar4.png', alt: 'Avatar 4' },
   // { id: 3, src: '/images/avatar/avatar3.png', alt: 'Avatar 3' },
   // Add more avatars as needed
 ];
