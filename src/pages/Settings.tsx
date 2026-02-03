@@ -27,9 +27,9 @@ const Settings = () => {
     { id: "profile", label: "Profile", icon: User },
     { id: "security", label: "Security", icon: Lock },
     { id: "transaction-pin", label: "Transaction PIN", icon: Key },
-    { id: "notifications", label: "Notifications", icon: Bell },
-    { id: "privacy", label: "Privacy", icon: Shield },
-    { id: "billing", label: "Billing", icon: CreditCard },
+    // { id: "notifications", label: "Notifications", icon: Bell },
+    // { id: "privacy", label: "Privacy", icon: Shield },
+    // { id: "billing", label: "Billing", icon: CreditCard },
   ];
 
   const handleSave = () => {

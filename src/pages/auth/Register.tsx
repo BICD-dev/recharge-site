@@ -34,9 +34,10 @@ const Register = () => {
       .min(8, "Password must be at least 8 characters")
       .matches(/^[A-Za-z0-9]{8,}$/,"Password not strong, only alphanumeric characters allowed")
       .required("Password is required"),
-    conf_password: Yup.string()
-      .oneOf([Yup.ref("password")], "Passwords must match")
-      .required("Confirm password is required"),
+    conf_password: Yup
+    .string()
+    .oneOf([Yup.ref('password')], 'Passwords do not match')
+    .required('Please confirm password'),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,13 +54,23 @@ const Register = () => {
         [name]: "",
       }));
     }
+
+    // If the user changes the password, clear confirm-password error too
+    if (name === "password" && errors.conf_password) {
+      setErrors((prev) => ({
+        ...prev,
+        conf_password: "",
+      }));
+    }
   };
 
   // Validate individual field on blur
   const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     try {
-      await schema.validateAt(name, { [name]: value });
+      // Validate with the full form data so cross-field refs (like conf_password referencing password) work
+      const dataToValidate = { ...formData, [name]: value };
+      await schema.validateAt(name, dataToValidate);
       setErrors((prev) => ({
         ...prev,
         [name]: "",

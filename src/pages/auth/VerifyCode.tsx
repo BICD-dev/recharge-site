@@ -52,7 +52,7 @@ const VerifyCode = () => {
         const result = await verifyCode(formData);
           toast.success(result.data.message);
           // set token in the local storage
-          localStorage.setItem(token, result.data.data.token)
+          localStorage.setItem("token", result.data.data.token)
           // navigate to the onboarding page
           navigate("/onboarding");
       } else{

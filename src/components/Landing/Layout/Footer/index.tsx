@@ -89,7 +89,9 @@ const Footer: FC = () => {
             </div>
           </div>
         </div>
-        {/* <p className='text-white/40 text-center py-8 border-t border-white/20'>Design & Develop by <Link className='hover:text-[#60da68]' to={"https://getnextjstemplates.com/"}>GetNextjsTemplates.com</Link></p> */}
+        <p className='text-white/40 text-center py-4 border-t border-white/20'>
+          © {new Date().getFullYear()} Datafy Technologies
+        </p>
       </div>
     </footer>
   )
