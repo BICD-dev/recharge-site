@@ -91,40 +91,14 @@ const SupportPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center">
-              <h1 className="text-3xl font-bold text-emerald-600 tracking-tight">
-                Datafy Technologies
-              </h1>
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#home" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
-                Home
-              </a>
-              <a href="#recharge" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
-                Recharge
-              </a>
-              <a href="#support" className="text-emerald-600 font-semibold">
-                Support
-              </a>
-              <a href="#about" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
-                About
-              </a>
-            </div>
-          </div>
-        </nav>
-      </header>
-
+      
       {/* Hero Section */}
-      <section className="bg-linear-to-br from-emerald-600 to-emerald-800 text-white py-20">
+      <section className="bg-linear-to-br from-green-600 to-green-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-5xl font-extrabold mb-4 tracking-tight">
             How can we help you?
           </h2>
-          <p className="text-xl text-emerald-50 max-w-2xl mx-auto">
+          <p className="text-xl text-green-50 max-w-2xl mx-auto">
             Find answers to common questions or reach out to our support team
           </p>
         </div>
@@ -134,8 +108,8 @@ const SupportPage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 mb-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:-translate-y-1 transition-transform">
-            <div className="flex items-center justify-center w-14 h-14 bg-emerald-100 rounded-lg mb-4">
-              <FiSmartphone className="text-2xl text-emerald-600" />
+            <div className="flex items-center justify-center w-14 h-14 bg-green-100 rounded-lg mb-4">
+              <FiSmartphone className="text-2xl text-green-600" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Recharge Issues</h3>
             <p className="text-gray-600">
@@ -144,8 +118,8 @@ const SupportPage: React.FC = () => {
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:-translate-y-1 transition-transform">
-            <div className="flex items-center justify-center w-14 h-14 bg-emerald-100 rounded-lg mb-4">
-              <FiCreditCard className="text-2xl text-emerald-600" />
+            <div className="flex items-center justify-center w-14 h-14 bg-green-100 rounded-lg mb-4">
+              <FiCreditCard className="text-2xl text-green-600" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Payment Problems</h3>
             <p className="text-gray-600">
@@ -154,8 +128,8 @@ const SupportPage: React.FC = () => {
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:-translate-y-1 transition-transform">
-            <div className="flex items-center justify-center w-14 h-14 bg-emerald-100 rounded-lg mb-4">
-              <FiClock className="text-2xl text-emerald-600" />
+            <div className="flex items-center justify-center w-14 h-14 bg-green-100 rounded-lg mb-4">
+              <FiClock className="text-2xl text-green-600" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Processing Time</h3>
             <p className="text-gray-600">
@@ -186,7 +160,7 @@ const SupportPage: React.FC = () => {
                     {faq.question}
                   </span>
                   <FiChevronDown 
-                    className={`text-emerald-600 text-xl shrink-0 transition-transform ${
+                    className={`text-green-600 text-xl shrink-0 transition-transform ${
                       activeAccordion === index ? 'rotate-180' : ''
                     }`}
                   />
@@ -212,42 +186,42 @@ const SupportPage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Contact Information */}
-          <div className="bg-emerald-50 rounded-2xl p-8 md:p-10">
-            <h2 className="text-3xl font-bold text-emerald-900 mb-6">
+          <div className="bg-green-50 rounded-2xl p-8 md:p-10">
+            <h2 className="text-3xl font-bold text-green-900 mb-6">
               Get in Touch
             </h2>
             
             <div className="space-y-6">
               <div className="flex items-start">
-                <div className="flex items-center justify-center w-12 h-12 bg-emerald-600 rounded-lg mr-4 shrink-0">
+                <div className="flex items-center justify-center w-12 h-12 bg-green-600 rounded-lg mr-4 shrink-0">
                   <FiPhone className="text-white text-xl" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-emerald-900 mb-1">Phone Support</h4>
-                  <p className="text-emerald-700">+234 800 123 4567</p>
-                  <p className="text-sm text-emerald-600 mt-1">Mon-Fri: 8AM - 8PM, Sat-Sun: 9AM - 5PM</p>
+                  <h4 className="font-semibold text-green-900 mb-1">Phone Support</h4>
+                  <p className="text-green-700">+234 800 123 4567</p>
+                  <p className="text-sm text-green-600 mt-1">Mon-Fri: 8AM - 8PM, Sat-Sun: 9AM - 5PM</p>
                 </div>
               </div>
 
               <div className="flex items-start">
-                <div className="flex items-center justify-center w-12 h-12 bg-emerald-600 rounded-lg mr-4 shrink-0">
+                <div className="flex items-center justify-center w-12 h-12 bg-green-600 rounded-lg mr-4 shrink-0">
                   <FiMail className="text-white text-xl" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-emerald-900 mb-1">Email Support</h4>
-                  <p className="text-emerald-700">support@dataf.tech</p>
-                  <p className="text-sm text-emerald-600 mt-1">We typically respond within 24 hours</p>
+                  <h4 className="font-semibold text-green-900 mb-1">Email Support</h4>
+                  <p className="text-green-700">support@datafy.ng</p>
+                  <p className="text-sm text-green-600 mt-1">We typically respond within 24 hours</p>
                 </div>
               </div>
 
               <div className="flex items-start">
-                <div className="flex items-center justify-center w-12 h-12 bg-emerald-600 rounded-lg mr-4 shrink-0">
+                <div className="flex items-center justify-center w-12 h-12 bg-green-600 rounded-lg mr-4 shrink-0">
                   <FiClock className="text-white text-xl" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-emerald-900 mb-1">Business Hours</h4>
-                  <p className="text-emerald-700">Monday - Friday: 8:00 AM - 8:00 PM</p>
-                  <p className="text-emerald-700">Saturday - Sunday: 9:00 AM - 5:00 PM</p>
+                  <h4 className="font-semibold text-green-900 mb-1">Business Hours</h4>
+                  <p className="text-green-700">Monday - Friday: 8:00 AM - 8:00 PM</p>
+                  <p className="text-green-700">Saturday - Sunday: 9:00 AM - 5:00 PM</p>
                 </div>
               </div>
             </div>
@@ -271,7 +245,7 @@ const SupportPage: React.FC = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                   placeholder="John Doe"
                 />
               </div>
@@ -287,7 +261,7 @@ const SupportPage: React.FC = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                   placeholder="john@example.com"
                 />
               </div>
@@ -302,7 +276,7 @@ const SupportPage: React.FC = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                   placeholder="+234 800 000 0000"
                 />
               </div>
@@ -316,7 +290,7 @@ const SupportPage: React.FC = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                 >
                   <option value="recharge-issue">Recharge Issue</option>
                   <option value="payment-problem">Payment Problem</option>
@@ -337,14 +311,14 @@ const SupportPage: React.FC = () => {
                   onChange={handleInputChange}
                   required
                   rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors resize-none"
                   placeholder="Please describe your issue..."
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors active:scale-[0.98]"
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors active:scale-[0.98]"
               >
                 Send Message
               </button>
@@ -363,10 +337,10 @@ const SupportPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <a
               href="#guide"
-              className="group p-6 border border-gray-200 rounded-xl hover:bg-emerald-50 hover:border-emerald-300 transition-all"
+              className="group p-6 border border-gray-200 rounded-xl hover:bg-green-50 hover:border-green-300 transition-all"
             >
-              <div className="flex items-center justify-center w-12 h-12 bg-emerald-100 rounded-lg mb-4 group-hover:bg-emerald-600 transition-colors">
-                <BsBook className="text-2xl text-emerald-600 group-hover:text-white transition-colors" />
+              <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-4 group-hover:bg-green-600 transition-colors">
+                <BsBook className="text-2xl text-green-600 group-hover:text-white transition-colors" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">User Guide</h4>
               <p className="text-sm text-gray-600">
@@ -376,10 +350,10 @@ const SupportPage: React.FC = () => {
 
             <a
               href="#faq"
-              className="group p-6 border border-gray-200 rounded-xl hover:bg-emerald-50 hover:border-emerald-300 transition-all"
+              className="group p-6 border border-gray-200 rounded-xl hover:bg-green-50 hover:border-green-300 transition-all"
             >
-              <div className="flex items-center justify-center w-12 h-12 bg-emerald-100 rounded-lg mb-4 group-hover:bg-emerald-600 transition-colors">
-                <BsQuestionCircle className="text-2xl text-emerald-600 group-hover:text-white transition-colors" />
+              <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-4 group-hover:bg-green-600 transition-colors">
+                <BsQuestionCircle className="text-2xl text-green-600 group-hover:text-white transition-colors" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">FAQ Center</h4>
               <p className="text-sm text-gray-600">
@@ -389,10 +363,10 @@ const SupportPage: React.FC = () => {
 
             <a
               href="#security"
-              className="group p-6 border border-gray-200 rounded-xl hover:bg-emerald-50 hover:border-emerald-300 transition-all"
+              className="group p-6 border border-gray-200 rounded-xl hover:bg-green-50 hover:border-green-300 transition-all"
             >
-              <div className="flex items-center justify-center w-12 h-12 bg-emerald-100 rounded-lg mb-4 group-hover:bg-emerald-600 transition-colors">
-                <BsShieldCheck className="text-2xl text-emerald-600 group-hover:text-white transition-colors" />
+              <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-4 group-hover:bg-green-600 transition-colors">
+                <BsShieldCheck className="text-2xl text-green-600 group-hover:text-white transition-colors" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">Security Info</h4>
               <p className="text-sm text-gray-600">
@@ -402,10 +376,10 @@ const SupportPage: React.FC = () => {
 
             <a
               href="#terms"
-              className="group p-6 border border-gray-200 rounded-xl hover:bg-emerald-50 hover:border-emerald-300 transition-all"
+              className="group p-6 border border-gray-200 rounded-xl hover:bg-green-50 hover:border-green-300 transition-all"
             >
-              <div className="flex items-center justify-center w-12 h-12 bg-emerald-100 rounded-lg mb-4 group-hover:bg-emerald-600 transition-colors">
-                <BsFileText className="text-2xl text-emerald-600 group-hover:text-white transition-colors" />
+              <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-4 group-hover:bg-green-600 transition-colors">
+                <BsFileText className="text-2xl text-green-600 group-hover:text-white transition-colors" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">Terms & Policies</h4>
               <p className="text-sm text-gray-600">
@@ -416,52 +390,7 @@ const SupportPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h3 className="text-emerald-400 font-bold text-lg mb-4">Company</h3>
-              <ul className="space-y-2">
-                <li><a href="#about" className="text-gray-400 hover:text-emerald-400 transition-colors">About Us</a></li>
-                <li><a href="#careers" className="text-gray-400 hover:text-emerald-400 transition-colors">Careers</a></li>
-                <li><a href="#press" className="text-gray-400 hover:text-emerald-400 transition-colors">Press</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-emerald-400 font-bold text-lg mb-4">Services</h3>
-              <ul className="space-y-2">
-                <li><a href="#mobile" className="text-gray-400 hover:text-emerald-400 transition-colors">Mobile Recharge</a></li>
-                <li><a href="#data" className="text-gray-400 hover:text-emerald-400 transition-colors">Data Plans</a></li>
-                <li><a href="#bills" className="text-gray-400 hover:text-emerald-400 transition-colors">Bill Payments</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-emerald-400 font-bold text-lg mb-4">Support</h3>
-              <ul className="space-y-2">
-                <li><a href="#help" className="text-gray-400 hover:text-emerald-400 transition-colors">Help Center</a></li>
-                <li><a href="#contact" className="text-gray-400 hover:text-emerald-400 transition-colors">Contact Us</a></li>
-                <li><a href="#status" className="text-gray-400 hover:text-emerald-400 transition-colors">Service Status</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-emerald-400 font-bold text-lg mb-4">Legal</h3>
-              <ul className="space-y-2">
-                <li><a href="#privacy" className="text-gray-400 hover:text-emerald-400 transition-colors">Privacy Policy</a></li>
-                <li><a href="#terms" className="text-gray-400 hover:text-emerald-400 transition-colors">Terms of Service</a></li>
-                <li><a href="#refund" className="text-gray-400 hover:text-emerald-400 transition-colors">Refund Policy</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-500">
-            <p>&copy; 2025 Dataf Technologies. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+     
     </div>
   );
 };
