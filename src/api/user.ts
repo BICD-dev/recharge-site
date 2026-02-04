@@ -61,3 +61,12 @@ export const onboardUser = async (data:OnboardData) => {
   );
   return response;
 };
+
+export const changePassword = async (data: {
+  oldPassword: string;
+  newPassword: string;
+}) => {
+  const response = await axiosClient.post(userUrl.changePasswordUrl, data);
+  return response;
+}
+

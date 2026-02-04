@@ -1,9 +1,13 @@
+import { sendResetPasswordOtp } from "@/api/auth";
+
 export const authUrl = {
     loginUrl:"/auth/login",
     signupUrl:"/auth/register",
     sendCodeUrl:"/auth/send-verification-code",
     verifyCodeUrl:"/auth/verify-code",
     verifyPinUrl:"/auth/verify-pin",
+    sendResetPasswordUrl:"/auth/send-reset-password",
+    resetPasswordUrl:"/auth/reset-password"
 } as const;
 
 export const walletUrl = {
@@ -29,4 +33,6 @@ export const userUrl = {
     getUser:"/user/me",
     setPinUrl:"/user/set-pin",
     onboardUrl:"/user/onboard",
+    changePasswordUrl:"/user/change-password"
+
 } as const;

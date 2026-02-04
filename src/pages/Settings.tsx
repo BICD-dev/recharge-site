@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { User, Lock, Bell, Shield, CreditCard, LogOut, Key } from "lucide-react";
+import { User, Lock, CreditCard, LogOut, Key } from "lucide-react";
 import ProfilePage from "@/components/Dashboard/Settings/ProfilePage";
+import SecuritySection from "@/components/Dashboard/Settings/SecuritySection";
 import TransactionPinSetup from "@/components/Dashboard/TransactionPin/TransactionPinSetup";
-import BalanceCard from "@/components/Dashboard/Wallet/BalanceCard";
 import { useSetPin, useUser } from "@/hooks/useUser";
 
 const Settings = () => {
@@ -112,58 +112,7 @@ const Settings = () => {
                 </div>
               )}
 
-              {activeTab === "security" && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-1">Security Settings</h2>
-                    <p className="text-sm text-gray-600">Manage your password and security preferences</p>
-                  </div>
-
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-700">Current Password</label>
-                      <input
-                        type="password"
-                        placeholder="Enter current password"
-                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-700">New Password</label>
-                      <input
-                        type="password"
-                        placeholder="Enter new password"
-                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-700">Confirm New Password</label>
-                      <input
-                        type="password"
-                        placeholder="Confirm new password"
-                        className="w-full h-12 px-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="bg-gray-50 rounded-lg p-4 border-2 border-gray-200">
-                    <h3 className="font-semibold text-gray-900 mb-2">Two-Factor Authentication</h3>
-                    <p className="text-sm text-gray-600 mb-4">Add an extra layer of security to your account</p>
-                    <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-all">
-                      Enable 2FA
-                    </button>
-                  </div>
-
-                  <button
-                    onClick={handleSave}
-                    className="w-full md:w-auto px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-green-600/30"
-                  >
-                    Update Password
-                  </button>
-                </div>
-              )}
+              {activeTab === "security" && <SecuritySection />}
 
               {activeTab === "notifications" && (
                 <div className="space-y-6">

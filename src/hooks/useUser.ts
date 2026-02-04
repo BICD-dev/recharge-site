@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchUser, onboardUser, setPin } from '@/api/user';
+import { changePassword, fetchUser, onboardUser, setPin } from '@/api/user';
 import { toast } from 'react-hot-toast';
 
 // Query Keys
@@ -50,6 +50,21 @@ export function useUserOnboard(){
     },
     onError: (err: any) => {
       toast.error(err?.response?.data?.message || 'Failed to onboard user');
+    },
+  });
+}
+
+export function useChangePassword() {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: { oldPassword: string; newPassword: string }) => changePassword(data),
+    onSuccess: (res) => {
+      qc.invalidateQueries({ queryKey: userKeys.me() });
+      toast.success(res.data?.message ?? 'Password changed successfully');
+    },
+    onError: (err: any) => {
+      toast.error(err?.response?.data?.message || 'Failed to change password');
     },
   });
 }
