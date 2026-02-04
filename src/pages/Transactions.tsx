@@ -18,7 +18,7 @@ import {
 import { motion } from "framer-motion";
 import { useWalletTransactions } from "@/hooks/useWallet";
 
-type TransactionStatus = "pending" | "completed" | "failed" | "success";
+type TransactionStatus = "pending" | "completed" | "failed" | "successful";
 
 interface Transaction {
   id: number;
@@ -71,7 +71,7 @@ export default function TransactionsPage() {
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
-              <SelectItem value="success">Success</SelectItem>
+              <SelectItem value="successful">Successful</SelectItem>
               <SelectItem value="failed">Failed</SelectItem>
             </SelectContent>
           </Select>
@@ -127,7 +127,7 @@ export default function TransactionsPage() {
                       <TableCell>
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-semibold capitalize ${
-                            txn.status === "completed" || txn.status === "success"
+                            txn.status === "completed" || txn.status === "successful"
                               ? "bg-green-700 text-white"
                               : txn.status === "pending"
                               ? "bg-yellow-500 text-white"

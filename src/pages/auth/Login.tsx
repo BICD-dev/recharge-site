@@ -8,6 +8,8 @@ import type { LoginFormTypes } from "../../constants/types/authTypes";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../api/auth";
 import loginImage from '@/assets/feature-img/login-feature.png';
+import { useLogin } from "@/hooks/useAuth";
+
 // Yup validation schema
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -28,7 +30,8 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false); 
-
+  const loginMutation = useLogin();
+  
   // handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -45,7 +48,7 @@ const Login = () => {
 
     try {
       await loginSchema.validate(formData, { abortEarly: false });
-      const response = await login(formData);
+      const response = await loginMutation.mutateAsync(formData);
       
         toast.success(response.data.message);
         localStorage.setItem("token", response.data?.data?.token || "");
