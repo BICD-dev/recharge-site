@@ -22,6 +22,7 @@ export function useUser() {
   });
 }
 
+
 // Mutation: set transaction PIN
 export function useSetPin() {
   const qc = useQueryClient();
@@ -44,6 +45,7 @@ export function useUserOnboard(){
   return useMutation({
     mutationFn: (data:{username:string,avatar_url:string}) => onboardUser(data),
     onSuccess: (res)=>{
+      qc.invalidateQueries({ queryKey: userKeys.me() });
       toast.success(res.data?.message ?? 'User Onboarding successfully')
     },
     onError: (err: any) => {
