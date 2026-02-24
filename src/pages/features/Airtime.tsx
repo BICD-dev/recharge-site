@@ -8,6 +8,7 @@ import SuccessPage from "@/components/Dashboard/Status_pages/SuccessPage";
 import FailedPage from "@/components/Dashboard/Status_pages/FailurePage";
 import LoadingPage from "@/components/Dashboard/Status_pages/LoadingPage";
 import { useBuyAirtime } from "@/hooks/usePurchase";
+import { useDownloadReceipt } from "@/hooks/useTransaction";
 
 interface AirtimeData {
   serviceID: string;
@@ -24,9 +25,13 @@ const Airtime = () => {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<"success" | "failure" | null>(null);
   const [error, setError] = useState<string>("");
+  // store reference and transaction id for receipt download after successful purchase
+  const [transactionId, setTransactionId] = useState<number | null>(null);
+  const [receiptReference, setReceiptReference] = useState<string>("");
   const navigate = useNavigate();
 
   const { mutateAsync: purchaseAirtime } = useBuyAirtime();
+  const {mutateAsync: downloadReceipt} = useDownloadReceipt();
 
   const handleAirtimeNext = (data: any) => {
     setAirtimeData(data);
@@ -54,6 +59,8 @@ const Airtime = () => {
       if (result.data?.message) {
         toast(result.data.message);
       }
+      setTransactionId(result.data?.data?.transactionId || null);
+      setReceiptReference(result.data?.data?.reference || "");
 
       setStep(3);
     } catch (error: any) {
@@ -94,7 +101,8 @@ const Airtime = () => {
           purpose="Airtime"
           formData={airtimeData}
           onGoHome={() => navigate("/dashboard")}
-          onDownloadReceipt={() => console.log("Download receipt")}
+          transactionId={transactionId!}
+          onDownloadReceipt={() => downloadReceipt({ id: transactionId!, reference: receiptReference })}
         />
       ) : (
         <FailedPage

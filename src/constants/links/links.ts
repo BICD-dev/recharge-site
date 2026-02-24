@@ -1,5 +1,3 @@
-import { sendResetPasswordOtp } from "@/api/auth";
-
 export const authUrl = {
     loginUrl:"/auth/login",
     signupUrl:"/auth/register",
@@ -35,4 +33,11 @@ export const userUrl = {
     onboardUrl:"/user/onboard",
     changePasswordUrl:"/user/change-password"
 
+} as const;
+
+export const transactionUrl = {
+    getTransactions:"/transactions",
+    getTransactionById:(id: number) => `/transactions/${id}`,
+    getReceiptPreview:(id: number) => `/transactions/${id}/receipt`,
+    downloadReceipt:(id: number) => `/transactions/${id}/receipt/download`,
 } as const;

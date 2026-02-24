@@ -1,8 +1,6 @@
-import {
-  CheckCircle2,
-  Download,
-  Home,
-} from "lucide-react";
+import { CheckCircle2, Download, Home } from "lucide-react";
+import { ReceiptPreviewModal } from "../ReceiptPreviewModal";
+import { useState } from "react";
 
 interface SuccessProps {
   purpose: string;
@@ -14,14 +12,17 @@ interface SuccessProps {
     serviceID: string;
   };
   onGoHome: () => void;
+  transactionId: number;
   onDownloadReceipt: () => void;
 }
 const SuccessPage: React.FC<SuccessProps> = ({
   purpose,
   formData,
   onGoHome,
+  transactionId,
   onDownloadReceipt,
 }) => {
+  const [showPreview, setShowPreview] = useState(false);
   const displayAmount = formData.amount || formData.variation_amount;
   const formatDate = () => {
     return new Date().toLocaleDateString("en-US", {
@@ -54,7 +55,7 @@ const SuccessPage: React.FC<SuccessProps> = ({
           Your {purpose} has been delivered successfully
         </p>
       </div>
-       <div className="bg-white text-gray-900 rounded-xl p-6 mb-6 flex flex-col items-center">
+      <div className="bg-white text-gray-900 rounded-xl p-6 mb-6 flex flex-col items-center">
         {/* <p className="text-sm opacity-80 mb-1">Amount</p> */}
         <p className="text-3xl font-semibold mb-4">₦ {displayAmount}</p>
       </div>
@@ -88,31 +89,7 @@ const SuccessPage: React.FC<SuccessProps> = ({
           <p className="text-sm font-medium text-gray-700">Share</p>
         </button>
 
-        {/* Add to Favorites */}
-        <button
-          onClick={() => {
-            /* handle favorite */
-          }}
-          className="flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition"
-        >
-          <div className="bg-pink-100 p-3 rounded-full mb-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 text-pink-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 15l7-7 7 7"
-              />
-            </svg>
-          </div>
-          <p className="text-sm font-medium text-gray-700">Favorite</p>
-        </button>
+      
 
         {/* View Details */}
         <button
@@ -144,6 +121,13 @@ const SuccessPage: React.FC<SuccessProps> = ({
       {/* Action Buttons */}
       <div className="space-y-3">
         <button
+          onClick={() => setShowPreview(true)}
+          className="text-sm text-green-700 hover:underline"
+        >
+          Preview
+        </button>
+
+        <button
           onClick={onDownloadReceipt}
           className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
         >
@@ -159,14 +143,11 @@ const SuccessPage: React.FC<SuccessProps> = ({
           Back to Home
         </button>
       </div>
-
-      {/* Reference Info */}
-      {/* <div className="mt-6 pt-6 border-t border-gray-200">
-        <p className="text-xs text-gray-500 text-center">
-          Transaction ID:{" "}
-          {Math.random().toString(36).substring(2, 15).toUpperCase()}
-        </p>
-      </div> */}
+      <ReceiptPreviewModal
+        transactionId={transactionId}
+        isOpen={showPreview}
+        onClose={() => setShowPreview(false)}
+      />
     </div>
   );
 };

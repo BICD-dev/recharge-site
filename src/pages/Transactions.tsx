@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectTrigger,
@@ -16,7 +17,10 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { motion } from "framer-motion";
+import { FiEye, FiDownload } from "react-icons/fi";
 import { useWalletTransactions } from "@/hooks/useWallet";
+import { useDownloadReceipt } from "@/hooks/useTransaction";
+import { ReceiptPreviewModal } from "@/components/Dashboard/ReceiptPreviewModal";
 
 type TransactionStatus = "pending" | "completed" | "failed" | "successful";
 
@@ -33,12 +37,31 @@ type FilterType = "all" | TransactionStatus;
 
 export default function TransactionsPage() {
   const [filter, setFilter] = useState<FilterType>("all");
+  const [previewModalOpen, setPreviewModalOpen] = useState(false);
+  const [selectedTransactionId, setSelectedTransactionId] = useState<number>(0);
 
   const {
     data,
     isLoading,
     isError,
   } = useWalletTransactions();
+
+  // Download receipt
+  const downloadReceiptMutation = useDownloadReceipt();
+
+  const handlePreview = (id: number) => {
+    setSelectedTransactionId(id);
+    setPreviewModalOpen(true);
+  };
+
+  const handleDownload = (id: number, reference: string) => {
+    downloadReceiptMutation.mutate({ id, reference });
+  };
+
+  const handleClosePreview = () => {
+    setPreviewModalOpen(false);
+    setSelectedTransactionId(0);
+  };
 
   // Normalize backend response structure
   const transactions: Transaction[] = Array.isArray(data?.data?.[0])
@@ -103,6 +126,7 @@ export default function TransactionsPage() {
                   <TableHead className="text-white">Amount</TableHead>
                   <TableHead className="text-white">Status</TableHead>
                   <TableHead className="text-white">Date</TableHead>
+                  <TableHead className="text-white text-center">Actions</TableHead>
                 </TableRow>
               </TableHeader>
 
@@ -143,11 +167,35 @@ export default function TransactionsPage() {
                           ? new Date(txn.created_at).toLocaleString()
                           : "—"}
                       </TableCell>
+
+                      <TableCell>
+                        <div className="flex items-center justify-center gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => handlePreview(txn.id)}
+                            title="Preview Receipt"
+                            className="hover:bg-green-50 hover:text-green-700"
+                          >
+                            <FiEye className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => handleDownload(txn.id, txn.reference)}
+                            disabled={downloadReceiptMutation.isPending}
+                            title="Download Receipt"
+                            className="hover:bg-green-50 hover:text-green-700"
+                          >
+                            <FiDownload className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-6 text-gray-500">
+                    <TableCell colSpan={6} className="text-center py-6 text-gray-500">
                       No transactions found.
                     </TableCell>
                   </TableRow>
@@ -157,6 +205,13 @@ export default function TransactionsPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* RECEIPT PREVIEW MODAL */}
+      <ReceiptPreviewModal
+        transactionId={selectedTransactionId}
+        isOpen={previewModalOpen}
+        onClose={handleClosePreview}
+      />
     </motion.div>
   );
 }

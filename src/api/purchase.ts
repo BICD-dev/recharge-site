@@ -25,6 +25,7 @@ interface AirtimeResponse {
     message: string;
     data?: {
         reference: string;
+        transactionId: number;
         purchaseStatus: string;
     };
     error?: undefined;
