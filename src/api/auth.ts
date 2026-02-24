@@ -89,4 +89,12 @@ export const verifyCode = async (data: VerifyCodeFormTypes) => {
   return response;
 };
 
+export const sendResetPasswordOtp = async (email: string) => {
+  const response = await axiosClient.post(authUrl.sendResetPasswordUrl, { email });
+  return response;
+}
 
+export const resetPassword = async (data: { email: string; reset_token: string; password: string }) => {
+  const response = await axiosClient.post(authUrl.resetPasswordUrl, data);
+  return response;
+}

@@ -2,7 +2,8 @@ import { authUrl, vtPassUrl } from "../constants/links/links";
 import type { 
   Airtime, CableTv, Data, Education_Jamb_Pin_Vending, 
   Education_Jamb_Profile_verification, Education_Waec_PinCheck, 
-  ElectricityMeterValidation, ElectricityPostpaid, ElectricityPrepaid
+  Electricity, 
+  ElectricityMeterValidation
 } from "../constants/types/vtPassTypes";
 import axiosClient from "./AxiosClient";
 import axios from "axios";
@@ -103,15 +104,11 @@ export const verifySmartCardApi = async (data: { billersCode: string; serviceID:
 };
 
 // Electricity
-export const buyElectricityPostpaid = async (data: ElectricityPostpaid) => {
+export const buyElectricity = async (data: Electricity) => {
   const response = await axiosClient.post(vtPassUrl.electricityUrl, data);
   return response;
 };
 
-export const buyElectricityPrepaid = async (data: ElectricityPrepaid) => {
-  const response = await axiosClient.post(vtPassUrl.electricityUrl, data);
-  return response;
-};
 
 export const validateElectricityMeter = async (data: ElectricityMeterValidation) => {
   const response = await axiosClient.post(vtPassUrl.electricityValidateUrl, data);

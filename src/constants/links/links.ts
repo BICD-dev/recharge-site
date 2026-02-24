@@ -20,7 +20,7 @@ export const vtPassUrl = {
     dataUrl:"/purchase/data",
     cableUrl:"/purchase/cable-tv",
     electricityUrl:"/purchase/electricity",
-    electricityValidateUrl:"/purchase/electricity/validate",
+    electricityValidateUrl:"/purchase/electricity/verify-meter",
     waecPinUrl:"/purchase/education/waec-reg",
     jambPinUrl:"/purchase/education/jamb/buy",
     jambValidationUrl:"/purchase/education/jamb/validate",

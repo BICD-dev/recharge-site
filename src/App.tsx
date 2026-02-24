@@ -29,6 +29,8 @@ import AuthHeader from "./pages/auth/AuthHeader";
 import Onboarding from "./pages/auth/Onboarding";
 import WaecRegistrationPin from "./pages/features/WaecRegistrationPin";
 import SupportPage from "./pages/Support";
+import ForgotPassword from "./components/Auth/ForgotPassword";
+import ResetPassword from "./components/Auth/ResetPassword";
 
 
 function App() {
@@ -73,6 +75,18 @@ function App() {
           <Register />
           </>}
           />
+          <Route path="/forgot" element={
+            <>
+            <AuthHeader logoUrl="/images/logo/logo6.png" />
+            <ForgotPassword />
+            </>
+          } />
+          <Route path="/reset-password" element={
+            <>
+            <AuthHeader logoUrl="/images/logo/logo6.png" />
+            <ResetPassword />
+            </>
+          } />
         <Route path="/verify-otp" element={
           <>
           <Header/>

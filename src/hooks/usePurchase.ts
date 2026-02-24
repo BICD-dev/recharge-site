@@ -8,9 +8,8 @@ import type {
   Education_Jamb_Pin_Vending,
   Education_Jamb_Profile_verification,
   Education_Waec_PinCheck,
+  Electricity,
   ElectricityMeterValidation,
-  ElectricityPostpaid,
-  ElectricityPrepaid,
 } from '@/constants/types/vtPassTypes';
 import { toast } from 'react-hot-toast';
 
@@ -116,34 +115,18 @@ export function useVerifySmartCard() {
   });
 }
 
-export function useBuyElectricityPostpaid() {
+export function useBuyElectricity() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: ElectricityPostpaid) => purchaseApi.buyElectricityPostpaid(data),
+    mutationFn: (data: Electricity) => purchaseApi.buyElectricity(data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: purchaseKeys.all });
       qc.invalidateQueries({ queryKey: walletKeys.balance() });
       qc.invalidateQueries({ queryKey: walletKeys.transactions() });
-      toast.success('Electricity (postpaid) purchase successful');
+      toast.success('Electricity purchase successful');
     },
     onError: (err: any) => {
-      toast.error(err?.response?.data?.message || 'Electricity postpaid purchase failed');
-    },
-  });
-}
-
-export function useBuyElectricityPrepaid() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (data: ElectricityPrepaid) => purchaseApi.buyElectricityPrepaid(data),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: purchaseKeys.all });
-      qc.invalidateQueries({ queryKey: walletKeys.balance() });
-      qc.invalidateQueries({ queryKey: walletKeys.transactions() });
-      toast.success('Electricity (prepaid) purchase successful');
-    },
-    onError: (err: any) => {
-      toast.error(err?.response?.data?.message || 'Electricity prepaid purchase failed');
+      toast.error(err?.response?.data?.message || 'Electricity purchase failed');
     },
   });
 }

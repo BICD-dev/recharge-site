@@ -11,24 +11,32 @@ import {
 } from "@/components/ui/select";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import type { ElectricityPrepaid } from "@/constants/types/vtPassTypes";
+import type { Electricity } from "@/constants/types/vtPassTypes";
+import { useValidateElectricityMeter } from "@/hooks/usePurchase";
 
-// ALL NIGERIAN STATES
-const nigeriaStates = [
-  "Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Borno",
-  "Cross River","Delta","Ebonyi","Edo","Ekiti","Enugu","Gombe","Imo","Jigawa",
-  "Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger",
-  "Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara","FCT"
+// ALL Service providers for electricity
+const electricityProviders = [
+  { name: "ikedc", label: "Ikeja Electric" , code:"ikeja-electric"},
+  { name: "ekedc", label: "Eko Electricity", code:"eko-electric" },
+  { name: "kedco", label: "Kano Electricity", code:"kano-electric" },
+  { name: "phed", label: "Port Harcourt Electric", code:"portharcourt-electric" },
+  { name: "jed", label: "Jos Electricity", code:"jos-electric" },
+  { name: "ibedc", label: "Ibadan Electricity", code:"ibadan-electric" },
+  { name: "kaedco", label: "Kaduna Electric", code:"kaduna-electric" },
+  { name: "aedc", label: "Abuja Electric", code:"abuja-electric" },
+  { name: "eedc", label: "Enugu Electricity", code:"enugu-electric" },
+  { name: "bedc", label: "Benin Electric", code:"benin-electric" },
+  { name: "aba", label: "ABA Electric" , code:"aba-electric"},
+  { name: "yedc", label: "Yola Electric", code:"yola-electric" }
 ];
 interface ElectricityFormProps {
-  onNext: (data: ElectricityPrepaid) => void;
+  onNext: (data: Electricity) => void;
 }
 const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
   const navigate = useNavigate();
+  const { mutateAsync: validateMeter, isPending: isValidating } = useValidateElectricityMeter();
 
-  const [formData, setFormData] = useState<ElectricityPrepaid>({
-    meter_number: "",
-    meter_type: "",
+  const [formData, setFormData] = useState<Electricity>({
     amount: 0,
     phone: "",
     serviceID: "",
@@ -37,15 +45,19 @@ const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [validationResult, setValidationResult] = useState<{
+    name?: string;
+    message?: string;
+    address?: string; 
+  } | null>(null);
 
   // YUP VALIDATION
   const schema = Yup.object().shape({
-    meter_number: Yup.string().required("Meter number is required"),
-    meter_type: Yup.string().required("Meter type is required"),
-    state: Yup.string().required("State is required"),
+    billersCode: Yup.string().required("Meter number is required"),
+    variation_code: Yup.string().required("Meter type is required"),
     amount: Yup.number().required("Amount is required"),
     phone: Yup.string().required("Phone number is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    serviceID: Yup.string().required("electricity service is required"),
   });
 
   // Handle text/number changes
@@ -63,6 +75,35 @@ const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleValidateMeter = async () => {
+    if (!formData.billersCode || !formData.serviceID || !formData.variation_code) {
+      toast.error("Please enter meter number, meter type, and service provider first.");
+      return;
+    }
+
+    try {
+      const res = await validateMeter({
+        billersCode: formData.billersCode,
+        serviceID: formData.serviceID,
+        type: formData.variation_code,
+      });
+
+      const data = res?.data ?? res;
+      const name =
+        data?.data?.Customer_Name ||
+        data?.content?.Customer_Name ||
+        data?.data?.customer_name ||
+        data?.content?.customer_name;
+      const message = data?.message || data?.data?.message;
+
+      setValidationResult({ name, message });
+      toast.success(message || "Meter validated successfully");
+    } catch {
+      setValidationResult(null);
+      // error toast handled in hook
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -70,7 +111,6 @@ const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
       await schema.validate(formData, { abortEarly: false });
       setLoading(true);
 
-      console.log("Electricity Purchase Payload:", formData);
       toast.success("Electricity purchase order submitted!");
 
       // navigate or send API call here
@@ -110,7 +150,7 @@ const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
           <label className="text-sm font-medium">Meter Number</label>
           <input
             type="text"
-            name="meter_number"
+            name="billersCode"
             onChange={handleChange}
             className="px-4 py-3 border border-gray-500 rounded-md"
             placeholder="Enter meter number"
@@ -119,8 +159,8 @@ const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
 
         {/* Meter Type */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Meter Type</label>
-          <Select onValueChange={(value) => handleSelectChange("meter_type", value)}>
+          <label className="text-sm font-medium">Meter Type/ Account ID</label>
+          <Select onValueChange={(value) => handleSelectChange("variation_code", value)}>
             <SelectTrigger className="w-full border-2 py-3 cursor-pointer">
               <SelectValue placeholder="Select meter type" />
             </SelectTrigger>
@@ -136,20 +176,44 @@ const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
 
         {/* State Select */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">State</label>
-          <Select onValueChange={(value) => handleSelectChange("state", value)}>
+          <label className="text-sm font-medium">Electricity Service</label>
+          <Select onValueChange={(value) => handleSelectChange("serviceID", value)}>
             <SelectTrigger className="w-full border-2 py-3 cursor-pointer">
-              <SelectValue placeholder="Select your state" />
+              <SelectValue placeholder="Select your Electricity service provider" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Nigeria States</SelectLabel>
-                {nigeriaStates.map((st) => (
-                  <SelectItem key={st} value={st}>{st}</SelectItem>
+                <SelectLabel>Electricity Service Providers</SelectLabel>
+                {electricityProviders.map((provider) => (
+                  <SelectItem key={provider.name} value={provider.code}>
+                    {provider.label}
+                  </SelectItem>
                 ))}
               </SelectGroup>
             </SelectContent>
           </Select>
+
+          <button
+            type="button"
+            onClick={handleValidateMeter}
+            disabled={isValidating}
+            className="w-full md:w-auto px-4 py-2 bg-green-600 text-white rounded-md text-sm font-semibold hover:bg-green-700 transition-all disabled:opacity-70"
+          >
+            {isValidating ? "Validating..." : "Validate Meter"}
+          </button>
+
+          {validationResult && (
+            <div className="rounded-md border border-green-200 bg-green-50 p-3 text-sm text-green-800">
+              {validationResult.name ? (
+                <p>
+                  <span className="font-semibold">Customer:</span> {validationResult.name}
+                </p>
+              ) : null}
+              {validationResult.message ? (
+                <p>{validationResult.message}</p>
+              ) : null}
+            </div>
+          )}
         </div>
 
         {/* Amount */}
@@ -176,17 +240,7 @@ const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
           />
         </div>
 
-        {/* Email */}
-        <div className="flex flex-col gap-1 w-full">
-          <label className="text-sm font-medium">Email</label>
-          <input
-            type="email"
-            name="email"
-            onChange={handleChange}
-            className="px-4 py-3 border border-gray-500 rounded-md"
-            placeholder="Enter email"
-          />
-        </div>
+        
 
         <button
           className="uppercase text-white bg-green-700 py-4 px-10 text-[0.9rem] rounded-md

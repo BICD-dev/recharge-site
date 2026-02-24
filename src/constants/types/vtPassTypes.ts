@@ -33,24 +33,13 @@ export interface ElectricityMeterValidation {
     type:string,
 }
 
-export interface ElectricityPrepaid {
+export interface Electricity{
     serviceID:string,
-    billersCode:string,
-    variation_code:string,
-    amount:number,
-    phone:string,
-    meter_number:string,
-    meter_type:string,
-}
-
-export interface ElectricityPostpaid {
-    serviceID:string,
-    billersCode:string,
-    variation_code:string,
+    billersCode:string, //meter number
+    variation_code:string, //meter type
     amount:number,
     phone:string,
 }
-
 export interface Education_Waec_PinCheck {
     serviceID:string,
     variation_code:string, 

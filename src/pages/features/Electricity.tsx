@@ -8,14 +8,14 @@ import { useNavigate } from "react-router-dom";
 import FailedPage from "@/components/Dashboard/Status_pages/FailurePage";
 import LoadingPage from "@/components/Dashboard/Status_pages/LoadingPage";
 import ElectricityForm from "@/components/Dashboard/Electricity/ElectricityForm";
+import { useBuyElectricity } from "@/hooks/usePurchase";
+import type { Electricity as ElectricityPayload } from "@/constants/types/vtPassTypes";
 
 interface ElectricityData {
-    meter_number: string;
-    meter_type: string;
-    state: string;
+    billersCode: string;
+    variation_code: string;
     amount: number;
     phone: string;
-    email: string;
     pin: string;
     serviceID: string;
 }
@@ -23,12 +23,10 @@ interface ElectricityData {
 const Electricity = () => {
     const [step, setStep] = useState(1);
     const [data, setData] = useState<ElectricityData>({
-        meter_number: "",
-        meter_type: "",
-        state: "",
+        billersCode: "",
+        variation_code: "",
         amount: 0,
         phone: "",
-        email: "",
         pin: "",
         serviceID: "", // or set dynamically if needed
     });
@@ -36,6 +34,7 @@ const Electricity = () => {
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { mutateAsync: buyElectricity } = useBuyElectricity();
 
     const handleFormNext = (formData: Partial<ElectricityData>) => {
         setData(prev => ({ ...prev, ...formData }));
@@ -44,19 +43,28 @@ const Electricity = () => {
 
     // ElectricityForm does not support onNext, so handle submission inside ElectricityForm and update state via navigation or context if needed.
 
-    const handlePinSuccess = async () => {
+    const handlePinSuccess = async (pinValue: string) => {
         setLoading(true);
         try {
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 1200));
+            const payload = {
+                serviceID: data.serviceID,
+                billersCode: data.billersCode,
+                variation_code: data.variation_code,
+                amount: data.amount,
+                phone: data.phone,
+                pin: pinValue
+            };
+
+            await buyElectricity(payload);
             setStatus("success");
             toast.success("Electricity purchase successful!");
             setStep(3);
             setLoading(false);
         } catch (error: unknown) {
             const err = error as { response?: { data?: { message?: string } } };
-            toast.error(err.response?.data?.message || "An error occurred during purchase");
-            setError(err.response?.data?.message || "An error occurred during purchase");
+            const message = err.response?.data?.message || "An error occurred during purchase";
+            toast.error(message);
+            setError(message);
             setStatus("failure");
             setStep(3);
         } finally {
@@ -77,7 +85,7 @@ const Electricity = () => {
                     onSuccess={handlePinSuccess}
                     transactionDetails={{
                         amount: data?.amount,
-                        service: data?.meter_type,
+                        service: data?.variation_code,
                         phone: data?.phone,
                     }}
                 />
