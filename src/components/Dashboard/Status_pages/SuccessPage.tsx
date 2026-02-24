@@ -1,4 +1,4 @@
-import { CheckCircle2, Download, Home } from "lucide-react";
+import { CheckCircle2, Download, Eye, Home } from "lucide-react";
 import { ReceiptPreviewModal } from "../ReceiptPreviewModal";
 import { useState } from "react";
 
@@ -93,40 +93,18 @@ const SuccessPage: React.FC<SuccessProps> = ({
 
         {/* View Details */}
         <button
-          onClick={() => {
-            /* handle view details */
-          }}
+          onClick={() => setShowPreview(true)}
           className="flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition"
         >
           <div className="bg-green-100 p-3 rounded-full mb-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 text-green-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+            <Eye className="w-6 h-6 text-green-600" />
           </div>
-          <p className="text-sm font-medium text-gray-700">Details</p>
+          <p className="text-sm font-medium text-gray-700">Preview Receipt</p>
         </button>
       </div>
 
       {/* Action Buttons */}
       <div className="space-y-3">
-        <button
-          onClick={() => setShowPreview(true)}
-          className="text-sm text-green-700 hover:underline"
-        >
-          Preview
-        </button>
-
         <button
           onClick={onDownloadReceipt}
           className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
