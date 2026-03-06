@@ -31,14 +31,14 @@ export const ReceiptPreviewModal = ({
           </button>
         </div>
 
-        <div className="overflow-auto max-h-[calc(90vh-80px)]">
+        <div className="overflow-auto max-h-[calc(90vh-80px)] py-10">
           {isLoading ? (
             <div className="p-8 text-center">Loading receipt...</div>
           ) : (
             <iframe
               srcDoc={html}
               title="Receipt Preview"
-              className="w-full h-[800px] border-0"
+              className="w-full h-50 border-0"
             />
           )}
         </div>

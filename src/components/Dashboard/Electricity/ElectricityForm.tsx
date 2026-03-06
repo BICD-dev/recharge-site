@@ -112,8 +112,6 @@ const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
       setLoading(true);
 
       toast.success("Electricity purchase order submitted!");
-
-      // navigate or send API call here
       // send payload to the next step
       onNext(formData);
     } catch (error) {
@@ -143,7 +141,7 @@ const ElectricityForm: React.FC<ElectricityFormProps  > = ({onNext}) => {
         Purchase electricity tokens safely and instantly.
       </p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-8 mt-12">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8 mt-12 mb-4">
 
         {/* Meter Number */}
         <div className="flex flex-col gap-2">

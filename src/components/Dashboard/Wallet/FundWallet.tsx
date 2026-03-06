@@ -17,11 +17,11 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
   const [searchParams] = useSearchParams();
   const reference = searchParams.get("reference");
 
-  // 🔥 React-Query Mutations
+  //  React-Query Mutations
   const fundMutation = useFundWallet();
   const verifyMutation = useVerifyFunds();
 
-  // ⛽ Fund Wallet Handler
+  //  Fund Wallet Handler
   const handleFunding = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -46,7 +46,7 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
     }
   };
 
-  // 🔍 Verify Payment on Redirect
+  //  Verify Payment on Redirect
   useEffect(() => {
     if (!reference) return;
 
@@ -83,7 +83,7 @@ const FundWallet: React.FC<FundWalletProps> = ({ show, onClose }) => {
             </button>
 
             <h2 className="text-2xl font-bold mb-4 text-green-700 text-center">
-              Fund your Wallet
+              Fund your Datafy Wallet
             </h2>
 
             {/* QUICK AMOUNTS */}

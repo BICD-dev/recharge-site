@@ -24,16 +24,6 @@ const SuccessPage: React.FC<SuccessProps> = ({
 }) => {
   const [showPreview, setShowPreview] = useState(false);
   const displayAmount = formData.amount || formData.variation_amount;
-  const formatDate = () => {
-    return new Date().toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   return (
     <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8 h-screen my-2">
       {/* Success Icon */}

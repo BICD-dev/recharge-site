@@ -31,11 +31,13 @@ const Topbar: React.FC<TopbarProps> = ({
         {/* User Avatar */}
         <div className="flex items-center gap-2 cursor-pointer">
           {userAvatarUrl ? (
-            <img
-              src={userAvatarUrl}
-              alt={userName}
-              className="w-10 h-10 rounded-full object-cover border-2 border-primary"
-            />
+             <Link to="/dashboard/settings">
+              <img
+                src={userAvatarUrl}
+                alt={userName}
+                className="w-10 h-10 rounded-full object-cover border-2 border-primary"
+              />
+            </Link>
           ) : (
             <Link to="/dashboard/settings">
               <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">

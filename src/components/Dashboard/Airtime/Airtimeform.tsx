@@ -11,15 +11,12 @@ import {
 } from "@/components/ui/select";
 import * as Yup from "yup";
 import type { Airtime } from "../../../constants/types/vtPassTypes";
-import { useNavigate } from "react-router-dom";
-import { buyAirtime } from "../../../api/purchase";
 import { Link } from "react-router-dom";
 interface AirtimeFormProps {
   onNext: (data: Airtime) => void;
 }
 
 const AirtimeForm: React.FC<AirtimeFormProps> = ({ onNext })=> {
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Airtime>({
     serviceID: "",
@@ -55,7 +52,7 @@ const AirtimeForm: React.FC<AirtimeFormProps> = ({ onNext })=> {
     e.preventDefault();
     try {
       await schema.validate(formData, { abortEarly: false });
-      onNext(formData); // ⬅⬅ Pass data to parent component
+      onNext(formData); //  Pass data to parent component
     } catch (error:any) {
       if (error instanceof Yup.ValidationError) {
         error.inner.forEach((err) => toast.error(err.message));
@@ -88,7 +85,7 @@ const AirtimeForm: React.FC<AirtimeFormProps> = ({ onNext })=> {
         </div>
 
         {/* Form Card */}
-        <div className=" ">
+        <div className="mb-4">
           <form onSubmit={handleSubmit} className="space-y-6">
 
             {/* Provider Select */}

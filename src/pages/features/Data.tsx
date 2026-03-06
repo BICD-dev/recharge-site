@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import FailedPage from "@/components/Dashboard/Status_pages/FailurePage";
 import LoadingPage from "@/components/Dashboard/Status_pages/LoadingPage";
 import { useBuyData } from "@/hooks/usePurchase";
+import { useDownloadReceipt } from "@/hooks/useTransaction";
 
 interface InternetData {
   serviceID: string;
@@ -29,9 +30,12 @@ const Data = () => {
   const [status, setStatus] = useState<"success" | "failure" | null>(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [transactionId, setTransactionId] = useState<number | null>(null);
+  const [receiptReference, setReceiptReference] = useState<string>("");
   const navigate = useNavigate();
 
   const { mutateAsync: purchaseData } = useBuyData();
+  const { mutateAsync: downloadReceipt } = useDownloadReceipt();
 
   const handleInternetNext = (payload: any) => {
     setData(payload);
@@ -56,6 +60,8 @@ const Data = () => {
       );
 
       if (result.data?.message) toast(result.data.message);
+      setTransactionId(result.data?.data?.transactionId || null);
+      setReceiptReference(result.data?.data?.reference || "");
 
       setStep(3);
     } catch (error: any) {
@@ -95,7 +101,8 @@ const Data = () => {
             purpose="Data"
             formData={data}
             onGoHome={() => navigate("/dashboard")}
-            onDownloadReceipt={() => console.log("Download receipt")}
+            transactionId={transactionId!}
+            onDownloadReceipt={() => downloadReceipt({ id: transactionId!, reference: receiptReference })}
           />
         ) : (
           <FailedPage

@@ -9,6 +9,7 @@ import FailedPage from "@/components/Dashboard/Status_pages/FailurePage";
 import LoadingPage from "@/components/Dashboard/Status_pages/LoadingPage";
 import ElectricityForm from "@/components/Dashboard/Electricity/ElectricityForm";
 import { useBuyElectricity } from "@/hooks/usePurchase";
+import { useDownloadReceipt } from "@/hooks/useTransaction";
 import type { Electricity as ElectricityPayload } from "@/constants/types/vtPassTypes";
 
 interface ElectricityData {
@@ -33,8 +34,11 @@ const Electricity = () => {
     const [status, setStatus] = useState<"success" | "failure" | null>(null);
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState(false);
+    const [transactionId, setTransactionId] = useState<number | null>(null);
+    const [receiptReference, setReceiptReference] = useState<string>("");
     const navigate = useNavigate();
     const { mutateAsync: buyElectricity } = useBuyElectricity();
+    const { mutateAsync: downloadReceipt } = useDownloadReceipt();
 
     const handleFormNext = (formData: Partial<ElectricityData>) => {
         setData(prev => ({ ...prev, ...formData }));
@@ -55,9 +59,11 @@ const Electricity = () => {
                 pin: pinValue
             };
 
-            await buyElectricity(payload);
+            const result = await buyElectricity(payload);
             setStatus("success");
             toast.success("Electricity purchase successful!");
+            setTransactionId(result.data?.data?.transactionId || null);
+            setReceiptReference(result.data?.data?.reference || "");
             setStep(3);
             setLoading(false);
         } catch (error: unknown) {
@@ -99,7 +105,8 @@ const Electricity = () => {
                         purpose="Electricity"
                         formData={{ ...data, serviceID: data.serviceID }}
                         onGoHome={() => navigate('/dashboard')}
-                        onDownloadReceipt={() => console.log("Download receipt")}
+                        transactionId={transactionId!}
+                        onDownloadReceipt={() => downloadReceipt({ id: transactionId!, reference: receiptReference })}
                     />
                 ) : (
                     <FailedPage

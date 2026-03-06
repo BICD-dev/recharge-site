@@ -124,7 +124,7 @@ const handleProviderChange = async (value: string) => {
         data plans. SME data also available.
       </p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-8 mt-12">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8 mt-12 mb-4">
         {/* Provider Select */}
         <div className="flex flex-col gap-2">
           <label className="text-sm font-medium">Select Provider</label>

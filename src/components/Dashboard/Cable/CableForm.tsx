@@ -200,7 +200,7 @@ const CableForm: React.FC<CableFormProps> = ({ onNext }) => {
         Cable Subscription
       </h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-8 mt-10">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8 mt-10 mb-4">
         {/* Provider */}
         <div>
           <label className="text-sm font-medium">Provider</label>

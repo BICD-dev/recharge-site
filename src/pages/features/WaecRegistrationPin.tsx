@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useBuyWaecPin, useGetVariations } from "@/hooks/usePurchase";
+import { useDownloadReceipt } from "@/hooks/useTransaction";
 import type { Education_Waec_PinCheck } from "@/constants/types/vtPassTypes";
 
 interface WaecFormData extends Education_Waec_PinCheck {
@@ -160,9 +161,12 @@ const Waec = () => {
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState<"success" | "failure" | null>(null);
     const [error, setError] = useState<string>("");
+    const [transactionId, setTransactionId] = useState<number | null>(null);
+    const [receiptReference, setReceiptReference] = useState<string>("");
     const navigate = useNavigate();
 
     const { mutateAsync: purchaseWaec } = useBuyWaecPin();
+    const { mutateAsync: downloadReceipt } = useDownloadReceipt();
 
     const handleFormNext = (data: WaecFormData) => {
         setFormData(data);
@@ -183,6 +187,8 @@ const Waec = () => {
             setError(result.data?.status === "failure" && result.data?.message ? result.data.message : "");
 
             if (result.data?.message) toast(result.data.message);
+            setTransactionId(result.data?.data?.transactionId || null);
+            setReceiptReference(result.data?.data?.reference || "");
 
             setStep(3);
         } catch (err: any) {
@@ -219,7 +225,8 @@ const Waec = () => {
                     purpose={formData?.serviceID === 'waec' ? 'WAEC Result Checker' : 'WAEC Registration PIN'}
                     formData={formData}
                     onGoHome={() => navigate("/dashboard")}
-                    onDownloadReceipt={() => console.log("Download receipt")}
+                    transactionId={transactionId!}
+                    onDownloadReceipt={() => downloadReceipt({ id: transactionId!, reference: receiptReference })}
                 />
             ) : (
                 <FailedPage

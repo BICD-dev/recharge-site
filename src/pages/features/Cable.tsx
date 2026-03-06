@@ -8,6 +8,7 @@ import FailedPage from "@/components/Dashboard/Status_pages/FailurePage";
 import LoadingPage from "@/components/Dashboard/Status_pages/LoadingPage";
 import CableForm from "@/components/Dashboard/Cable/CableForm";
 import { useBuyCableTv } from "@/hooks/usePurchase";
+import { useDownloadReceipt } from "@/hooks/useTransaction";
 
 interface CableData {
   serviceID: string;
@@ -32,9 +33,12 @@ const Cable = () => {
   const [status, setStatus] = useState<"success" | "failure" | null>(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [transactionId, setTransactionId] = useState<number | null>(null);
+  const [receiptReference, setReceiptReference] = useState<string>("");
   const navigate = useNavigate();
 
   const { mutateAsync: purchaseCable } = useBuyCableTv();
+  const { mutateAsync: downloadReceipt } = useDownloadReceipt();
 
   const handleInternetNext = (payload: any) => {
     setData(payload);
@@ -54,6 +58,8 @@ const Cable = () => {
       setError(result.data?.status === "failure" && result.data?.message ? result.data.message : "");
 
       if (result.data?.message) toast.success(result.data.message);
+      setTransactionId(result.data?.data?.transactionId || null);
+      setReceiptReference(result.data?.data?.reference || "");
 
       setStep(3);
     } catch (err: any) {
@@ -90,7 +96,8 @@ const Cable = () => {
           purpose="Cable"
           formData={data}
           onGoHome={() => navigate("/dashboard")}
-          onDownloadReceipt={() => console.log("Download receipt")}
+          transactionId={transactionId!}
+          onDownloadReceipt={() => downloadReceipt({ id: transactionId!, reference: receiptReference })}
         />
       ) : (
         <FailedPage
